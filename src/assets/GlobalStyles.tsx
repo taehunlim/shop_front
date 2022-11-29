@@ -36,6 +36,14 @@ const styles = css`
 
     a {
       text-decoration: none;
+      transition: all 0.3s;
+
+      :visited {
+        color: unset;
+      }
+      :hover {
+        color: ${theme.fg.black};
+      }
     }
   }
 
@@ -47,6 +55,8 @@ const styles = css`
     margin: 0;
   }
 
+  a {
+  }
   a,
   button {
     display: inline-block;
