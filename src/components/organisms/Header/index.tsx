@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
+import Navigation from "../Navigation";
+
 import { StyledHeader, Container, LogoWrapper, IconContainer } from "./style";
 
 const Header = () => {
@@ -34,7 +36,7 @@ const Header = () => {
             <img alt="logo" />
           </Link>
         </LogoWrapper>
-        <nav>1</nav>
+        <Navigation />
         <IconContainer>
           <ul>
             <li>
