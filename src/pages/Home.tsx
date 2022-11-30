@@ -5,7 +5,7 @@ import Layout from "components/templates/Layout";
 const Home = () => {
   return (
     <Layout>
-      <h1></h1>
+      <div style={{ minHeight: "100vh" }}>main</div>
     </Layout>
   );
 };
