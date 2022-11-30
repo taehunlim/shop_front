@@ -1,24 +1,24 @@
-import {SET_TASKS, DELETE_TASK} from './types';
+import { SET_TASKS, DELETE_TASK } from './types';
 
-export type TasksProps =  {
-    id: number;
-    title: string;
+export type TasksProps = {
+   id: number;
+   title: string;
 };
 
 export function setTasks(tasks: TasksProps[]) {
-    return {
-        type: SET_TASKS,
-        payload: {
-            tasks
-        }
-    };
-};
+   return {
+      type: SET_TASKS,
+      payload: {
+         tasks,
+      },
+   };
+}
 
 export function deleteTask(id: number) {
-    return {
-        type: DELETE_TASK,
-        payload: {
-            id
-        }
-    };
-};
+   return {
+      type: DELETE_TASK,
+      payload: {
+         id,
+      },
+   };
+}

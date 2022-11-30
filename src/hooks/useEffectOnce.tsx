@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react';
 type EffectProps = void | (() => void);
 
 export const useEffectOnce = (effect: () => EffectProps) => {
-
    const destroyFunction = useRef<EffectProps>();
    const isCalledOnce = useRef(false);
    const isRendered = useRef(false);
