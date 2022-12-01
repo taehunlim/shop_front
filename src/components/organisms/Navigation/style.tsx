@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 
 import { keyframes, css } from '@emotion/react';
+import { ThemeProps } from 'assets/emotion';
 
 const growDown = keyframes`
   from {
@@ -22,7 +23,7 @@ const growRight = keyframes`
   }
 `;
 
-const menuStyles = css`
+const menuStyles = ({ theme }: ThemeProps) => css`
    visibility: hidden;
 
    padding: 30px 0;
@@ -32,16 +33,34 @@ const menuStyles = css`
 
    height: auto;
 
-   background-color: #fff;
-   box-shadow: -2px 2px 81px -27px rgb(0 0 0 / 30%);
+   background-color: ${theme.fg.black};
 
    > li {
       min-width: 220px;
       padding: 0 30px;
       margin: 5px 0;
-      a > {
+      > a {
+         color: ${theme.fg.gray};
          margin-bottom: 15px;
       }
+   }
+`;
+
+const lineStyles = ({ theme }: ThemeProps) => css`
+   position: relative;
+   ::after {
+      content: '';
+      position: absolute;
+
+      left: auto;
+      right: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+
+      transition: 0.3s;
+
+      background-color: ${theme.fg.white};
    }
 `;
 
@@ -55,6 +74,22 @@ const ThirdMenu = styled.ul`
    transform: scaleX(0);
    top: 0;
    left: 100%;
+
+   > li {
+      > a {
+         ${lineStyles};
+      }
+      :hover {
+         > a {
+            color: ${({ theme }) => theme.fg.white};
+
+            ::after {
+               left: 0;
+               width: 100%;
+            }
+         }
+      }
+   }
 `;
 
 const SubMenu = styled.ul`
@@ -64,12 +99,22 @@ const SubMenu = styled.ul`
    left: -37px;
 
    > li {
+      > a {
+         ${lineStyles};
+      }
       :hover {
          ${ThirdMenu} {
             visibility: visible;
             transform: scaleX(1);
             transform-origin: top left;
             animation: ${growRight} 0.5s ease-in-out forwards;
+         }
+         > a {
+            color: ${({ theme }) => theme.fg.white};
+            ::after {
+               left: 0;
+               width: 100%;
+            }
          }
       }
    }
@@ -84,11 +129,18 @@ const Menu = styled.ul`
       position: relative;
       display: inline-block;
       margin-right: 50px;
-      text-align: left;
 
       > a {
-         font-weight: 500;
+         ${lineStyles};
          line-height: 80px;
+
+         font-weight: 500;
+         text-align: left;
+
+         ::after {
+            bottom: 30px;
+            background-color: ${({ theme }) => theme.fg.black};
+         }
       }
 
       :last-of-type {
@@ -101,6 +153,12 @@ const Menu = styled.ul`
             transform: scaleY(1);
             transform-origin: top center;
             animation: ${growDown} 0.5s ease-in-out forwards;
+         }
+         > a {
+            ::after {
+               left: 0;
+               width: 100%;
+            }
          }
       }
    }
