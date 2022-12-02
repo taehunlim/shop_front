@@ -6,7 +6,8 @@ import { DELETE_TASK } from '../../redux/actions/types';
 
 import ListContainer from './ListContainer';
 
-import tasks from '../../../fixtures/tasks';
+import tasks from 'fixtures/tasks';
+
 import MockedFunction = jest.MockedFunction;
 
 jest.mock('react-redux');

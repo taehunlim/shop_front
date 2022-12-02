@@ -20,6 +20,7 @@ module.exports = {
                '**/setupTest.ts',
                '**/*.test.ts',
                '**/*.test.tsx',
+               'src/utils/tests/*',
             ],
          },
       ],

@@ -5,7 +5,7 @@ import { render, fireEvent } from '@testing-library/react';
 import List from './List';
 import { TasksProps } from '../../redux/actions/actions';
 
-import tasks from '../../../fixtures/tasks';
+import tasks from 'fixtures/tasks';
 
 describe('List', () => {
    const handleClick = jest.fn();

@@ -48,6 +48,7 @@ const StyledHeader = styled.header<StyledHeaderProps>`
 const Container = styled.div`
    width: 95%;
    display: flex;
+   align-items: center;
    flex-wrap: wrap;
    margin: auto;
 

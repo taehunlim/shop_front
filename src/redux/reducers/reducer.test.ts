@@ -1,7 +1,7 @@
 import reducer from './reducer';
 
 import { deleteTask, setTasks } from '../actions/actions';
-import tasks from '../../../fixtures/tasks';
+import tasks from '../../fixtures/tasks';
 
 describe('reducer', () => {
    describe('setTasks', () => {

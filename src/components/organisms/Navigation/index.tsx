@@ -1,87 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import navs from 'fixtures/navs';
+
 import { StyledNav, Menu, SubMenu, ThirdMenu } from './style';
 
 function Navigation() {
    return (
       <StyledNav>
-         <Menu>
-            <li>
-               <Link to="/">Home</Link>
-               <SubMenu>
-                  <li>
-                     <Link to="/">2</Link>
-                     <ThirdMenu>
-                        <li>
-                           <Link to="/">3</Link>
-                        </li>
-                        <li>
-                           <Link to="/">3</Link>
-                        </li>
-                        <li>
-                           <Link to="/">3</Link>
-                        </li>
-                     </ThirdMenu>
+         <Menu data-testid="nav">
+            {navs.map((nav, index) => (
+                  <li key={`nav_${nav.id}`}>
+                     <Link to={nav.url}>{nav.label}</Link>
+                     {nav.children && (
+                        <SubMenu data-testid={`nav_${index}-subNav`}>
+                           {nav.children.map((subNav, subIndex) => (
+                              <li key={`subNav_${subNav.id}`}>
+                                 <Link to={subNav.url}>{subNav.label}</Link>
+                                 {subNav.children && (
+                                    <ThirdMenu
+                                       data-testid={`nav_${index}-subNav_${subIndex}-thirdNav`}
+                                    >
+                                       {subNav.children.map((thirdNav) => (
+                                          <li key={`thirdNav_${thirdNav.id}`}>
+                                             <Link to={thirdNav.url}>
+                                                {thirdNav.label}
+                                             </Link>
+                                          </li>
+                                       ))}
+                                    </ThirdMenu>
+                                 )}
+                              </li>
+                           ))}
+                        </SubMenu>
+                     )}
                   </li>
-                  <li>
-                     <Link to="/">2</Link>
-                     <ThirdMenu>
-                        <li>
-                           <Link to="/">4</Link>
-                        </li>
-                        <li>
-                           <Link to="/">4</Link>
-                        </li>
-                        <li>
-                           <Link to="/">4</Link>
-                        </li>
-                     </ThirdMenu>
-                  </li>
-                  <li>
-                     <Link to="/">2</Link>
-                  </li>
-               </SubMenu>
-            </li>
-            <li>
-               <Link to="/">Shop</Link>
-            </li>
-            <li>
-               <Link to="/">Pages</Link>
-               <SubMenu>
-                  <li>
-                     <Link to="/">2</Link>
-                     <ThirdMenu>
-                        <li>
-                           <Link to="/">3</Link>
-                        </li>
-                        <li>
-                           <Link to="/">3</Link>
-                        </li>
-                        <li>
-                           <Link to="/">3</Link>
-                        </li>
-                     </ThirdMenu>
-                  </li>
-                  <li>
-                     <Link to="/">2</Link>
-                     <ThirdMenu>
-                        <li>
-                           <Link to="/">4</Link>
-                        </li>
-                        <li>
-                           <Link to="/">4</Link>
-                        </li>
-                        <li>
-                           <Link to="/">4</Link>
-                        </li>
-                     </ThirdMenu>
-                  </li>
-                  <li>
-                     <Link to="/">2</Link>
-                  </li>
-               </SubMenu>
-            </li>
+               ))}
          </Menu>
       </StyledNav>
    );

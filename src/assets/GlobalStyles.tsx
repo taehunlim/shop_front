@@ -36,6 +36,7 @@ const styles = css`
       a {
          text-decoration: none;
          transition: all 0.3s;
+         color: ${theme.fg.black};
 
          :visited {
             color: unset;
