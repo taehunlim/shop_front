@@ -40,27 +40,25 @@ describe('Navigation test', () => {
             const subNavList = subNav.children;
 
             const subNavs = navs[i].children;
-            if (subNav) {
+            if (subNavs.length) {
                for (let j = 0; j < subNavList.length; j++) {
                   const subLink = subNavList[j]
                      .firstElementChild as HTMLAnchorElement;
                   fireEvent.click(subLink);
 
-                  expect(window.location.pathname).toBe(subNavs![j].url);
+                  expect(window.location.pathname).toBe(subNavs[j].url);
 
                   //thirdNav test
                   const thirdNav = getByTestId(`nav_${i}-subNav_${j}-thirdNav`);
                   const thirdNavList = thirdNav.children;
                   const thirdNavs = subNavs![j].children;
-                  if (thirdNavs) {
+                  if (thirdNavs.length) {
                      for (let k = 0; k < thirdNavList.length; k++) {
                         const thirdLink = thirdNavList[k]
                            .firstElementChild as HTMLAnchorElement;
                         fireEvent.click(thirdLink);
 
-                        expect(window.location.pathname).toBe(
-                           thirdNavs![k].url,
-                        );
+                        expect(window.location.pathname).toBe(thirdNavs[k].url);
                      }
                   }
                }

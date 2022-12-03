@@ -38,17 +38,17 @@ const navs = [
             url: '/sub3',
             children: [
                {
-                  id: 1,
+                  id: 4,
                   label: 'third1',
                   url: '/third1',
                },
                {
-                  id: 2,
+                  id: 5,
                   label: 'third2',
                   url: '/third2',
                },
                {
-                  id: 3,
+                  id: 6,
                   label: 'third3',
                   url: '/third3',
                },
@@ -60,6 +60,7 @@ const navs = [
       id: 2,
       label: 'Shop',
       url: '/shop',
+      children: [],
    },
    {
       id: 3,
@@ -67,50 +68,50 @@ const navs = [
       url: '/page',
       children: [
          {
-            id: 1,
+            id: 4,
             label: 'sub1',
             url: '/sub1',
             children: [
                {
-                  id: 1,
+                  id: 7,
                   label: 'third1',
                   url: '/third1',
                },
                {
-                  id: 2,
+                  id: 8,
                   label: 'third2',
                   url: '/third2',
                },
                {
-                  id: 3,
+                  id: 9,
                   label: 'third3',
                   url: '/third3',
                },
             ],
          },
          {
-            id: 2,
+            id: 5,
             label: 'sub2',
             url: '/sub2',
             children: [],
          },
          {
-            id: 3,
+            id: 6,
             label: 'sub3',
             url: '/sub3',
             children: [
                {
-                  id: 1,
+                  id: 10,
                   label: 'third1',
                   url: '/third1',
                },
                {
-                  id: 2,
+                  id: 11,
                   label: 'third2',
                   url: '/third2',
                },
                {
-                  id: 3,
+                  id: 12,
                   label: 'third3',
                   url: '/third3',
                },
