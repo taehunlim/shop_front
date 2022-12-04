@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+import Modal from 'components/molecules/Modal';
 import Navigation from '../Navigation';
 
 import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
@@ -8,6 +9,7 @@ import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
 function Header() {
    const ref = useRef<HTMLHeadElement>(null);
    const [isSticky, setIsSticky] = useState(false);
+   const [isShow, setIsShow] = useState<boolean>();
 
    useEffect(() => {
       if (ref.current) {
@@ -49,11 +51,16 @@ function Header() {
                      <button type="button">H</button>
                   </li>
                   <li>
-                     <button type="button">C</button>
+                     <button type="button" onClick={() => setIsShow(true)}>
+                        C
+                     </button>
                   </li>
                </ul>
             </IconContainer>
          </Container>
+         <Modal show={isShow} onClose={() => setIsShow(false)}>
+            modal
+         </Modal>
       </StyledHeader>
    );
 }
