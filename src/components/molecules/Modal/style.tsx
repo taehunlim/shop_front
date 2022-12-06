@@ -30,7 +30,7 @@ const CloseButton = styled.button`
    position: absolute;
    z-index: 9;
    right: 15px;
-   top: 30px;
+   top: 20px;
    cursor: pointer;
    color: ${({ theme }) => theme.fg.black};
 `;

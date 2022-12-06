@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-import Modal from 'components/molecules/Modal';
 import Navigation from '../Navigation';
+import HeaderModal from '../HeaderModal';
 
 import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
 
 function Header() {
    const ref = useRef<HTMLHeadElement>(null);
    const [isSticky, setIsSticky] = useState(false);
-   const [isShow, setIsShow] = useState<boolean>();
+
+   const [isWishShow, setIsWishShow] = useState<boolean>();
+   const [isCartShow, setIsCartShow] = useState<boolean>();
 
    useEffect(() => {
       if (ref.current) {
@@ -48,19 +50,30 @@ function Header() {
                      <button type="button">P</button>
                   </li>
                   <li>
-                     <button type="button">H</button>
+                     <button type="button" onClick={() => setIsWishShow(true)}>
+                        H
+                     </button>
                   </li>
                   <li>
-                     <button type="button" onClick={() => setIsShow(true)}>
+                     <button type="button" onClick={() => setIsCartShow(true)}>
                         C
                      </button>
                   </li>
                </ul>
             </IconContainer>
          </Container>
-         <Modal show={isShow} onClose={() => setIsShow(false)}>
-            modal
-         </Modal>
+
+         <HeaderModal
+            title="WishList"
+            show={isWishShow}
+            onClose={() => setIsWishShow(false)}
+         />
+
+         <HeaderModal
+            title="Cart"
+            show={isCartShow}
+            onClose={() => setIsCartShow(false)}
+         />
       </StyledHeader>
    );
 }
