@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+import Icon from 'components/atoms/Icon';
 import Navigation from '../Navigation';
 import HeaderModal from '../HeaderModal';
 
@@ -44,19 +45,23 @@ function Header() {
             <IconContainer>
                <ul>
                   <li>
-                     <button type="button">S</button>
+                     <button type="button">
+                        <Icon icon="search" width={15} />
+                     </button>
                   </li>
                   <li>
-                     <button type="button">P</button>
+                     <button type="button">
+                        <Icon icon="user" width={15} />
+                     </button>
                   </li>
                   <li>
                      <button type="button" onClick={() => setIsWishShow(true)}>
-                        H
+                        <Icon icon="heart" width={15} />
                      </button>
                   </li>
                   <li>
                      <button type="button" onClick={() => setIsCartShow(true)}>
-                        C
+                        <Icon icon="cart" width={15} />
                      </button>
                   </li>
                </ul>
