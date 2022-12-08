@@ -52,7 +52,8 @@ const Container = styled.div`
    position: fixed;
    left: 0;
    top: 0;
-   display: none;
+   display: table;
+   visibility: hidden;
    height: 100%;
    width: 100%;
    z-index: 1;

@@ -13,7 +13,7 @@ export const revealingStyle = (
    Content: ComponentSelector,
 ) => css`
    &.show {
-      display: table;
+      visibility: visible;
       transform: scale(1);
 
       ${Wrapper} {
@@ -29,6 +29,9 @@ export const revealingStyle = (
    }
 
    &.hidden {
+      visibility: hidden;
+      transition: all 0.8s;
+
       transform: scale(1);
 
       animation: ${quickScaleDown} 0s 0.8s linear forwards;
