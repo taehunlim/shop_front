@@ -1,24 +1,27 @@
 import React from 'react';
-import { fireEvent, render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
+import HeaderModal from '.';
 import EmotionProvider from 'assets/EmotionProvider';
-import Modal from '.';
 
-describe('Modal Component', () => {
+describe('HeaderModal Component', () => {
    const getComponent = (show?: boolean, width?: string) => {
       const onClick = jest.fn();
+      const title = 'Header Modal';
 
       const result = render(
          <EmotionProvider>
-            <button type="button" onClick={() => onClick(true)}>
-               show
-            </button>
-            <Modal width={width} show={show} onClose={() => onClick(false)}>
-               modal content
-            </Modal>
+            <button onClick={() => onClick(true)}>show</button>
+            <HeaderModal
+               title={title}
+               width={width}
+               show={show}
+               onClose={() => onClick(false)}
+            />
          </EmotionProvider>,
       );
 
+      const EmptyContent = result.getByText(title);
       const Buttons = result.getAllByRole('button');
       const ShowButton = Buttons[0];
       const CloseButton = Buttons[1];
@@ -29,6 +32,7 @@ describe('Modal Component', () => {
       const clickCloseButton = () => fireEvent.click(CloseButton);
 
       return {
+         EmptyContent,
          ShowButton,
          CloseButton,
          Container,
@@ -40,11 +44,17 @@ describe('Modal Component', () => {
    };
 
    it('render test', () => {
-      const { Container, clickShowButton, clickCloseButton, onClick } =
-         getComponent();
+      const {
+         EmptyContent,
+         Container,
+         onClick,
+         clickShowButton,
+         clickCloseButton,
+      } = getComponent();
 
       expect(Container).not.toHaveClass('show');
       expect(Container).not.toHaveClass('hidden');
+      expect(EmptyContent).toBeInTheDocument();
 
       clickShowButton();
       expect(onClick).toBeCalledWith(true);
@@ -59,13 +69,11 @@ describe('Modal Component', () => {
       expect(Container).toHaveClass('show');
       expect(ContentEl).toHaveStyle('width: 380px');
    });
-
    it('className hidden test', () => {
       const { Container } = getComponent(false);
 
       expect(Container).toHaveClass('hidden');
    });
-
    it('width test', () => {
       const { Container, ContentEl } = getComponent(true, '100%');
 
