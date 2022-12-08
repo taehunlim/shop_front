@@ -13,6 +13,7 @@ export const revealingStyle = (
    Content: ComponentSelector,
 ) => css`
    &.show {
+      display: table;
       transform: scale(1);
 
       ${Wrapper} {
