@@ -26,7 +26,7 @@ describe('HeaderModal Component', () => {
       const ShowButton = Buttons[0];
       const CloseButton = Buttons[1];
       const Container = ShowButton.nextElementSibling;
-      const ContentEl = CloseButton.parentElement;
+      const ContentEl = () => CloseButton.parentElement;
 
       const clickShowButton = () => fireEvent.click(ShowButton);
       const clickCloseButton = () => fireEvent.click(CloseButton);
@@ -34,7 +34,6 @@ describe('HeaderModal Component', () => {
       return {
          EmptyContent,
          ShowButton,
-         CloseButton,
          Container,
          ContentEl,
          clickShowButton,
@@ -44,40 +43,39 @@ describe('HeaderModal Component', () => {
    };
 
    it('render test', () => {
-      const {
-         EmptyContent,
-         Container,
-         onClick,
-         clickShowButton,
-         clickCloseButton,
-      } = getComponent();
+      const { ShowButton, Container } = getComponent();
 
+      expect(ShowButton).toBeInTheDocument();
+      expect(Container).not.toBeVisible();
       expect(Container).not.toHaveClass('show');
       expect(Container).not.toHaveClass('hidden');
-      expect(EmptyContent).toBeInTheDocument();
+   });
 
-      clickShowButton();
-      expect(onClick).toBeCalledWith(true);
+   it('className show test', () => {
+      const { Container, ContentEl, clickCloseButton, onClick } =
+         getComponent(true);
+
+      expect(Container).toBeVisible();
+      expect(Container).toHaveClass('show');
+      expect(ContentEl()).toHaveStyle('width: 380px');
 
       clickCloseButton();
       expect(onClick).toBeCalledWith(false);
    });
 
-   it('className show test', () => {
-      const { Container, ContentEl } = getComponent(true);
-
-      expect(Container).toHaveClass('show');
-      expect(ContentEl).toHaveStyle('width: 380px');
-   });
    it('className hidden test', () => {
-      const { Container } = getComponent(false);
+      const { Container, clickShowButton, onClick } = getComponent(false);
 
+      expect(Container).not.toBeVisible();
       expect(Container).toHaveClass('hidden');
-   });
-   it('width test', () => {
-      const { Container, ContentEl } = getComponent(true, '100%');
 
-      expect(Container).toHaveClass('show');
-      expect(ContentEl).toHaveStyle('width: 100%');
+      clickShowButton();
+      expect(onClick).toBeCalledWith(true);
+   });
+
+   it('width test', () => {
+      const { ContentEl } = getComponent(true, '100%');
+
+      expect(ContentEl()).toHaveStyle('width: 100%');
    });
 });
