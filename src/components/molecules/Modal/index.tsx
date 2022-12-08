@@ -1,16 +1,16 @@
 import React from 'react';
 
-import styledComponent from './style';
+import styledComponent, { ContentProps } from './style';
 
 const { Container, Wrapper, Content, CloseButton } = styledComponent;
 
-export interface ModalProps {
+export interface ModalProps extends ContentProps {
    show: boolean | undefined;
    onClose: () => void;
    children?: React.ReactNode;
 }
 
-function Modal({ show, onClose, children }: ModalProps) {
+function Modal({ show, onClose, children, width }: ModalProps) {
    const isHidden = typeof show === 'undefined' ? '' : 'hidden';
 
    const showClass = show ? 'show' : isHidden;
@@ -18,7 +18,7 @@ function Modal({ show, onClose, children }: ModalProps) {
    return (
       <Container className={`revealing ${showClass}`}>
          <Wrapper>
-            <Content>
+            <Content width={width}>
                <CloseButton onClick={onClose}>✕</CloseButton>
                {children}
             </Content>

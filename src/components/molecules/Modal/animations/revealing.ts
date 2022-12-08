@@ -33,7 +33,7 @@ export const fadeOut = keyframes`
 
 export const contentFadeIn = keyframes`
   0% {
-    transform: translateX(380px);
+    transform: translateX(100%);
     opacity: 0;
   }
   100% {
@@ -48,7 +48,7 @@ export const contentFadeOut = keyframes`
     opacity: 1;
   }
   100% {
-    transform: translateX(380px);
+    transform: translateX(100%);
     opacity: 0;
   }
 `;

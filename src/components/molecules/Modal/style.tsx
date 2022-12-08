@@ -2,11 +2,15 @@ import styled from '@emotion/styled';
 
 import { revealingStyle } from './animations';
 
-const Content = styled.div`
+export interface ContentProps {
+   width?: string;
+}
+
+const Content = styled.div<ContentProps>`
    text-align: initial;
    background: #fff;
    padding: 20px;
-   width: 380px;
+   width: ${({ width }) => width || '380px'};
 
    height: 100%;
 

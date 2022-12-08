@@ -11,6 +11,8 @@ function Header() {
    const ref = useRef<HTMLHeadElement>(null);
    const [isSticky, setIsSticky] = useState(false);
 
+   const [isSearchShow, setIsSearchShow] = useState<boolean>();
+
    const [isWishShow, setIsWishShow] = useState<boolean>();
    const [isCartShow, setIsCartShow] = useState<boolean>();
 
@@ -45,7 +47,10 @@ function Header() {
             <IconContainer>
                <ul>
                   <li>
-                     <button type="button">
+                     <button
+                        type="button"
+                        onClick={() => setIsSearchShow(true)}
+                     >
                         <Icon icon="search" width={15} />
                      </button>
                   </li>
@@ -67,6 +72,13 @@ function Header() {
                </ul>
             </IconContainer>
          </Container>
+
+         <HeaderModal
+            width="100%"
+            title="Search"
+            show={isSearchShow}
+            onClose={() => setIsSearchShow(false)}
+         />
 
          <HeaderModal
             title="WishList"
