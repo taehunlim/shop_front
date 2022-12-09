@@ -7,9 +7,9 @@ interface HeaderProps extends ModalProps {
    title: string;
 }
 
-function HeaderModal({ title, show, onClose, width }: HeaderProps) {
+function HeaderModal({ title, show, onClose, width, ...props }: HeaderProps) {
    return (
-      <Modal width={width} show={show} onClose={onClose}>
+      <Modal {...props} width={width} show={show} onClose={onClose}>
          <div>
             <Title>{title}</Title>
             No Items found in {title.toLowerCase()}

@@ -10,13 +10,13 @@ export interface ModalProps extends ContentProps {
    children?: React.ReactNode;
 }
 
-function Modal({ show, onClose, children, width }: ModalProps) {
+function Modal({ show, onClose, children, width, ...props }: ModalProps) {
    const isHidden = typeof show === 'undefined' ? '' : 'hidden';
 
    const showClass = show ? 'show' : isHidden;
 
    return (
-      <Container className={`revealing ${showClass}`}>
+      <Container {...props} className={`revealing ${showClass}`}>
          <Wrapper>
             <Content width={width}>
                <CloseButton onClick={onClose}>✕</CloseButton>

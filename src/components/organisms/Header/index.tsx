@@ -17,13 +17,11 @@ function Header() {
    const [isCartShow, setIsCartShow] = useState<boolean>();
 
    useEffect(() => {
-      if (ref.current) {
-         window.addEventListener('scroll', handleScroll);
+      window.addEventListener('scroll', handleScroll);
 
-         return () => {
-            window.removeEventListener('scroll', handleScroll);
-         };
-      }
+      return () => {
+         window.removeEventListener('scroll', handleScroll);
+      };
    }, [ref]);
 
    const handleScroll = () => {
@@ -36,7 +34,7 @@ function Header() {
    };
 
    return (
-      <StyledHeader ref={ref} isSticky={isSticky}>
+      <StyledHeader data-testid="header" ref={ref} isSticky={isSticky}>
          <Container>
             <LogoWrapper>
                <Link to="/">
@@ -74,6 +72,7 @@ function Header() {
          </Container>
 
          <HeaderModal
+            data-testid="search-modal"
             width="100%"
             title="Search"
             show={isSearchShow}
@@ -81,12 +80,14 @@ function Header() {
          />
 
          <HeaderModal
+            data-testid="wish-modal"
             title="WishList"
             show={isWishShow}
             onClose={() => setIsWishShow(false)}
          />
 
          <HeaderModal
+            data-testid="cart-modal"
             title="Cart"
             show={isCartShow}
             onClose={() => setIsCartShow(false)}
