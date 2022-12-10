@@ -1,11 +1,12 @@
 import React from 'react';
 
 import Layout from 'components/templates/Layout';
+import Banner from 'components/organisms/Banner';
 
 function Home() {
    return (
       <Layout>
-         <div style={{ minHeight: '100vh' }}>main</div>
+         <Banner />
       </Layout>
    );
 }
