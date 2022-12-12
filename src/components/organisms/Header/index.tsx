@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import Icon from 'components/atoms/Icon';
+import { useBrowserEvent } from 'hooks/useBrowserEvent';
+
 import Navigation from '../Navigation';
 import HeaderModal from '../HeaderModal';
 
@@ -16,22 +18,16 @@ function Header() {
    const [isWishShow, setIsWishShow] = useState<boolean>();
    const [isCartShow, setIsCartShow] = useState<boolean>();
 
-   useEffect(() => {
-      window.addEventListener('scroll', handleScroll);
+   useBrowserEvent('scroll', handleScroll);
 
-      return () => {
-         window.removeEventListener('scroll', handleScroll);
-      };
-   }, [ref]);
-
-   const handleScroll = () => {
+   function handleScroll() {
       const headerHeight = (ref.current as HTMLHeadElement).offsetHeight;
 
       if (window.scrollY > headerHeight) {
          return setIsSticky(true);
       }
       return setIsSticky(false);
-   };
+   }
 
    return (
       <StyledHeader data-testid="header" ref={ref} isSticky={isSticky}>
