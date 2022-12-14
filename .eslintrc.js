@@ -48,6 +48,7 @@ module.exports = {
       ],
       'react/jsx-no-bind': 0,
       'react/no-array-index-key': 0,
+      'no-restricted-globals': 0,
    },
    plugins: ['jest', '@typescript-eslint'],
    parser: '@typescript-eslint/parser',

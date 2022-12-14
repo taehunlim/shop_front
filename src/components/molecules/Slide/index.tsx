@@ -33,7 +33,7 @@ type OnChangeType = {
 
 function Slide({
    children,
-   slideWidth,
+   slideWidth = '100%',
    slidePerView = 1,
    slideGap = 0,
    onChange,
@@ -41,41 +41,26 @@ function Slide({
 }: Props) {
    const containerRef = useRef<HTMLDivElement>(null);
    const wrapperRef = useRef<HTMLDivElement>(null);
-
-   // const currentSlideIndex = useRef(defaultIndex);
-   const [currentSlideIndex, setCurrentSlideIndex] = useState(defaultIndex);
    const touchStart = useRef(0);
-
    const slideTransition = useRef('all 0.4s ease-in-out');
 
-   const [width, setWidth] = useState(slideWidth);
-
-   const itemWidth = Number(width) / slidePerView - slideGap;
-
+   const [currentSlideIndex, setCurrentSlideIndex] = useState(defaultIndex);
    const [slidePosition, setSlidePosition] = useState(`translateX(0)`);
 
+   const width = slideWidth === 'auto' ? '100%' : slideWidth;
+   const isPercent = !!(typeof width === 'string' && width.split('%')[0]);
+   const tWidth = isPercent ? 100 : width;
+   const perWidth = Number(tWidth) / slidePerView;
+
+   const itemWidth = isPercent
+      ? `calc(${perWidth}% - ${slideGap}px)`
+      : `${perWidth - slideGap}`;
+
    useEffect(() => {
-      if (slideWidth === 'auto' || !slideWidth) {
-         const container = containerRef.current;
-         if (container) {
-            setWidth(container.clientWidth);
-
-            window.addEventListener('resize', () => {
-               setWidth(container.clientWidth);
-            });
-
-            return () => {
-               window.removeEventListener('resize', () => {
-                  setWidth(container.clientWidth);
-               });
-            };
-         }
+      if (defaultIndex) {
+         handleSlidePosition(defaultIndex);
       }
-   }, [containerRef]);
-
-   useEffect(() => {
-      handleSlidePosition(defaultIndex);
-   }, [defaultIndex]);
+   }, []);
 
    useEffect(() => {
       const wrapper = wrapperRef.current;
@@ -105,7 +90,6 @@ function Slide({
       slideTransition.current = 'all 0.4s ease-in-out';
 
       if (currentSlideIndex === lastSlideIndex) {
-         setSlidePosition(`translateX(0)`);
          return handleSlidePosition(0);
       }
 
@@ -166,8 +150,8 @@ function Slide({
    };
 
    const itemStyle = {
-      width: itemWidth || '',
-      margin: `0 ${slideGap / 2}`,
+      width: itemWidth,
+      marginRight: `${slideGap}`,
    };
 
    return (
