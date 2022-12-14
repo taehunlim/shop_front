@@ -1,8 +1,18 @@
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 
-interface WidthProps {
-   width?: string | number;
+export type ContainerWidth = `${number}%` | number;
+export type Width = Calc | ContainerWidth;
+
+type Gap = ` - ${number}px`;
+type Calc = `calc(${number}%${Gap})`;
+
+interface SlideContainerProps {
+   width: ContainerWidth;
+}
+
+interface SlideItemsProps {
+   slideWidth: Width;
+   gap: number;
 }
 
 const ButtonContainer = styled.div`
@@ -24,8 +34,9 @@ const ButtonContainer = styled.div`
    }
 `;
 
-const SlideContainer = styled.div`
+const SlideContainer = styled.div<SlideContainerProps>`
    overflow: hidden;
+   width: ${({ width }) => width};
 `;
 
 const Wrapper = styled.div`
@@ -34,11 +45,12 @@ const Wrapper = styled.div`
    height: 100%;
 `;
 
-const SlideItem = styled.div`
+const SlideItem = styled.div<SlideItemsProps>`
    display: flex;
    flex-shrink: 0;
 
-   width: 100%;
+   width: ${({ slideWidth }) => slideWidth};
+   margin-right: ${({ gap }) => gap};
    height: 100%;
 
    img {
@@ -47,21 +59,13 @@ const SlideItem = styled.div`
    }
 `;
 
-const Container = styled.div<WidthProps>`
+const Container = styled.div`
    position: relative;
    height: 100%;
 
    display: flex;
    align-items: center;
    justify-content: center;
-
-   ${({ width }) => {
-      if (!width || typeof width === 'string') {
-         return css`
-            container-type: inline-size;
-         `;
-      }
-   }}
 
    :hover {
       ${ButtonContainer} {

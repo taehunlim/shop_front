@@ -7,6 +7,7 @@ const Container = styled.div`
 const BannerWrapper = styled.div`
    background: center / cover no-repeat url('/assets/images/banner-size.jpg');
    height: 100%;
+   width: 100%;
 `;
 
 export { Container, BannerWrapper };

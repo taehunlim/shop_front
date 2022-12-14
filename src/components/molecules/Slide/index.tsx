@@ -14,26 +14,28 @@ import {
    Wrapper,
    SlideItem,
    ButtonContainer,
+   ContainerWidth,
+   Width,
 } from './style';
+
+interface OnChangeType {
+   element: Element;
+   slideIndex: number;
+}
 
 interface Props {
    children: ReactNode;
 
-   slideWidth?: string | number;
+   width?: ContainerWidth;
    slidePerView?: number;
    slideGap?: number;
    onChange?: (e: OnChangeType) => void;
    defaultIndex?: number;
 }
 
-type OnChangeType = {
-   element: Element;
-   slideIndex: number;
-};
-
 function Slide({
    children,
-   slideWidth = '100%',
+   width = '100%',
    slidePerView = 1,
    slideGap = 0,
    onChange,
@@ -47,14 +49,13 @@ function Slide({
    const [currentSlideIndex, setCurrentSlideIndex] = useState(defaultIndex);
    const [slidePosition, setSlidePosition] = useState(`translateX(0)`);
 
-   const width = slideWidth === 'auto' ? '100%' : slideWidth;
-   const isPercent = !!(typeof width === 'string' && width.split('%')[0]);
-   const tWidth = isPercent ? 100 : width;
-   const perWidth = Number(tWidth) / slidePerView;
-
-   const itemWidth = isPercent
+   const isPercent = typeof width === 'string';
+   const perWidth: number = (isPercent ? 100 : width) / slidePerView;
+   const percentWidth: Width = slideGap
       ? `calc(${perWidth}% - ${slideGap}px)`
-      : `${perWidth - slideGap}`;
+      : `${perWidth}%`;
+
+   const itemWidth: Width = isPercent ? percentWidth : perWidth - slideGap;
 
    useEffect(() => {
       if (defaultIndex) {
@@ -63,10 +64,9 @@ function Slide({
    }, []);
 
    useEffect(() => {
-      const wrapper = wrapperRef.current;
-
-      if (wrapper) {
-         if (onChange) {
+      if (onChange) {
+         const wrapper = wrapperRef.current;
+         if (wrapper) {
             onChange({
                element: wrapper.children[currentSlideIndex],
                slideIndex: currentSlideIndex,
@@ -149,22 +149,17 @@ function Slide({
       transition: slideTransition.current,
    };
 
-   const itemStyle = {
-      width: itemWidth,
-      marginRight: `${slideGap}`,
-   };
-
    return (
-      <Container ref={containerRef} width={slideWidth}>
+      <Container ref={containerRef}>
          <SlideContainer
-            style={{ width }}
+            width={width}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
          >
             <Wrapper ref={wrapperRef} style={style}>
                {React.Children.toArray(children).map((child, index) => (
-                  <SlideItem key={index} style={itemStyle}>
+                  <SlideItem key={index} slideWidth={itemWidth} gap={slideGap}>
                      {child}
                   </SlideItem>
                ))}
