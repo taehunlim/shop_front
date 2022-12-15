@@ -16,6 +16,7 @@ import {
    ButtonContainer,
    ContainerWidth,
    Width,
+   Translate,
 } from './style';
 
 interface OnChangeType {
@@ -44,10 +45,10 @@ function Slide({
    const containerRef = useRef<HTMLDivElement>(null);
    const wrapperRef = useRef<HTMLDivElement>(null);
    const touchStart = useRef(0);
-   const slideTransition = useRef('all 0.4s ease-in-out');
 
    const [currentSlideIndex, setCurrentSlideIndex] = useState(defaultIndex);
-   const [slidePosition, setSlidePosition] = useState(`translateX(0)`);
+   const [slidePosition, setSlidePosition] =
+      useState<Translate>(`translateX(0px)`);
 
    const isPercent = typeof width === 'string';
    const perWidth: number = (isPercent ? 100 : width) / slidePerView;
@@ -76,18 +77,20 @@ function Slide({
    }, [currentSlideIndex]);
 
    function handleSlidePosition(index: number) {
+      if (wrapperRef.current) {
+         wrapperRef.current.style.transition = 'all 0.4s ease-in-out';
+      }
+
       setCurrentSlideIndex(index);
-      return setSlidePosition(`translateX(-${(index * 100) / slidePerView}%)`);
+      return setSlidePosition(`translateX(${-(index * 100) / slidePerView}%)`);
    }
 
    function currentSlide() {
-      slideTransition.current = 'all 0.4s ease-in-out';
       handleSlidePosition(currentSlideIndex);
    }
 
    function nextSlide() {
       const lastSlideIndex = React.Children.count(children) - 1;
-      slideTransition.current = 'all 0.4s ease-in-out';
 
       if (currentSlideIndex === lastSlideIndex) {
          return handleSlidePosition(0);
@@ -97,8 +100,6 @@ function Slide({
    }
 
    function prevSlide() {
-      slideTransition.current = 'all 0.4s ease-in-out';
-
       if (currentSlideIndex === 0) {
          const lastSlideIndex = React.Children.count(children) - 1;
 
@@ -114,6 +115,8 @@ function Slide({
 
    function handleTouchMove(e: TouchEvent<HTMLDivElement>) {
       if (wrapperRef.current) {
+         wrapperRef.current.style.transition = '0ms';
+
          const current = wrapperRef.current.clientWidth * currentSlideIndex;
 
          const result =
@@ -121,8 +124,6 @@ function Slide({
             touchStart.current -
             current / slidePerView;
          setSlidePosition(`translateX(${result}px)`);
-
-         slideTransition.current = '0ms';
       }
    }
 
@@ -144,11 +145,6 @@ function Slide({
       }
    }
 
-   const style = {
-      transform: slidePosition,
-      transition: slideTransition.current,
-   };
-
    return (
       <Container ref={containerRef}>
          <SlideContainer
@@ -157,7 +153,7 @@ function Slide({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
          >
-            <Wrapper ref={wrapperRef} style={style}>
+            <Wrapper ref={wrapperRef} position={slidePosition}>
                {React.Children.toArray(children).map((child, index) => (
                   <SlideItem key={index} slideWidth={itemWidth} gap={slideGap}>
                      {child}

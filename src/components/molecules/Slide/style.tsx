@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 
 export type ContainerWidth = `${number}%` | number;
 export type Width = Calc | ContainerWidth;
+export type Translate = `translateX(${number}${Unit})`;
 
 type Gap = ` - ${number}px`;
 type Calc = `calc(${number}%${Gap})`;
+type Unit = `px` | `%`;
 
 interface SlideContainerProps {
    width: ContainerWidth;
@@ -13,6 +15,10 @@ interface SlideContainerProps {
 interface SlideItemsProps {
    slideWidth: Width;
    gap: number;
+}
+
+interface WrapperProps {
+   position: Translate;
 }
 
 const ButtonContainer = styled.div`
@@ -39,10 +45,12 @@ const SlideContainer = styled.div<SlideContainerProps>`
    width: ${({ width }) => width};
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<WrapperProps>`
    display: flex;
    width: 100%;
    height: 100%;
+
+   transform: ${({ position }) => position};
 `;
 
 const SlideItem = styled.div<SlideItemsProps>`
