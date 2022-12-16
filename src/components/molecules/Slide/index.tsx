@@ -24,7 +24,7 @@ interface OnChangeType {
    slideIndex: number;
 }
 
-interface Props {
+export interface SlideProps {
    children: ReactNode;
 
    width?: ContainerWidth;
@@ -41,14 +41,14 @@ function Slide({
    slideGap = 0,
    onChange,
    defaultIndex = 0,
-}: Props) {
+}: SlideProps) {
    const containerRef = useRef<HTMLDivElement>(null);
    const wrapperRef = useRef<HTMLDivElement>(null);
    const touchStart = useRef(0);
+   const currentSlideIndex = useRef(defaultIndex);
 
-   const [currentSlideIndex, setCurrentSlideIndex] = useState(defaultIndex);
    const [slidePosition, setSlidePosition] =
-      useState<Translate>(`translateX(0px)`);
+      useState<Translate>(`translateX(0%)`);
 
    const isPercent = typeof width === 'string';
    const perWidth: number = (isPercent ? 100 : width) / slidePerView;
@@ -64,49 +64,48 @@ function Slide({
       }
    }, []);
 
-   useEffect(() => {
-      if (onChange) {
-         const wrapper = wrapperRef.current;
-         if (wrapper) {
-            onChange({
-               element: wrapper.children[currentSlideIndex],
-               slideIndex: currentSlideIndex,
-            });
-         }
-      }
-   }, [currentSlideIndex]);
-
    function handleSlidePosition(index: number) {
+      currentSlideIndex.current = index;
+
       if (wrapperRef.current) {
          wrapperRef.current.style.transition = 'all 0.4s ease-in-out';
       }
 
-      setCurrentSlideIndex(index);
+      if (onChange) {
+         const wrapper = wrapperRef.current;
+         if (wrapper) {
+            onChange({
+               element: wrapper.children[currentSlideIndex.current],
+               slideIndex: currentSlideIndex.current,
+            });
+         }
+      }
+
       return setSlidePosition(`translateX(${-(index * 100) / slidePerView}%)`);
    }
 
    function currentSlide() {
-      handleSlidePosition(currentSlideIndex);
+      handleSlidePosition(currentSlideIndex.current);
    }
 
    function nextSlide() {
       const lastSlideIndex = React.Children.count(children) - 1;
 
-      if (currentSlideIndex === lastSlideIndex) {
+      if (currentSlideIndex.current === lastSlideIndex) {
          return handleSlidePosition(0);
       }
 
-      handleSlidePosition(currentSlideIndex + 1);
+      handleSlidePosition(currentSlideIndex.current + 1);
    }
 
    function prevSlide() {
-      if (currentSlideIndex === 0) {
+      if (currentSlideIndex.current === 0) {
          const lastSlideIndex = React.Children.count(children) - 1;
 
          return handleSlidePosition(lastSlideIndex);
       }
 
-      handleSlidePosition(currentSlideIndex - 1);
+      handleSlidePosition(currentSlideIndex.current - 1);
    }
 
    function handleTouchStart(e: TouchEvent<HTMLDivElement>) {
@@ -117,7 +116,8 @@ function Slide({
       if (wrapperRef.current) {
          wrapperRef.current.style.transition = '0ms';
 
-         const current = wrapperRef.current.clientWidth * currentSlideIndex;
+         const current =
+            wrapperRef.current.clientWidth * currentSlideIndex.current;
 
          const result =
             e.targetTouches[0].pageX -
