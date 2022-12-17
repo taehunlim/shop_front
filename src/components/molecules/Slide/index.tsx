@@ -34,6 +34,19 @@ export interface SlideProps {
    defaultIndex?: number;
 }
 
+export function getItemWidth(
+   width: ContainerWidth,
+   perView: number,
+   gap: number,
+): Width {
+   const isPercent = typeof width === 'string';
+   const perWidth: number = (isPercent ? 100 : width) / perView;
+   const percentWidth: Width = gap
+      ? `calc(${perWidth}% - ${gap}px)`
+      : `${perWidth}%`;
+   return isPercent ? percentWidth : perWidth - gap;
+}
+
 function Slide({
    children,
    width = '100%',
@@ -50,13 +63,7 @@ function Slide({
    const [slidePosition, setSlidePosition] =
       useState<Translate>(`translateX(0%)`);
 
-   const isPercent = typeof width === 'string';
-   const perWidth: number = (isPercent ? 100 : width) / slidePerView;
-   const percentWidth: Width = slideGap
-      ? `calc(${perWidth}% - ${slideGap}px)`
-      : `${perWidth}%`;
-
-   const itemWidth: Width = isPercent ? percentWidth : perWidth - slideGap;
+   const itemWidth: Width = getItemWidth(width, slidePerView, slideGap);
 
    useEffect(() => {
       if (defaultIndex) {
@@ -67,18 +74,14 @@ function Slide({
    function handleSlidePosition(index: number) {
       currentSlideIndex.current = index;
 
-      if (wrapperRef.current) {
-         wrapperRef.current.style.transition = 'all 0.4s ease-in-out';
-      }
+      const wrapper = wrapperRef.current as HTMLDivElement;
+      wrapper.style.transition = 'all 0.4s ease-in-out';
 
       if (onChange) {
-         const wrapper = wrapperRef.current;
-         if (wrapper) {
-            onChange({
-               element: wrapper.children[currentSlideIndex.current],
-               slideIndex: currentSlideIndex.current,
-            });
-         }
+         onChange({
+            element: wrapper.children[currentSlideIndex.current],
+            slideIndex: currentSlideIndex.current,
+         });
       }
 
       return setSlidePosition(`translateX(${-(index * 100) / slidePerView}%)`);
@@ -113,36 +116,32 @@ function Slide({
    }
 
    function handleTouchMove(e: TouchEvent<HTMLDivElement>) {
-      if (wrapperRef.current) {
-         wrapperRef.current.style.transition = '0ms';
+      const wrapper = wrapperRef.current as HTMLDivElement;
+      wrapper.style.transition = '0ms';
 
-         const current =
-            wrapperRef.current.clientWidth * currentSlideIndex.current;
+      const current = wrapper.offsetWidth * currentSlideIndex.current;
 
-         const result =
-            e.targetTouches[0].pageX -
-            touchStart.current -
-            current / slidePerView;
-         setSlidePosition(`translateX(${result}px)`);
-      }
+      const result =
+         e.targetTouches[0].pageX - touchStart.current - current / slidePerView;
+      setSlidePosition(`translateX(${result}px)`);
    }
 
    function handleTouchEnd(e: TouchEvent<HTMLDivElement>) {
       const end = e.changedTouches[0].pageX;
 
-      const { current } = wrapperRef;
-      if (current) {
-         const slideReferencePoint = current.clientWidth / 3 / slidePerView;
-         if (touchStart.current - end > slideReferencePoint) {
-            return nextSlide();
-         }
+      const wrapper = wrapperRef.current as HTMLDivElement;
 
-         if (end - touchStart.current > slideReferencePoint) {
-            return prevSlide();
-         }
+      const slideReferencePoint = wrapper.offsetWidth / 3 / slidePerView;
 
-         return currentSlide();
+      if (touchStart.current - end > slideReferencePoint) {
+         return nextSlide();
       }
+
+      if (end - touchStart.current > slideReferencePoint) {
+         return prevSlide();
+      }
+
+      return currentSlide();
    }
 
    return (
