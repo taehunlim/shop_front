@@ -30,6 +30,7 @@ export interface SlideProps {
    width?: ContainerWidth;
    slidePerView?: number;
    slideGap?: number;
+   centerGap?: boolean;
    onChange?: (e: OnChangeType) => void;
    defaultIndex?: number;
 }
@@ -52,6 +53,7 @@ function Slide({
    width = '100%',
    slidePerView = 1,
    slideGap = 0,
+   centerGap = false,
    onChange,
    defaultIndex = 0,
 }: SlideProps) {
@@ -154,7 +156,12 @@ function Slide({
          >
             <Wrapper ref={wrapperRef} position={slidePosition}>
                {React.Children.toArray(children).map((child, index) => (
-                  <SlideItem key={index} slideWidth={itemWidth} gap={slideGap}>
+                  <SlideItem
+                     key={index}
+                     slideWidth={itemWidth}
+                     gap={slideGap}
+                     centerGap={centerGap}
+                  >
                      {child}
                   </SlideItem>
                ))}

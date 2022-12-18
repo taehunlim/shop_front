@@ -15,6 +15,7 @@ interface SlideContainerProps {
 interface SlideItemsProps {
    slideWidth: Width;
    gap: number;
+   centerGap: boolean;
 }
 
 interface WrapperProps {
@@ -58,7 +59,9 @@ const SlideItem = styled.div<SlideItemsProps>`
    flex-shrink: 0;
 
    width: ${({ slideWidth }) => slideWidth};
-   margin-right: ${({ gap }) => gap};
+   margin-right: ${({ centerGap, gap }) => (centerGap ? gap / 2 : gap)};
+   margin-left: ${({ centerGap, gap }) => (centerGap ? gap / 2 : 0)};
+
    height: 100%;
 
    img {
