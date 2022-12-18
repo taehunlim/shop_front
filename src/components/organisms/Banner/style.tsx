@@ -6,6 +6,7 @@ interface BannerWrapperProps {
 
 const Container = styled.div`
    height: 100vh;
+   margin-bottom: 50px;
 `;
 
 const BannerWrapper = styled.div<BannerWrapperProps>`
