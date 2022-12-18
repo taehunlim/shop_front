@@ -62,6 +62,13 @@ const lineStyles = ({ theme }: ThemeProps) => css`
 
       background-color: ${theme.fg.white};
    }
+
+   :hover {
+      ::after {
+         left: 0;
+         width: 100%;
+      }
+   }
 `;
 
 const StyledNav = styled.nav`
@@ -82,11 +89,6 @@ const ThirdMenu = styled.ul`
       :hover {
          > a {
             color: ${({ theme }) => theme.fg.white};
-
-            ::after {
-               left: 0;
-               width: 100%;
-            }
          }
       }
    }
@@ -111,10 +113,6 @@ const SubMenu = styled.ul`
          }
          > a {
             color: ${({ theme }) => theme.fg.white};
-            ::after {
-               left: 0;
-               width: 100%;
-            }
          }
       }
    }
@@ -153,12 +151,6 @@ const Menu = styled.ul`
             transform: scaleY(1);
             transform-origin: top center;
             animation: ${growDown} 0.5s ease-in-out forwards;
-         }
-         > a {
-            ::after {
-               left: 0;
-               width: 100%;
-            }
          }
       }
    }
