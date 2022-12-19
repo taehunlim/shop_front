@@ -26,18 +26,26 @@ const ButtonContainer = styled.div`
    opacity: 0;
    transition: 0.3s;
 
-   padding: 0 20px;
-
-   display: flex;
-   justify-content: space-between;
    width: 100%;
 
    position: absolute;
+   z-index: 9;
    top: 50%;
    transform: translateY(-50%);
 
    button {
       color: #ffffff;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+
+      :first-of-type {
+         left: 20;
+      }
+
+      :last-of-type {
+         right: 20;
+      }
    }
 `;
 
@@ -50,7 +58,7 @@ const Wrapper = styled.div<WrapperProps>`
    display: flex;
    width: 100%;
    height: 100%;
-   z-index: 1;
+
    position: relative;
 
    transform: ${({ position }) => position};
