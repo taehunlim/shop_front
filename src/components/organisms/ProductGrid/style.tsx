@@ -1,6 +1,12 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 import Button from 'components/atoms/Button';
+
+export type PriceType = `${number}`;
+interface PriceProps {
+   discountedPrice: PriceType;
+}
 
 const ProductImgWrapper = styled.div`
    position: relative;
@@ -78,19 +84,28 @@ const HoverText = styled.span`
    }
 `;
 
-const Price = styled.div`
-   span {
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 1;
-      color: ${({ theme }) => theme.fg.black};
-   }
-`;
+const Price = styled.span<PriceProps>`
+   font-size: 14px;
+   font-weight: 600;
+   line-height: 1;
+   color: ${({ theme }) => theme.fg.black};
 
-const Cost = styled.span`
-   text-decoration: line-through;
-   color: ${({ theme }) => theme.fg.gray};
-   margin-right: 5px;
+   ${({ discountedPrice, theme }) => {
+      if (discountedPrice)
+         return css`
+            color: ${theme.fg.gray};
+            text-decoration: line-through;
+
+            ::after {
+               display: inline-block;
+               color: ${theme.fg.black};
+
+               content: '${discountedPrice}';
+               margin-left: 5px;
+               text-decoration: none;
+            }
+         `;
+   }}
 `;
 
 const Container = styled.div`
@@ -129,5 +144,4 @@ export {
    Title,
    HoverText,
    Price,
-   Cost,
 };

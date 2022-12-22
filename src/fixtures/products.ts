@@ -51,7 +51,7 @@ export const products = [
       name: 'Lorem ipsum fashion eight',
       slug: 'lorem-ipsum-fashion-eight',
       price: 25,
-      discount: 10,
+      discount: 0,
       new: false,
       rating: 5,
       ratingCount: 20,

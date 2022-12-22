@@ -13,17 +13,18 @@ import {
    Title,
    HoverText,
    Price,
-   Cost,
+   PriceType,
 } from './style';
 
 function ProductGrid({ product }: any) {
-   const getDiscountPrice = (price: number, discount: number) =>
-      discount && discount > 0 ? price - price * (discount / 100) : price;
+   const getDiscountPrice = (price: number, discount: number): PriceType => {
+      const discountedPrice = (price - price * (discount / 100)).toFixed(
+         2,
+      ) as PriceType;
+      return discount && discount > 0 ? discountedPrice : '0';
+   };
 
-   const discountedPrice = getDiscountPrice(
-      product.price,
-      product.discount,
-   ).toFixed(2);
+   const discountedPrice = getDiscountPrice(product.price, product.discount);
    const productPrice = product.price.toFixed(2);
 
    return (
@@ -53,14 +54,7 @@ function ProductGrid({ product }: any) {
                   <HoverText>Buy now</HoverText>
                </Link>
             </ContentTitle>
-            <Price>
-               {discountedPrice ? (
-                  <Cost>{productPrice}</Cost>
-               ) : (
-                  <span>${productPrice}</span>
-               )}
-               {discountedPrice && <span>${discountedPrice}</span>}
-            </Price>
+            <Price discountedPrice={discountedPrice}>{productPrice}</Price>
          </Content>
       </Container>
    );
