@@ -61,6 +61,10 @@ const Content = styled.div`
 
 const ContentTitle = styled.div`
    position: relative;
+
+   a {
+      width: 100%;
+   }
 `;
 
 const Title = styled.h3`
@@ -73,6 +77,10 @@ const Title = styled.h3`
    transition: 0.5s;
    opacity: 1;
    transform: translateY(0);
+
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
 `;
 
 const HoverText = styled.span`
