@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from 'components/templates/Layout';
 import Banner from 'components/organisms/Banner';
 import HoverBanner from 'components/organisms/HoverBanner';
-import ProductGrid from 'components/organisms/ProductGrid';
+import Product from 'components/molecules/Product';
 
 import { products } from 'fixtures/products';
 
@@ -13,7 +13,7 @@ function Home() {
          <Banner />
          <HoverBanner />
 
-         <ProductGrid product={products[0]} />
+         <Product product={products[0]} />
       </Layout>
    );
 }

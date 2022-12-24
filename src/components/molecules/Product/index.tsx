@@ -31,7 +31,7 @@ const getDiscountPrice = (price: number, discount: number): PriceType => {
    return discount && discount > 0 ? discountedPrice : '0';
 };
 
-function ProductGrid({ product }: Props) {
+function Product({ product }: Props) {
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
 
    const discountedPrice = getDiscountPrice(price, discount);
@@ -76,4 +76,4 @@ function ProductGrid({ product }: Props) {
    );
 }
 
-export default ProductGrid;
+export default Product;
