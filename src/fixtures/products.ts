@@ -1,42 +1,93 @@
 export const products = [
    {
-      id: '17',
-      sku: 'asdf117',
-      name: 'Lorem ipsum fashion seven',
-      slug: 'lorem-ipsum-fashion-seven',
-      price: 27,
+      id: '53',
+      sku: 'asdf153',
+      name: 'Lorem ipsum wearables three',
+      slug: 'lorem-ipsum-wearables-three',
+      price: 16,
       discount: 20,
       new: true,
-      rating: 4,
-      ratingCount: 25,
-      saleCount: 70,
-      category: ['fashion', 'women'],
-      tag: ['fashion', 'women'],
+      stock: 38,
+      rating: 5,
+      ratingCount: 27,
+      saleCount: 78,
+      category: ['wearables', 'men'],
+      tag: ['wearables', 'men'],
       variation: [
          {
             color: 'black',
             colorCode: '#333333',
             image: '/assets/images/product-size.jpg',
-
-            size: [Array],
+            size: [
+               {
+                  name: 'x',
+                  stock: 3,
+               },
+               {
+                  name: 'm',
+                  stock: 2,
+               },
+               {
+                  name: 'xl',
+                  stock: 5,
+               },
+            ],
          },
          {
             color: 'blue',
             colorCode: '#1e73be',
             image: '/assets/images/product-size.jpg',
-
-            size: [Array],
+            size: [
+               {
+                  name: 'x',
+                  stock: 4,
+               },
+               {
+                  name: 'm',
+                  stock: 7,
+               },
+               {
+                  name: 'xl',
+                  stock: 9,
+               },
+               {
+                  name: 'xxl',
+                  stock: 1,
+               },
+            ],
          },
          {
             color: 'yellow',
             colorCode: '#dd9933',
             image: '/assets/images/product-size.jpg',
-
-            size: [Array],
+            size: [
+               {
+                  name: 'x',
+                  stock: 1,
+               },
+               {
+                  name: 'm',
+                  stock: 2,
+               },
+               {
+                  name: 'xl',
+                  stock: 4,
+               },
+               {
+                  name: 'xxl',
+                  stock: 0,
+               },
+            ],
          },
       ],
-      thumbImage: ['/assets/images/product-size.jpg'],
+      thumbImage: [
+         '/assets/images/product-size.jpg',
+         '/assets/images/product-size.jpg',
+      ],
       image: [
+         '/assets/images/product-size.jpg',
+         '/assets/images/product-size.jpg',
+         '/assets/images/product-size.jpg',
          '/assets/images/product-size.jpg',
          '/assets/images/product-size.jpg',
       ],
@@ -46,39 +97,87 @@ export const products = [
          'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
    },
    {
-      id: '18',
-      sku: 'asdf118',
-      name: 'Lorem ipsum fashion eight',
-      slug: 'lorem-ipsum-fashion-eight',
-      price: 25,
-      discount: 0,
+      id: '54',
+      sku: 'asdf154',
+      name: 'Lorem ipsum wearables four',
+      slug: 'lorem-ipsum-wearables-four',
+      price: 10,
+      discount: 25,
       new: false,
-      rating: 5,
+      stock: 36,
+      rating: 4,
       ratingCount: 20,
-      saleCount: 50,
-      category: ['fashion', 'women'],
-      tag: ['fashion', 'women'],
+      saleCount: 70,
+      category: ['wearables', 'men'],
+      tag: ['wearables', 'men'],
       variation: [
          {
             color: 'black',
             colorCode: '#333333',
             image: '/assets/images/product-size.jpg',
 
-            size: [Array],
+            size: [
+               {
+                  name: 'x',
+                  stock: 3,
+               },
+               {
+                  name: 'm',
+                  stock: 2,
+               },
+               {
+                  name: 'xl',
+                  stock: 5,
+               },
+            ],
          },
          {
             color: 'blue',
             colorCode: '#1e73be',
             image: '/assets/images/product-size.jpg',
 
-            size: [Array],
+            size: [
+               {
+                  name: 'x',
+                  stock: 4,
+               },
+               {
+                  name: 'm',
+                  stock: 7,
+               },
+               {
+                  name: 'xl',
+                  stock: 9,
+               },
+               {
+                  name: 'xxl',
+                  stock: 1,
+               },
+            ],
          },
          {
             color: 'yellow',
             colorCode: '#dd9933',
             image: '/assets/images/product-size.jpg',
 
-            size: [Array],
+            size: [
+               {
+                  name: 'x',
+                  stock: 1,
+               },
+               {
+                  name: 'm',
+                  stock: 2,
+               },
+               {
+                  name: 'xl',
+                  stock: 4,
+               },
+               {
+                  name: 'xxl',
+                  stock: 0,
+               },
+            ],
          },
       ],
       thumbImage: [
@@ -86,6 +185,7 @@ export const products = [
          '/assets/images/product-size.jpg',
       ],
       image: [
+         '/assets/images/product-size.jpg',
          '/assets/images/product-size.jpg',
          '/assets/images/product-size.jpg',
          '/assets/images/product-size.jpg',

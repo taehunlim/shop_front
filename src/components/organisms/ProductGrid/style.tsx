@@ -2,10 +2,21 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
 import Button from 'components/atoms/Button';
+import { ThemeProps } from 'assets/emotion';
 
 export type PriceType = `${number}`;
 interface PriceProps {
    discountedPrice: PriceType;
+}
+
+interface BadgeProps {
+   type?: 'sale' | 'new';
+}
+
+function getColor({ theme, type }: BadgeProps & ThemeProps) {
+   const saleColor = type === 'sale' ? theme.fg.complete : theme.fg.black;
+   const newColor = type === 'new' ? theme.fg.red : saleColor;
+   return newColor;
 }
 
 const ProductImgWrapper = styled.div`
@@ -108,6 +119,32 @@ const Price = styled.span<PriceProps>`
    }}
 `;
 
+const BadgeContainer = styled.div`
+   position: absolute;
+   z-index: 9;
+   top: 20px;
+   left: 20px;
+   display: flex;
+   flex-direction: column;
+`;
+
+const Badge = styled.span<BadgeProps>`
+   font-size: 14px;
+   font-weight: 500;
+   line-height: 48px;
+   z-index: 3;
+   display: inline-block;
+   width: 48px;
+   height: 48px;
+   margin-bottom: 10px;
+   text-align: center;
+   text-transform: lowercase;
+   color: #fff;
+   border-radius: 100%;
+
+   background-color: ${getColor};
+`;
+
 const Container = styled.div`
    position: relative;
    margin-bottom: 50px;
@@ -144,4 +181,6 @@ export {
    Title,
    HoverText,
    Price,
+   BadgeContainer,
+   Badge,
 };

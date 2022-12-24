@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import Icon from 'components/atoms/Icon';
 
+import { products } from 'fixtures/products';
+
 import {
    Container,
    ProductImgWrapper,
@@ -13,26 +15,40 @@ import {
    Title,
    HoverText,
    Price,
+   BadgeContainer,
+   Badge,
    PriceType,
 } from './style';
 
-function ProductGrid({ product }: any) {
-   const getDiscountPrice = (price: number, discount: number): PriceType => {
-      const discountedPrice = (price - price * (discount / 100)).toFixed(
-         2,
-      ) as PriceType;
-      return discount && discount > 0 ? discountedPrice : '0';
-   };
+interface Props {
+   product: typeof products[0];
+}
 
-   const discountedPrice = getDiscountPrice(product.price, product.discount);
-   const productPrice = product.price.toFixed(2);
+const getDiscountPrice = (price: number, discount: number): PriceType => {
+   const discountedPrice = (price - price * (discount / 100)).toFixed(
+      2,
+   ) as PriceType;
+   return discount && discount > 0 ? discountedPrice : '0';
+};
+
+function ProductGrid({ product }: Props) {
+   const { new: isNew, stock, price, discount, thumbImage, name } = product;
+
+   const discountedPrice = getDiscountPrice(price, discount);
+   const productPrice = price.toFixed(2);
 
    return (
       <Container>
          <ProductImgWrapper>
             <Link to="/">
-               <img src={product.thumbImage[0]} alt={product.name} />
+               <img src={thumbImage[0]} alt={name} />
             </Link>
+
+            <BadgeContainer>
+               {discount && <Badge type="sale">{discount}%</Badge>}
+               {isNew && <Badge type="new">new</Badge>}
+               {!stock && <Badge>out</Badge>}
+            </BadgeContainer>
          </ProductImgWrapper>
          <ButtonContainer>
             <IconButton>
@@ -48,7 +64,7 @@ function ProductGrid({ product }: any) {
          <Content>
             <ContentTitle>
                <Link to="/">
-                  <Title>{product.name}</Title>
+                  <Title>{name}</Title>
                </Link>
                <Link to="/">
                   <HoverText>Buy now</HoverText>
