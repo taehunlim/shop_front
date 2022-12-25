@@ -22,6 +22,7 @@ import {
 
 interface Props {
    product: typeof products[0];
+   onWish?: () => void;
 }
 
 const getDiscountPrice = (price: number, discount: number): PriceType => {
@@ -31,7 +32,7 @@ const getDiscountPrice = (price: number, discount: number): PriceType => {
    return discount && discount > 0 ? discountedPrice : '0';
 };
 
-function Product({ product }: Props) {
+function Product({ product, onWish }: Props) {
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
 
    const discountedPrice = getDiscountPrice(price, discount);
@@ -51,7 +52,7 @@ function Product({ product }: Props) {
             </BadgeContainer>
          </ProductImgWrapper>
          <ButtonContainer>
-            <IconButton>
+            <IconButton onClick={onWish}>
                <Icon icon="heart" />
             </IconButton>
             <IconButton>

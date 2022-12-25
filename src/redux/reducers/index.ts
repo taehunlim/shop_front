@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import Reducer from './reducer';
+import wishlistReducer from '../reducers/wishlist';
 
 export type RootState = ReturnType<typeof rootReducer>;
 
 const rootReducer = combineReducers({
-   Reducer,
+   wishlistReducer,
 });
 
 export default rootReducer;

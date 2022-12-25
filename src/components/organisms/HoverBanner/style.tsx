@@ -29,7 +29,7 @@ const lineStyles = ({ theme }: ThemeProps) => css`
 
 const Container = styled.div`
    height: fit-content;
-   margin: 0 30px;
+   margin: 0 30px 100px;
 `;
 
 const BannerContainer = styled.div`

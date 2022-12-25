@@ -5,6 +5,8 @@ const Container = styled.div`
    flex-wrap: wrap;
    justify-content: space-between;
    gap: 15px;
+
+   margin: 0 30px;
 `;
 
 const Wrapper = styled.div`
