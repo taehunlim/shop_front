@@ -20,9 +20,11 @@ import {
    PriceType,
 } from './style';
 
+export type ProductType = typeof products[0];
+
 interface Props {
-   product: typeof products[0];
-   onWish?: () => void;
+   product: ProductType;
+   onWish: (product: ProductType) => void;
 }
 
 const getDiscountPrice = (price: number, discount: number): PriceType => {
@@ -52,7 +54,7 @@ function Product({ product, onWish }: Props) {
             </BadgeContainer>
          </ProductImgWrapper>
          <ButtonContainer>
-            <IconButton onClick={onWish}>
+            <IconButton onClick={() => onWish(product)}>
                <Icon icon="heart" />
             </IconButton>
             <IconButton>
