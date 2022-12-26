@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addToWishlist } from 'redux/actions/wishlistActions';
@@ -9,12 +9,15 @@ import { products } from 'fixtures/products';
 
 import { Container, Wrapper } from './style';
 
-function ProductLists() {
+function ProductList() {
    const dispatch = useDispatch();
 
-   function handleWishlist(product: ProductType) {
-      dispatch(addToWishlist(product));
-   }
+   const handleWishlist = useCallback(
+      (product: ProductType) => {
+         dispatch(addToWishlist(product));
+      },
+      [dispatch],
+   );
 
    return (
       <Container>
@@ -27,4 +30,4 @@ function ProductLists() {
    );
 }
 
-export default ProductLists;
+export default ProductList;

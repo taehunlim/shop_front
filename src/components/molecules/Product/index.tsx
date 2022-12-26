@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import Icon from 'components/atoms/Icon';
@@ -20,6 +20,8 @@ import {
    PriceType,
 } from './style';
 
+export type { PriceType };
+
 export type ProductType = typeof products[0];
 
 interface Props {
@@ -27,15 +29,17 @@ interface Props {
    onWish: (product: ProductType) => void;
 }
 
-const getDiscountPrice = (price: number, discount: number): PriceType => {
-   const discountedPrice = (price - price * (discount / 100)).toFixed(
-      2,
-   ) as PriceType;
-   return discount && discount > 0 ? discountedPrice : '0';
-};
-
 function Product({ product, onWish }: Props) {
+   console.log('rendering');
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
+
+   const getDiscountPrice = (price: number, discount: number): PriceType => {
+      const discountedPrice = (price - price * (discount / 100)).toFixed(
+         2,
+      ) as PriceType;
+
+      return discount && discount > 0 ? discountedPrice : '0';
+   };
 
    const discountedPrice = getDiscountPrice(price, discount);
    const productPrice = price.toFixed(2);
@@ -79,4 +83,4 @@ function Product({ product, onWish }: Props) {
    );
 }
 
-export default Product;
+export default memo(Product);
