@@ -26,11 +26,12 @@ export type ProductType = typeof products[0];
 
 interface Props {
    product: ProductType;
+   isWished: boolean;
+
    onWish: (product: ProductType) => void;
 }
 
-function Product({ product, onWish }: Props) {
-   console.log('rendering');
+function Product({ product, isWished, onWish }: Props) {
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
 
    const getDiscountPrice = (price: number, discount: number): PriceType => {
@@ -59,7 +60,7 @@ function Product({ product, onWish }: Props) {
          </ProductImgWrapper>
          <ButtonContainer>
             <IconButton onClick={() => onWish(product)}>
-               <Icon icon="heart" />
+               <Icon icon={isWished ? 'heart-solid' : 'heart'} />
             </IconButton>
             <IconButton>
                <Icon icon="heart" />
