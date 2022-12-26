@@ -9,3 +9,10 @@ export function addToWishlist(item: ProductProps) {
       payload: item,
    };
 }
+
+export function deleteFromWishlist(item: ProductProps) {
+   return {
+      type: ActionType.DELETE_FROM_WISHLIST,
+      payload: item,
+   };
+}

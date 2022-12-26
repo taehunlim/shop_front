@@ -26,6 +26,11 @@ export default function Reducer(
             wishlist: [...state.wishlist, action.payload],
          };
 
+      case ActionType.DELETE_FROM_WISHLIST:
+         return {
+            ...state,
+            wishlist: state.wishlist.filter((wish) => wish !== action.payload),
+         };
       default:
          return state;
    }
