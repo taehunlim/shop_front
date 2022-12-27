@@ -9,6 +9,7 @@ import {
 import useTypedSelector from 'hooks/useTypedSelector';
 
 import Product, { ProductType } from 'components/molecules/Product';
+import Modal from 'components/molecules/Modal';
 
 import { products } from 'fixtures/products';
 
@@ -17,6 +18,8 @@ import { Container, Wrapper } from './style';
 function ProductList() {
    const wishlist = useTypedSelector((state) => state.wishlistReducer.wishlist);
    const dispatch = useDispatch();
+
+   const [isShow, setIsShow] = React.useState<boolean>();
 
    const addWishlist = useCallback(
       (product: ProductType) => dispatch(addToWishlist(product)),
@@ -41,10 +44,13 @@ function ProductList() {
                      product={product}
                      isWished={isWished}
                      onWish={isWished ? deleteWishlist : addWishlist}
+                     onQuickView={() => setIsShow(true)}
                   />
                </Wrapper>
             );
          })}
+
+         <Modal show={isShow} onClose={() => setIsShow(false)} />
       </Container>
    );
 }

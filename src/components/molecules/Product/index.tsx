@@ -29,9 +29,10 @@ interface Props {
    isWished: boolean;
 
    onWish: (product: ProductType) => void;
+   onQuickView: (product: ProductType) => void;
 }
 
-function Product({ product, isWished, onWish }: Props) {
+function Product({ product, isWished, onWish, onQuickView }: Props) {
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
 
    const getDiscountPrice = (price: number, discount: number): PriceType => {
@@ -44,7 +45,7 @@ function Product({ product, isWished, onWish }: Props) {
 
    const discountedPrice = getDiscountPrice(price, discount);
    const productPrice = price.toFixed(2);
-
+   console.log(123);
    return (
       <Container>
          <ProductImgWrapper>
@@ -62,11 +63,8 @@ function Product({ product, isWished, onWish }: Props) {
             <IconButton onClick={() => onWish(product)}>
                <Icon icon={isWished ? 'heart-solid' : 'heart'} />
             </IconButton>
-            <IconButton>
-               <Icon icon="heart" />
-            </IconButton>
-            <IconButton>
-               <Icon icon="heart" />
+            <IconButton onClick={() => onQuickView(product)}>
+               <Icon icon="search" />
             </IconButton>
          </ButtonContainer>
          <Content>

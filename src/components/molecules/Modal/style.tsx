@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-import { revealingStyle } from './animations';
+import { sidebarStyle } from './animations/sidebar';
 
 export interface ContentProps {
    width?: string;
@@ -60,7 +60,7 @@ const Container = styled.div`
    /* hidden 처리 */
    transform: scale(0);
 
-   ${revealingStyle(Wrapper, Content)}
+   ${sidebarStyle(Wrapper, Content)}
 `;
 
 const styledComponent = {
