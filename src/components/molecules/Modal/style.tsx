@@ -1,9 +1,15 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
+import { basicStyle } from './animations/basic';
 import { sidebarStyle } from './animations/sidebar';
 
 export interface ContentProps {
    width?: string;
+}
+
+export interface ContainerProps {
+   modalStyle?: 'sidebar';
 }
 
 const Content = styled.div<ContentProps>`
@@ -12,7 +18,7 @@ const Content = styled.div<ContentProps>`
    padding: 20px;
    width: ${({ width }) => width || '380px'};
 
-   height: 100%;
+   height: 600px;
 
    display: inline-block;
    border-radius: 3px;
@@ -45,10 +51,10 @@ const Wrapper = styled.div`
    text-align: center;
    vertical-align: middle;
 
-   text-align: end;
+   text-align: center;
 `;
 
-const Container = styled.div`
+const Container = styled.div<ContainerProps>`
    position: fixed;
    left: 0;
    top: 0;
@@ -60,7 +66,20 @@ const Container = styled.div`
    /* hidden 처리 */
    transform: scale(0);
 
-   ${sidebarStyle(Wrapper, Content)}
+   ${basicStyle(Wrapper, Content)};
+
+   ${({ modalStyle }) => {
+      if (modalStyle === 'sidebar')
+         return css`
+            ${sidebarStyle(Wrapper, Content)}
+            ${Wrapper} {
+               text-align: end;
+            }
+            ${Content} {
+               height: 100%;
+            }
+         `;
+   }}
 `;
 
 const styledComponent = {
