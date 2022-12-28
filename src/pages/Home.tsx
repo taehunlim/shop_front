@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from 'components/templates/Layout';
 import Banner from 'components/organisms/Banner';
 import HoverBanner from 'components/organisms/HoverBanner';
-import ProductList from 'components/organisms/ProductList';
+import ProductGrid from 'components/organisms/ProductGrid';
 
 function Home() {
    return (
@@ -11,7 +11,7 @@ function Home() {
          <Banner />
          <HoverBanner />
 
-         <ProductList />
+         <ProductGrid />
       </Layout>
    );
 }

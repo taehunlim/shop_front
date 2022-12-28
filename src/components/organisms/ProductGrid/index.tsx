@@ -14,7 +14,7 @@ import { products } from 'fixtures/products';
 
 import { Container, Wrapper } from './style';
 
-function ProductList() {
+function ProductGrid() {
    const wishlist = useTypedSelector((state) => state.wishlistReducer.wishlist);
    const dispatch = useDispatch();
 
@@ -49,4 +49,4 @@ function ProductList() {
    );
 }
 
-export default ProductList;
+export default ProductGrid;
