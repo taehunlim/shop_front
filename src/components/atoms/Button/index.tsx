@@ -13,7 +13,7 @@ interface StyleProps extends React.ComponentProps<'button'> {
    height?: number;
 }
 
-function Button({ type, height, ...props }: ButtonProps) {
+function Button({ type = 'button', height, ...props }: ButtonProps) {
    return <StyledButton height={height} {...props} type={type} />;
 }
 

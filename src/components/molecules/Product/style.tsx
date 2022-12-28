@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import Button from 'components/atoms/Button';
 import { ThemeProps } from 'assets/emotion';
 
-export type PriceType = `${number}`;
+export type PriceType = `${number}` | null;
 interface PriceProps {
    discountedPrice: PriceType;
 }

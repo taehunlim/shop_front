@@ -24,15 +24,14 @@ export type { PriceType };
 
 export type ProductType = typeof products[0];
 
-interface Props {
+export interface ProductProps {
    product: ProductType;
    isWished: boolean;
 
    onWish: (product: ProductType) => void;
-   onQuickView: (product: ProductType) => void;
 }
 
-function Product({ product, isWished, onWish, onQuickView }: Props) {
+function Product({ product, isWished, onWish }: ProductProps) {
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
 
    const getDiscountPrice = (price: number, discount: number): PriceType => {
@@ -40,12 +39,12 @@ function Product({ product, isWished, onWish, onQuickView }: Props) {
          2,
       ) as PriceType;
 
-      return discount && discount > 0 ? discountedPrice : '0';
+      return discount && discount > 0 ? discountedPrice : null;
    };
 
    const discountedPrice = getDiscountPrice(price, discount);
    const productPrice = price.toFixed(2);
-   console.log(123);
+
    return (
       <Container>
          <ProductImgWrapper>
@@ -54,16 +53,22 @@ function Product({ product, isWished, onWish, onQuickView }: Props) {
             </Link>
 
             <BadgeContainer>
-               {discount && <Badge type="sale">{discount}%</Badge>}
+               {discountedPrice && <Badge type="sale">{discount}%</Badge>}
                {isNew && <Badge type="new">new</Badge>}
                {!stock && <Badge>out</Badge>}
             </BadgeContainer>
          </ProductImgWrapper>
          <ButtonContainer>
-            <IconButton onClick={() => onWish(product)}>
-               <Icon icon={isWished ? 'heart-solid' : 'heart'} />
+            <IconButton
+               data-testid="wish-button"
+               onClick={() => onWish(product)}
+            >
+               <Icon
+                  data-testid={isWished ? 'wished' : ''}
+                  icon={isWished ? 'heart-solid' : 'heart'}
+               />
             </IconButton>
-            <IconButton onClick={() => onQuickView(product)}>
+            <IconButton>
                <Icon icon="search" />
             </IconButton>
          </ButtonContainer>
