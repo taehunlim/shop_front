@@ -6,7 +6,7 @@ const { Container, Wrapper, Content, CloseButton } = styledComponent;
 
 export interface ModalProps extends ContentProps, ContainerProps {
    show: boolean | undefined;
-   onClose: () => void;
+   onClose: (f: boolean) => void;
    children?: React.ReactNode;
 }
 
@@ -30,7 +30,7 @@ function Modal({
       >
          <Wrapper>
             <Content width={width}>
-               <CloseButton onClick={onClose}>✕</CloseButton>
+               <CloseButton onClick={() => onClose(false)}>✕</CloseButton>
                {children}
             </Content>
          </Wrapper>

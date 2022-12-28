@@ -72,21 +72,21 @@ function Header() {
             width="100%"
             title="Search"
             show={isSearchShow}
-            onClose={() => setIsSearchShow(false)}
+            onClose={setIsSearchShow}
          />
 
          <HeaderModal
             data-testid="wish-modal"
             title="WishList"
             show={isWishShow}
-            onClose={() => setIsWishShow(false)}
+            onClose={setIsWishShow}
          />
 
          <HeaderModal
             data-testid="cart-modal"
             title="Cart"
             show={isCartShow}
-            onClose={() => setIsCartShow(false)}
+            onClose={setIsCartShow}
          />
       </StyledHeader>
    );
