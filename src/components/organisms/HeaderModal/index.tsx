@@ -3,11 +3,11 @@ import Modal, { ModalProps } from 'components/molecules/Modal';
 
 import { Container, Title } from './style';
 
-interface HeaderProps extends ModalProps {
+interface Props extends ModalProps {
    title: string;
 }
 
-function HeaderModal({ title, show, onClose, width, ...props }: HeaderProps) {
+function HeaderModal({ title, show, onClose, width, ...props }: Props) {
    return (
       <Modal
          {...props}

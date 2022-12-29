@@ -22,14 +22,14 @@ import {
 
 export type { PriceType };
 
-export type ProductType = typeof products[0];
+export type ProductDataProps = typeof products[0];
 
 export interface ProductProps {
-   product: ProductType;
+   product: ProductDataProps;
    isWished: boolean;
-   onQuickView: (product: ProductType) => void;
 
-   onWish: (product: ProductType) => void;
+   onWish: (product: ProductDataProps) => void;
+   onQuickView: (product: ProductDataProps) => void;
 }
 
 function Product({ product, isWished, onWish, onQuickView }: ProductProps) {

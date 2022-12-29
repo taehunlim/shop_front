@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -8,7 +8,8 @@ import {
 
 import useTypedSelector from 'hooks/useTypedSelector';
 
-import Product, { ProductType } from 'components/molecules/Product';
+import Product, { ProductDataProps } from 'components/molecules/Product';
+import Modal from 'components/molecules/Modal';
 
 import { products } from 'fixtures/products';
 
@@ -18,15 +19,25 @@ function ProductGrid() {
    const wishlist = useTypedSelector((state) => state.wishlistReducer.wishlist);
    const dispatch = useDispatch();
 
+   const [isShow, setIsShow] = useState<boolean>();
+   const [currentProduct, setCurrentProduct] = useState<ProductDataProps>();
+
    const addWishlist = useCallback(
-      (product: ProductType) => dispatch(addToWishlist(product)),
+      (product: ProductDataProps) => dispatch(addToWishlist(product)),
       [dispatch],
    );
 
    const deleteWishlist = useCallback(
-      (product: ProductType) => dispatch(deleteFromWishlist(product)),
+      (product: ProductDataProps) => dispatch(deleteFromWishlist(product)),
       [dispatch],
    );
+
+   const handleQuickView = useCallback(onQuickView, [products]);
+
+   function onQuickView(product: ProductDataProps) {
+      setIsShow(true);
+      setCurrentProduct(product);
+   }
 
    return (
       <Container>
@@ -41,10 +52,14 @@ function ProductGrid() {
                      product={product}
                      isWished={isWished}
                      onWish={isWished ? deleteWishlist : addWishlist}
+                     onQuickView={handleQuickView}
                   />
                </Wrapper>
             );
          })}
+         <Modal show={isShow} onClose={setIsShow}>
+            {currentProduct?.name}
+         </Modal>
       </Container>
    );
 }
