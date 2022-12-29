@@ -15,10 +15,10 @@ export interface ContainerProps {
 const Content = styled.div<ContentProps>`
    text-align: initial;
    background: #fff;
-   padding: 20px;
+   /* padding: 20px; */
    width: ${({ width }) => width || '380px'};
 
-   height: 600px;
+   min-height: 600px;
 
    display: inline-block;
    border-radius: 3px;

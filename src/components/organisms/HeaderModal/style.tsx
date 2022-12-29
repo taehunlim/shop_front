@@ -1,5 +1,10 @@
 import styled from '@emotion/styled';
 
+const Container = styled.div`
+   padding: 20px;
+   height: 100%;
+`;
+
 const Title = styled.h3`
    font-size: 18px;
    font-weight: 500;
@@ -10,4 +15,4 @@ const Title = styled.h3`
    border-bottom: 1px solid #eeeeee;
 `;
 
-export { Title };
+export { Container, Title };
