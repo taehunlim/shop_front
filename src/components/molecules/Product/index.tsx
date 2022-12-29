@@ -27,11 +27,12 @@ export type ProductType = typeof products[0];
 export interface ProductProps {
    product: ProductType;
    isWished: boolean;
+   onQuickView: (product: ProductType) => void;
 
    onWish: (product: ProductType) => void;
 }
 
-function Product({ product, isWished, onWish }: ProductProps) {
+function Product({ product, isWished, onWish, onQuickView }: ProductProps) {
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
 
    const getDiscountPrice = (price: number, discount: number): PriceType => {
@@ -68,7 +69,10 @@ function Product({ product, isWished, onWish }: ProductProps) {
                   icon={isWished ? 'heart-solid' : 'heart'}
                />
             </IconButton>
-            <IconButton>
+            <IconButton
+               data-testid="quick-view-button"
+               onClick={() => onQuickView(product)}
+            >
                <Icon icon="search" />
             </IconButton>
          </ButtonContainer>
