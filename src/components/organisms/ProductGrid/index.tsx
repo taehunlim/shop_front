@@ -9,7 +9,7 @@ import {
 import useTypedSelector from 'hooks/useTypedSelector';
 
 import Product, { ProductDataProps } from 'components/molecules/Product';
-import Modal from 'components/molecules/Modal';
+import ProductModal from 'components/organisms/ProductModal';
 
 import { products } from 'fixtures/products';
 
@@ -20,7 +20,9 @@ function ProductGrid() {
    const dispatch = useDispatch();
 
    const [isShow, setIsShow] = useState<boolean>();
-   const [currentProduct, setCurrentProduct] = useState<ProductDataProps>();
+   const [currentProduct, setCurrentProduct] = useState<ProductDataProps>(
+      products[0],
+   );
 
    const addWishlist = useCallback(
       (product: ProductDataProps) => dispatch(addToWishlist(product)),
@@ -57,9 +59,11 @@ function ProductGrid() {
                </Wrapper>
             );
          })}
-         <Modal show={isShow} onClose={setIsShow}>
-            {currentProduct?.name}
-         </Modal>
+         <ProductModal
+            show={isShow}
+            onClose={setIsShow}
+            product={currentProduct}
+         />
       </Container>
    );
 }

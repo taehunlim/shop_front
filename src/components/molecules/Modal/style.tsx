@@ -62,7 +62,7 @@ const Container = styled.div<ContainerProps>`
    visibility: hidden;
    height: 100%;
    width: 100%;
-   z-index: 1;
+   z-index: 999;
    /* hidden 처리 */
    transform: scale(0);
 
