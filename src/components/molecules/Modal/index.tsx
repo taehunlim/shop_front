@@ -15,6 +15,7 @@ function Modal({
    onClose,
    children,
    width,
+   height,
    modalStyle,
    ...props
 }: ModalProps) {
@@ -29,7 +30,7 @@ function Modal({
          className={`revealing ${showClass}`}
       >
          <Wrapper>
-            <Content width={width}>
+            <Content width={width} height={height}>
                <CloseButton onClick={() => onClose(false)}>✕</CloseButton>
                {children}
             </Content>

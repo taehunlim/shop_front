@@ -1,12 +1,12 @@
 import styled from '@emotion/styled';
 
 const Container = styled.div`
-   display: flex;
+   display: grid;
+   grid-template-columns: 0.8fr 1fr;
 `;
 
 const Content = styled.div`
    padding: 30px;
-   width: 550px;
 
    h2 {
       font-size: 34px;
@@ -20,6 +20,22 @@ const Content = styled.div`
       font-size: 15px;
       line-height: 1.5;
       color: ${({ theme }) => theme.fg.gray};
+      margin-bottom: 30px;
+   }
+`;
+
+const ImgWrapper = styled.div`
+   position: relative;
+   width: 100%;
+   padding-top: ${(100 * 4) / 3}%;
+
+   img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      object-fit: contain;
+      height: auto;
    }
 `;
 
@@ -33,4 +49,9 @@ const TextWrapper = styled.div`
    }
 `;
 
-export { Container, Content, TextWrapper };
+const ButtonContainer = styled.div`
+   display: flex;
+   gap: 10px;
+`;
+
+export { Container, Content, ImgWrapper, TextWrapper, ButtonContainer };

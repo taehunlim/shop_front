@@ -6,6 +6,7 @@ import { sidebarStyle } from './animations/sidebar';
 
 export interface ContentProps {
    width?: string;
+   height?: string;
 }
 
 export interface ContainerProps {
@@ -18,7 +19,7 @@ const Content = styled.div<ContentProps>`
    /* padding: 20px; */
    width: ${({ width }) => width || '380px'};
 
-   min-height: 600px;
+   min-height: ${({ height }) => height || '600px'};
 
    display: inline-block;
    border-radius: 3px;

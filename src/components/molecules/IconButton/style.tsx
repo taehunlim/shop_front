@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import Button from 'components/atoms/Button';
 
 export interface IconButtonProps {
-   width: number;
-   height: number;
+   width?: number;
+   height?: number;
 }
 
 const StyledButton = styled(Button)<IconButtonProps>`
