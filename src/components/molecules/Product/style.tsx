@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-import Button from 'components/atoms/Button';
 import { ThemeProps } from 'assets/emotion';
 
 export type PriceType = `${number}` | null;
@@ -46,13 +45,6 @@ const ButtonContainer = styled.div`
    transition: 0.5s;
    opacity: 0;
    transform: translateY(30px);
-`;
-
-const IconButton = styled(Button)`
-   width: 40px;
-   height: 40px;
-   padding: 0;
-   background-color: ${({ theme }) => theme.fg.white};
 `;
 
 const Content = styled.div`
@@ -183,7 +175,6 @@ export {
    Container,
    ProductImgWrapper,
    ButtonContainer,
-   IconButton,
    Content,
    ContentTitle,
    Title,

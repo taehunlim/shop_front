@@ -26,12 +26,12 @@ describe('Product', () => {
          </EmotionProvider>,
       );
 
-      const WishButton = getByTestId('wish-button');
+      const WishButton = () => getByTestId('wish-button');
       const QuickViewButton = getByTestId('quick-view-button');
 
-      const WishedIcon = () => getByTestId('wished');
+      const WishedIcon = () => getByTestId('wished-button');
 
-      const clickWishButton = () => fireEvent.click(WishButton);
+      const clickWishButton = () => fireEvent.click(WishButton());
       const clickQuickViewButton = () => fireEvent.click(QuickViewButton);
 
       return { WishedIcon, clickWishButton, clickQuickViewButton };

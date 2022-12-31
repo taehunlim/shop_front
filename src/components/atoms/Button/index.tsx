@@ -5,7 +5,7 @@ import styledComponent from './style';
 
 const { StyledButton } = styledComponent;
 
-type ButtonProps = StyleProps & {
+export type ButtonProps = StyleProps & {
    [key in keyof BootstrapColorProps]?: boolean;
 };
 

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import Icon from 'components/atoms/Icon';
+import IconButton from 'components/molecules/IconButton';
 
 import { products } from 'fixtures/products';
 
@@ -9,7 +9,6 @@ import {
    Container,
    ProductImgWrapper,
    ButtonContainer,
-   IconButton,
    Content,
    ContentTitle,
    Title,
@@ -61,20 +60,20 @@ function Product({ product, isWished, onWish, onQuickView }: ProductProps) {
          </ProductImgWrapper>
          <ButtonContainer>
             <IconButton
-               data-testid="wish-button"
+               icon={isWished ? 'heart-solid' : 'heart'}
+               width={40}
+               height={40}
+               data-testid={isWished ? 'wished-button' : 'wish-button'}
                onClick={() => onWish(product)}
-            >
-               <Icon
-                  data-testid={isWished ? 'wished' : ''}
-                  icon={isWished ? 'heart-solid' : 'heart'}
-               />
-            </IconButton>
+            />
+
             <IconButton
+               icon="search"
+               width={40}
+               height={40}
                data-testid="quick-view-button"
                onClick={() => onQuickView(product)}
-            >
-               <Icon icon="search" />
-            </IconButton>
+            />
          </ButtonContainer>
          <Content>
             <ContentTitle>
