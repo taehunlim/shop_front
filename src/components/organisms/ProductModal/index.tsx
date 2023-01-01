@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import Button from 'components/atoms/Button';
 import IconButton from 'components/molecules/IconButton';
@@ -15,9 +15,11 @@ import {
 
 interface Props extends ModalProps {
    product: ProductDataProps;
+   isWished: boolean;
+   onWish: (product: ProductDataProps) => void;
 }
 
-function ProductModal({ show, onClose, product }: Props) {
+function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
          <Container>
@@ -34,7 +36,12 @@ function ProductModal({ show, onClose, product }: Props) {
                   <Button height={39} primary>
                      ADD TO CART
                   </Button>
-                  <IconButton width={40} height={40} icon="heart" />
+                  <IconButton
+                     icon={isWished ? 'heart-solid' : 'heart'}
+                     width={40}
+                     height={40}
+                     onClick={() => onWish(product)}
+                  />
                </ButtonContainer>
             </Content>
          </Container>
@@ -42,4 +49,4 @@ function ProductModal({ show, onClose, product }: Props) {
    );
 }
 
-export default ProductModal;
+export default memo(ProductModal);

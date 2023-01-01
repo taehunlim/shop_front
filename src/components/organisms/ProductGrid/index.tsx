@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -20,9 +20,7 @@ function ProductGrid() {
    const dispatch = useDispatch();
 
    const [isShow, setIsShow] = useState<boolean>();
-   const [currentProduct, setCurrentProduct] = useState<ProductDataProps>(
-      products[0],
-   );
+   const [currentProduct, setCurrentProduct] = useState(products[0]);
 
    const addWishlist = useCallback(
       (product: ProductDataProps) => dispatch(addToWishlist(product)),
@@ -34,12 +32,20 @@ function ProductGrid() {
       [dispatch],
    );
 
-   const handleQuickView = useCallback(onQuickView, [products]);
+   const handleQuickView = useCallback(
+      (product: ProductDataProps) => {
+         setIsShow(true);
+         setCurrentProduct(product);
+      },
+      [products],
+   );
 
-   function onQuickView(product: ProductDataProps) {
-      setIsShow(true);
-      setCurrentProduct(product);
-   }
+   const isWished = useMemo(
+      () =>
+         !!wishlist.filter((wishlist) => wishlist.id === currentProduct.id)
+            .length,
+      [wishlist],
+   );
 
    return (
       <Container>
@@ -63,6 +69,8 @@ function ProductGrid() {
             show={isShow}
             onClose={setIsShow}
             product={currentProduct}
+            isWished={isWished}
+            onWish={isWished ? deleteWishlist : addWishlist}
          />
       </Container>
    );
