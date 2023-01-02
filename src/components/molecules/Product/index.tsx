@@ -31,16 +31,19 @@ export interface ProductProps {
    onQuickView: (product: ProductDataProps) => void;
 }
 
+export const getDiscountPrice = (
+   price: number,
+   discount: number,
+): PriceType => {
+   const discountedPrice = (price - price * (discount / 100)).toFixed(
+      2,
+   ) as PriceType;
+
+   return discount && discount > 0 ? discountedPrice : null;
+};
+
 function Product({ product, isWished, onWish, onQuickView }: ProductProps) {
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
-
-   const getDiscountPrice = (price: number, discount: number): PriceType => {
-      const discountedPrice = (price - price * (discount / 100)).toFixed(
-         2,
-      ) as PriceType;
-
-      return discount && discount > 0 ? discountedPrice : null;
-   };
 
    const discountedPrice = getDiscountPrice(price, discount);
    const productPrice = price.toFixed(2);

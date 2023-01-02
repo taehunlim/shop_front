@@ -3,8 +3,12 @@ import React, { memo } from 'react';
 import Button from 'components/atoms/Button';
 import IconButton from 'components/molecules/IconButton';
 import Modal, { ModalProps } from 'components/molecules/Modal';
-import { ProductDataProps } from 'components/molecules/Product';
+import {
+   getDiscountPrice,
+   ProductDataProps,
+} from 'components/molecules/Product';
 
+import { Price } from 'components/molecules/Product/style';
 import {
    Container,
    Content,
@@ -20,6 +24,9 @@ interface Props extends ModalProps {
 }
 
 function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
+   const { price, discount } = product;
+   const discountedPrice = getDiscountPrice(price, discount);
+
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
          <Container>
@@ -29,7 +36,9 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
             <Content>
                <h2>{product.name}</h2>
                <TextWrapper>
-                  <span>${product.price}</span>
+                  <Price discountedPrice={discountedPrice}>
+                     ${product.price}
+                  </Price>
                </TextWrapper>
                <p>{product.fullDescription}</p>
                <ButtonContainer>
