@@ -25,6 +25,12 @@ export default function cartReducer(
             cart: [...state.cart, action.payload],
          };
 
+      case ActionType.DELETE_FROM_CART:
+         return {
+            ...state,
+            cart: state.cart.filter((cart) => cart !== action.payload),
+         };
+
       default:
          return state;
    }

@@ -1,5 +1,4 @@
 import { ProductProps } from 'redux/actions/wishlistActions';
-
 import ActionType from 'redux/actions/types';
 
 interface InitialState {

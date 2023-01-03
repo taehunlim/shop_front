@@ -2,7 +2,7 @@ import React, { memo, useMemo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useTypedSelector from 'hooks/useTypedSelector';
-import { addToCart } from 'redux/actions/cartActions';
+import { addToCart, deleteFromCart } from 'redux/actions/cartActions';
 
 import Button from 'components/atoms/Button';
 import IconButton from 'components/molecules/IconButton';
@@ -40,8 +40,13 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
 
    const isAdded = !!cart.filter((c) => c.id === product.id)[0];
 
-   const addCart = useCallback(
+   const addProductToCart = useCallback(
       (product: ProductDataProps) => dispatch(addToCart(product)),
+      [dispatch],
+   );
+
+   const deleteProductFromCart = useCallback(
+      (product: ProductDataProps) => dispatch(deleteFromCart(product)),
       [dispatch],
    );
 
@@ -65,7 +70,15 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
                </TextWrapper>
                <p>{product.fullDescription}</p>
                <ButtonContainer>
-                  <Button height={39} primary onClick={() => addCart(product)}>
+                  <Button
+                     height={39}
+                     primary
+                     onClick={() =>
+                        isAdded
+                           ? deleteProductFromCart(product)
+                           : addProductToCart(product)
+                     }
+                  >
                      {isAdded ? 'DELETE FROM CART' : 'ADD TO CART'}
                   </Button>
                   <IconButton

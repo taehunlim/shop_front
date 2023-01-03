@@ -9,3 +9,10 @@ export function addToCart(item: ProductProps) {
       payload: item,
    };
 }
+
+export function deleteFromCart(item: ProductProps) {
+   return {
+      type: ActionType.DELETE_FROM_CART,
+      payload: item,
+   };
+}
