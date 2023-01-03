@@ -6,16 +6,16 @@ interface InitialState {
    wishlist: ProductProps[];
 }
 
-type Action = {
+interface Action {
    type: ActionType;
    payload: any;
-};
+}
 
 const initialState = {
    wishlist: [],
 };
 
-export default function Reducer(
+export default function wishlistReducer(
    state: InitialState = initialState,
    action: Action,
 ) {

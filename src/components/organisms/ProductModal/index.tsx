@@ -1,4 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+
+import useTypedSelector from 'hooks/useTypedSelector';
+import { addToCart } from 'redux/actions/cartActions';
 
 import Button from 'components/atoms/Button';
 import IconButton from 'components/molecules/IconButton';
@@ -26,8 +30,18 @@ interface Props extends ModalProps {
 }
 
 function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
+   const cart = useTypedSelector((state) => state.cartReducer.cart);
+   const dispatch = useDispatch();
+
    const { price, discount } = product;
    const discountedPrice = getDiscountPrice(price, discount);
+
+   const isAdded = !!cart.filter((c) => c.id === product.id)[0];
+
+   const addCart = useCallback(
+      (product: ProductDataProps) => dispatch(addToCart(product)),
+      [dispatch],
+   );
 
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
@@ -39,7 +53,7 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
                   </ImgWrapper>
                ))}
             </Slide>
-            {/* <img src={product.thumbImage[0]} alt={`${product.name} img`} /> */}
+
             <Content>
                <h2>{product.name}</h2>
                <TextWrapper>
@@ -49,8 +63,8 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
                </TextWrapper>
                <p>{product.fullDescription}</p>
                <ButtonContainer>
-                  <Button height={39} primary>
-                     ADD TO CART
+                  <Button height={39} primary onClick={() => addCart(product)}>
+                     {isAdded ? 'DELETE FROM CART' : 'ADD TO CART'}
                   </Button>
                   <IconButton
                      icon={isWished ? 'heart-solid' : 'heart'}
