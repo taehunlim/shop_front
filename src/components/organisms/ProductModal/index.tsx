@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useTypedSelector from 'hooks/useTypedSelector';
@@ -9,10 +9,9 @@ import IconButton from 'components/molecules/IconButton';
 import Modal, { ModalProps } from 'components/molecules/Modal';
 import Slide from 'components/molecules/Slide';
 
-import {
-   getDiscountPrice,
-   ProductDataProps,
-} from 'components/molecules/Product';
+import { ProductDataProps } from 'components/molecules/Product';
+
+import { getDiscountPrice } from 'utils/getDiscountPrice';
 
 import { Price } from 'components/molecules/Product/style';
 import {
@@ -34,7 +33,10 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
    const dispatch = useDispatch();
 
    const { price, discount } = product;
-   const discountedPrice = getDiscountPrice(price, discount);
+   const discountedPrice = useMemo(
+      () => getDiscountPrice(price, discount),
+      [product],
+   );
 
    const isAdded = !!cart.filter((c) => c.id === product.id)[0];
 

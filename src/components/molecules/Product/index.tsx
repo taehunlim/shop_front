@@ -1,7 +1,9 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
 import IconButton from 'components/molecules/IconButton';
+
+import { getDiscountPrice } from 'utils/getDiscountPrice';
 
 import { products } from 'fixtures/products';
 
@@ -16,10 +18,7 @@ import {
    Price,
    BadgeContainer,
    Badge,
-   PriceType,
 } from './style';
-
-export type { PriceType };
 
 export type ProductDataProps = typeof products[0];
 
@@ -31,21 +30,13 @@ export interface ProductProps {
    onQuickView: (product: ProductDataProps) => void;
 }
 
-export const getDiscountPrice = (
-   price: number,
-   discount: number,
-): PriceType => {
-   const discountedPrice = (price - price * (discount / 100)).toFixed(
-      2,
-   ) as PriceType;
-
-   return discount && discount > 0 ? discountedPrice : null;
-};
-
 function Product({ product, isWished, onWish, onQuickView }: ProductProps) {
    const { new: isNew, stock, price, discount, thumbImage, name } = product;
 
-   const discountedPrice = getDiscountPrice(price, discount);
+   const discountedPrice = useMemo(
+      () => getDiscountPrice(price, discount),
+      [product],
+   );
    const productPrice = price.toFixed(2);
 
    return (
