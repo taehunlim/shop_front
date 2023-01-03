@@ -3,6 +3,8 @@ import React, { memo } from 'react';
 import Button from 'components/atoms/Button';
 import IconButton from 'components/molecules/IconButton';
 import Modal, { ModalProps } from 'components/molecules/Modal';
+import Slide from 'components/molecules/Slide';
+
 import {
    getDiscountPrice,
    ProductDataProps,
@@ -30,9 +32,14 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
          <Container>
-            <ImgWrapper>
-               <img src={product.thumbImage[0]} alt={`${product.name} img`} />
-            </ImgWrapper>
+            <Slide>
+               {product.image.map((img, i) => (
+                  <ImgWrapper key={i}>
+                     <img src={img} alt={`${product.name} img ${i + 1}`} />
+                  </ImgWrapper>
+               ))}
+            </Slide>
+            {/* <img src={product.thumbImage[0]} alt={`${product.name} img`} /> */}
             <Content>
                <h2>{product.name}</h2>
                <TextWrapper>
