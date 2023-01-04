@@ -76,6 +76,10 @@ const IconContainer = styled.div`
    button,
    a {
       padding: 0;
+
+      span {
+         pointer-events: none;
+      }
    }
 `;
 

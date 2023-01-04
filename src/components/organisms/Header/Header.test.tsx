@@ -20,13 +20,9 @@ describe('Header Component', () => {
       const Buttons = getAllByRole('button');
       const [SearchButton, UserButton, WishButton, CartButton] = Buttons;
 
-      const SearchModal = getByTestId('search-modal');
-      const WishModal = getByTestId('wish-modal');
-      const CartModal = getByTestId('cart-modal');
+      const Modal = getByTestId('header-modal');
 
-      const SearchCloseButton = SearchModal.querySelectorAll('button')[0];
-      const WishCloseButton = WishModal.querySelectorAll('button')[0];
-      const CartCloseButton = CartModal.querySelectorAll('button')[0];
+      const CartCloseButton = Modal.querySelectorAll('button')[0];
 
       const clickLogo = () => fireEvent.click(Logo);
       const clickSearchButton = () => fireEvent.click(SearchButton);
@@ -34,8 +30,6 @@ describe('Header Component', () => {
       const clickWishButton = () => fireEvent.click(WishButton);
       const clickCartButton = () => fireEvent.click(CartButton);
 
-      const clickSearchCloseButton = () => fireEvent.click(SearchCloseButton);
-      const clickWishCloseButton = () => fireEvent.click(WishCloseButton);
       const clickCartCloseButton = () => fireEvent.click(CartCloseButton);
 
       return {
@@ -46,17 +40,14 @@ describe('Header Component', () => {
          WishButton,
          CartButton,
 
-         SearchModal,
-         WishModal,
-         CartModal,
+         Modal,
 
          clickLogo,
          clickSearchButton,
          clickUserButton,
          clickWishButton,
          clickCartButton,
-         clickSearchCloseButton,
-         clickWishCloseButton,
+
          clickCartCloseButton,
       };
    };
@@ -75,38 +66,26 @@ describe('Header Component', () => {
 
    it('Button click test', () => {
       const {
-         SearchModal,
-         WishModal,
-         CartModal,
+         Modal,
 
          clickSearchButton,
          clickWishButton,
          clickCartButton,
 
-         clickSearchCloseButton,
-         clickWishCloseButton,
          clickCartCloseButton,
       } = getComponent();
 
-      expect(SearchModal).not.toBeVisible();
-      expect(WishModal).not.toBeVisible();
-      expect(CartModal).not.toBeVisible();
+      expect(Modal).not.toBeVisible();
 
       clickSearchButton();
       clickWishButton();
       clickCartButton();
 
-      expect(SearchModal).toBeVisible();
-      expect(WishModal).toBeVisible();
-      expect(CartModal).toBeVisible();
+      expect(Modal).toBeVisible();
 
-      clickSearchCloseButton();
-      clickWishCloseButton();
       clickCartCloseButton();
 
-      expect(SearchModal).not.toBeVisible();
-      expect(WishModal).not.toBeVisible();
-      expect(CartModal).not.toBeVisible();
+      expect(Modal).not.toBeVisible();
    });
 
    it('scroll test', () => {

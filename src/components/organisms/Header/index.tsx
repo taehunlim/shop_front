@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 import Icon from 'components/atoms/Icon';
@@ -13,10 +13,8 @@ function Header() {
    const ref = useRef<HTMLHeadElement>(null);
    const [isSticky, setIsSticky] = useState(false);
 
-   const [isSearchShow, setIsSearchShow] = useState<boolean>();
-
-   const [isWishShow, setIsWishShow] = useState<boolean>();
-   const [isCartShow, setIsCartShow] = useState<boolean>();
+   const [isShow, setIsShow] = useState<boolean>();
+   const [modalTitle, setModalTitle] = useState('');
 
    useBrowserEvent('scroll', handleScroll);
 
@@ -27,6 +25,13 @@ function Header() {
          return setIsSticky(true);
       }
       return setIsSticky(false);
+   }
+
+   function handleModal(event: MouseEvent<HTMLButtonElement>) {
+      const { value } = event.target as HTMLButtonElement;
+
+      setIsShow(true);
+      setModalTitle(value);
    }
 
    return (
@@ -41,10 +46,7 @@ function Header() {
             <IconContainer>
                <ul>
                   <li>
-                     <button
-                        type="button"
-                        onClick={() => setIsSearchShow(true)}
-                     >
+                     <button type="button" value="Search" onClick={handleModal}>
                         <Icon icon="search" width={15} />
                      </button>
                   </li>
@@ -54,12 +56,16 @@ function Header() {
                      </button>
                   </li>
                   <li>
-                     <button type="button" onClick={() => setIsWishShow(true)}>
+                     <button
+                        type="button"
+                        value="Wishlist"
+                        onClick={handleModal}
+                     >
                         <Icon icon="heart" width={15} />
                      </button>
                   </li>
                   <li>
-                     <button type="button" onClick={() => setIsCartShow(true)}>
+                     <button type="button" value="Cart" onClick={handleModal}>
                         <Icon icon="cart" width={15} />
                      </button>
                   </li>
@@ -68,25 +74,10 @@ function Header() {
          </Container>
 
          <HeaderModal
-            data-testid="search-modal"
-            width="100%"
-            title="Search"
-            show={isSearchShow}
-            onClose={setIsSearchShow}
-         />
-
-         <HeaderModal
-            data-testid="wish-modal"
-            title="WishList"
-            show={isWishShow}
-            onClose={setIsWishShow}
-         />
-
-         <HeaderModal
-            data-testid="cart-modal"
-            title="Cart"
-            show={isCartShow}
-            onClose={setIsCartShow}
+            data-testid="header-modal"
+            title={modalTitle}
+            show={isShow}
+            onClose={setIsShow}
          />
       </StyledHeader>
    );
