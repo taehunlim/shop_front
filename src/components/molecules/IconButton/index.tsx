@@ -1,19 +1,16 @@
 import React from 'react';
 
 import { ButtonProps } from 'components/atoms/Button';
-import Icon from 'components/atoms/Icon';
+import Icon, { IconProps } from 'components/atoms/Icon';
 
 import { StyledButton, IconButtonProps } from './style';
 
-type Props = IconButtonProps &
-   ButtonProps & {
-      icon: string;
-   };
+type Props = IconButtonProps & ButtonProps & IconProps;
 
-function IconButton({ icon, ...props }: Props) {
+function IconButton({ icon, width, height, padding, ...props }: Props) {
    return (
-      <StyledButton {...props}>
-         <Icon icon={icon} />
+      <StyledButton {...props} padding={padding}>
+         <Icon icon={icon} width={width} height={height} />
       </StyledButton>
    );
 }

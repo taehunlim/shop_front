@@ -64,16 +64,19 @@ const LogoWrapper = styled.div`
 const IconContainer = styled.div`
    padding-left: 15px;
 
-   li {
-      display: inline-block;
-      margin-right: 30px;
+   ul {
+      display: flex;
 
-      :last-of-type {
-         margin-right: 0;
+      li {
+         display: inline-block;
+         margin-right: 30px;
+
+         :last-of-type {
+            margin-right: 0;
+         }
       }
    }
 
-   button,
    a {
       padding: 0;
 

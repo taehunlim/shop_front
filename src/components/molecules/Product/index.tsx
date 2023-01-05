@@ -55,16 +55,20 @@ function Product({ product, isWished, onWish, onQuickView }: ProductProps) {
          <ButtonContainer>
             <IconButton
                icon={isWished ? 'heart-solid' : 'heart'}
-               width={40}
-               height={40}
+               padding="10px 10px"
+               primary
+               width={20}
+               height={20}
                data-testid={isWished ? 'wished-button' : 'wish-button'}
                onClick={() => onWish(product)}
             />
 
             <IconButton
                icon="search"
-               width={40}
-               height={40}
+               padding="10px 10px"
+               primary
+               width={20}
+               height={20}
                data-testid="quick-view-button"
                onClick={() => onQuickView(product)}
             />

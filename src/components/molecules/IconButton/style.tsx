@@ -3,15 +3,24 @@ import styled from '@emotion/styled';
 import Button from 'components/atoms/Button';
 
 export interface IconButtonProps {
-   width?: number;
-   height?: number;
+   padding?: string;
 }
 
 const StyledButton = styled(Button)<IconButtonProps>`
-   width: ${({ width }) => width || 'auto'};
-   height: ${({ height }) => height || 'auto'};
-   padding: 0;
-   background-color: ${({ theme }) => theme.fg.white};
+   width: auto;
+   height: auto;
+   padding: ${({ padding }) => padding || 0};
+   border: none;
+
+   span {
+      pointer-events: none;
+   }
+
+   &:hover,
+   &:focus,
+   &:active {
+      border: none;
+   }
 `;
 
 export { StyledButton };

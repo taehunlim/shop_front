@@ -3,7 +3,7 @@ import styledComponent, { IconStyleProps } from './style';
 
 const { StyledIcon } = styledComponent;
 
-interface IconProps extends IconStyleProps {
+export interface IconProps extends IconStyleProps {
    icon?: string;
 }
 

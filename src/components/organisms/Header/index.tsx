@@ -2,6 +2,7 @@ import React, { useState, useRef, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 
 import Icon from 'components/atoms/Icon';
+import IconButton from 'components/molecules/IconButton';
 import { useBrowserEvent } from 'hooks/useBrowserEvent';
 
 import Navigation from '../Navigation';
@@ -51,23 +52,34 @@ function Header() {
                      </button>
                   </li>
                   <li>
-                     <button type="button">
-                        <Icon icon="user" width={15} />
-                     </button>
+                     <IconButton
+                        icon="user"
+                        width={15}
+                        height={15}
+                        type="button"
+                        value="User"
+                        onClick={handleModal}
+                     />
                   </li>
                   <li>
-                     <button
+                     <IconButton
+                        icon="heart"
+                        width={15}
+                        height={15}
                         type="button"
                         value="Wishlist"
                         onClick={handleModal}
-                     >
-                        <Icon icon="heart" width={15} />
-                     </button>
+                     />
                   </li>
                   <li>
-                     <button type="button" value="Cart" onClick={handleModal}>
-                        <Icon icon="cart" width={15} />
-                     </button>
+                     <IconButton
+                        icon="cart"
+                        width={15}
+                        height={15}
+                        type="button"
+                        value="Cart"
+                        onClick={handleModal}
+                     />
                   </li>
                </ul>
             </IconContainer>
