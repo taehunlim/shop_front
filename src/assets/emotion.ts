@@ -1,5 +1,13 @@
 import '@emotion/react';
 
+export const bootstrapColors = [
+   'primary',
+   'danger',
+   'complete',
+   'onGoing',
+   'etc',
+] as const;
+
 interface DeviceSizeProps {
    desktop: string;
    laptop: string;
@@ -14,21 +22,10 @@ interface DeviceProps {
    mobile: string;
 }
 
-interface BootstrapColorProps {
-   primary: string;
-   danger: string;
-   complete: string;
-   onGoing: string;
-   etc: string;
-}
-
-interface BootstrapColorProps {
-   primary: string;
-   danger: string;
-   complete: string;
-   onGoing: string;
-   etc: string;
-}
+type BootstrapColors = typeof bootstrapColors[number];
+export type BootstrapColorProps = {
+   [key in BootstrapColors]: string;
+};
 
 type FgProps = Fg & {
    [key in keyof Fg]: string;

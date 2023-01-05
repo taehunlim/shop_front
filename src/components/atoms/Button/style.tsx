@@ -1,15 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import { ThemeProps, BootstrapColorProps } from 'assets/emotion';
+
+import { bootstrapColors, ThemeProps } from 'assets/emotion';
 
 interface StyleProps extends React.ComponentProps<'button'> {
    height?: number;
 }
-
-type BootstrapColorKeys = keyof BootstrapColorProps;
-
-const colorList = ['primary', 'danger', 'complete', 'onGoing', 'etc'];
 
 const styles = ({
    height,
@@ -17,9 +14,9 @@ const styles = ({
    theme,
    ...props
 }: StyleProps & ThemeProps) => {
-   const selectedColor = colorList.find(
-      (color: BootstrapColorKeys) => color in props && color,
-   ) as BootstrapColorKeys;
+   const selectedColor = bootstrapColors.find(
+      (color) => color in props && color,
+   );
 
    const selectedBgColor = selectedColor
       ? theme.bg[selectedColor]
