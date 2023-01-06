@@ -1,12 +1,12 @@
-import React, { useState, useRef, MouseEvent } from 'react';
+import React, { useRef, useMemo, useState, MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 
-import Icon from 'components/atoms/Icon';
-import IconButton from 'components/molecules/IconButton';
+import useTypedSelector from 'hooks/useTypedSelector';
 import { useBrowserEvent } from 'hooks/useBrowserEvent';
 
-import Navigation from '../Navigation';
-import HeaderModal from '../HeaderModal';
+import IconButton from 'components/molecules/IconButton';
+import Navigation from 'components/organisms/Navigation';
+import HeaderModal from 'components/organisms/HeaderModal';
 
 import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
 
@@ -15,7 +15,15 @@ function Header() {
    const [isSticky, setIsSticky] = useState(false);
 
    const [isShow, setIsShow] = useState<boolean>();
-   const [modalTitle, setModalTitle] = useState('');
+   const [modalTitle, setModalTitle] = useState('Cart');
+
+   const { cart, wishlist } = useTypedSelector((state) => {
+      const { cartReducer, wishlistReducer } = state;
+      return {
+         cart: cartReducer.cart,
+         wishlist: wishlistReducer.wishlist,
+      };
+   });
 
    useBrowserEvent('scroll', handleScroll);
 
@@ -35,6 +43,20 @@ function Header() {
       setModalTitle(value);
    }
 
+   const getData = useMemo(() => {
+      const key = modalTitle.toLocaleLowerCase();
+
+      switch (key) {
+         case 'cart':
+            return cart;
+         case 'wishlist':
+            return wishlist;
+
+         default:
+            return [];
+      }
+   }, [cart, wishlist, modalTitle]);
+
    return (
       <StyledHeader data-testid="header" ref={ref} isSticky={isSticky}>
          <Container>
@@ -47,9 +69,14 @@ function Header() {
             <IconContainer>
                <ul>
                   <li>
-                     <button type="button" value="Search" onClick={handleModal}>
-                        <Icon icon="search" width={15} />
-                     </button>
+                     <IconButton
+                        icon="search"
+                        width={15}
+                        height={15}
+                        type="button"
+                        value="Search"
+                        onClick={handleModal}
+                     />
                   </li>
                   <li>
                      <IconButton
@@ -87,9 +114,10 @@ function Header() {
 
          <HeaderModal
             data-testid="header-modal"
-            title={modalTitle}
+            data={getData}
             show={isShow}
             onClose={setIsShow}
+            title={modalTitle}
          />
       </StyledHeader>
    );

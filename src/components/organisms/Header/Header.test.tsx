@@ -5,7 +5,22 @@ import { renderWithRouter } from 'utils/tests/renderWithRouter';
 import EmotionProvider from 'assets/EmotionProvider';
 import Header from '.';
 
+import useTypedSelector from 'hooks/useTypedSelector';
+
+import MockedFunction = jest.MockedFunction;
+
 describe('Header Component', () => {
+   const _useSelector = useTypedSelector as MockedFunction<
+      typeof useTypedSelector
+   >;
+
+   _useSelector.mockImplementation((selector) =>
+      selector({
+         cartReducer: { cart: [] },
+         wishlistReducer: { wishlist: [] },
+      }),
+   );
+
    const getComponent = () => {
       const { getAllByRole, getByTestId } = renderWithRouter(
          <EmotionProvider>
