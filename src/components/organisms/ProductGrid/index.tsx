@@ -44,7 +44,7 @@ function ProductGrid() {
       () =>
          !!wishlist.filter((wishlist) => wishlist.id === currentProduct.id)
             .length,
-      [wishlist],
+      [wishlist, isShow],
    );
 
    return (
