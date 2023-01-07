@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import useTypedSelector from 'hooks/useTypedSelector';
 import { useBrowserEvent } from 'hooks/useBrowserEvent';
 
+import Badge from 'components/atoms/Badge';
 import IconButton from 'components/molecules/IconButton';
 import Navigation from 'components/organisms/Navigation';
 import HeaderModal from 'components/organisms/HeaderModal';
@@ -71,8 +72,8 @@ function Header() {
                   <li>
                      <IconButton
                         icon="search"
-                        width={15}
-                        height={15}
+                        width={20}
+                        height={20}
                         type="button"
                         value="Search"
                         onClick={handleModal}
@@ -81,32 +82,36 @@ function Header() {
                   <li>
                      <IconButton
                         icon="user"
-                        width={15}
-                        height={15}
+                        width={20}
+                        height={20}
                         type="button"
                         value="User"
                         onClick={handleModal}
                      />
                   </li>
                   <li>
-                     <IconButton
-                        icon="heart"
-                        width={15}
-                        height={15}
-                        type="button"
-                        value="Wishlist"
-                        onClick={handleModal}
-                     />
+                     <Badge count={wishlist.length}>
+                        <IconButton
+                           icon="heart"
+                           width={20}
+                           height={20}
+                           type="button"
+                           value="Wishlist"
+                           onClick={handleModal}
+                        />
+                     </Badge>
                   </li>
                   <li>
-                     <IconButton
-                        icon="cart"
-                        width={15}
-                        height={15}
-                        type="button"
-                        value="Cart"
-                        onClick={handleModal}
-                     />
+                     <Badge count={cart.length}>
+                        <IconButton
+                           icon="cart"
+                           width={20}
+                           height={20}
+                           type="button"
+                           value="Cart"
+                           onClick={handleModal}
+                        />
+                     </Badge>
                   </li>
                </ul>
             </IconContainer>
