@@ -15,4 +15,25 @@ const Title = styled.h3`
    border-bottom: 1px solid #eeeeee;
 `;
 
-export { Container, Title };
+const ProductContainer = styled.div`
+   display: grid;
+   grid-template-columns: 0.3fr 1fr;
+   gap: 15px;
+
+   padding-bottom: 25px;
+   margin-bottom: 25px;
+
+   border-bottom: 1px solid #eeeeee;
+`;
+
+const ProductContent = styled.div`
+   p {
+      font-size: 14px;
+
+      span {
+         color: ${({ theme }) => theme.fg.gray};
+      }
+   }
+`;
+
+export { Container, Title, ProductContainer, ProductContent };
