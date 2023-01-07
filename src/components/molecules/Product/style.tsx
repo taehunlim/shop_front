@@ -18,21 +18,6 @@ function getColor({ theme, type }: BadgeProps & ThemeProps) {
    return newColor;
 }
 
-const ProductImgWrapper = styled.div`
-   position: relative;
-   width: 100%;
-   padding-top: ${(100 * 4) / 3}%;
-
-   img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      object-fit: contain;
-      height: auto;
-   }
-`;
-
 const ButtonContainer = styled.div`
    display: inline-grid;
    gap: 5px;
@@ -173,7 +158,6 @@ const Container = styled.div`
 
 export {
    Container,
-   ProductImgWrapper,
    ButtonContainer,
    Content,
    ContentTitle,

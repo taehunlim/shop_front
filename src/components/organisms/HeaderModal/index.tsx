@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 
+import { ProductImgWrapper } from 'components/atoms/Images';
 import Modal, { ModalProps } from 'components/molecules/Modal';
-import Product from 'components/molecules/Product';
 
 import { products } from 'fixtures/products';
 
@@ -25,13 +25,9 @@ function HeaderModal({ data, title, show, onClose, width, ...props }: Props) {
             <Title>{title}</Title>
             {data?.length ? (
                data.map((product) => (
-                  <Product
-                     key={product.id}
-                     product={product}
-                     isWished
-                     onQuickView={console.log}
-                     onWish={console.log}
-                  />
+                  <ProductImgWrapper key={product.id}>
+                     <img src={product.thumbImage[0]} alt={product.name} />
+                  </ProductImgWrapper>
                ))
             ) : (
                <span>No Items found in {title.toLowerCase()}</span>

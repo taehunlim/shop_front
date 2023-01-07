@@ -24,21 +24,6 @@ const Content = styled.div`
    }
 `;
 
-const ImgWrapper = styled.div`
-   position: relative;
-   width: 100%;
-   padding-top: ${(100 * 4) / 3}%;
-
-   img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      object-fit: contain;
-      height: auto;
-   }
-`;
-
 const TextWrapper = styled.div`
    margin-bottom: 20px;
 
@@ -54,4 +39,4 @@ const ButtonContainer = styled.div`
    gap: 10px;
 `;
 
-export { Container, Content, ImgWrapper, TextWrapper, ButtonContainer };
+export { Container, Content, TextWrapper, ButtonContainer };

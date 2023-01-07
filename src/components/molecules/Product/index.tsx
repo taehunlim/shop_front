@@ -1,6 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
+import { ProductImgWrapper } from 'components/atoms/Images';
 import IconButton from 'components/molecules/IconButton';
 
 import { getDiscountPrice } from 'utils/getDiscountPrice';
@@ -9,7 +10,6 @@ import { products } from 'fixtures/products';
 
 import {
    Container,
-   ProductImgWrapper,
    ButtonContainer,
    Content,
    ContentTitle,
