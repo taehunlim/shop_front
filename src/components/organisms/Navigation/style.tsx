@@ -47,26 +47,32 @@ const menuStyles = ({ theme }: ThemeProps) => css`
 `;
 
 const lineStyles = ({ theme }: ThemeProps) => css`
-   position: relative;
-   ::after {
-      content: '';
-      position: absolute;
+   > li {
+      > a {
+         position: relative;
+         ::after {
+            content: '';
+            position: absolute;
 
-      left: auto;
-      right: 0;
-      bottom: 0;
-      width: 0;
-      height: 1px;
+            left: auto;
+            right: 0;
+            bottom: 0;
+            width: 0;
+            height: 1px;
 
-      transition: 0.3s;
+            transition: 0.3s;
 
-      background-color: ${theme.fg.white};
-   }
+            background-color: ${theme.fg.white};
+         }
+      }
 
-   :hover {
-      ::after {
-         left: 0;
-         width: 100%;
+      :hover {
+         > a {
+            ::after {
+               left: 0;
+               width: 100%;
+            }
+         }
       }
    }
 `;
@@ -82,10 +88,9 @@ const ThirdMenu = styled.ul`
    top: 0;
    left: 100%;
 
+   ${lineStyles};
+
    > li {
-      > a {
-         ${lineStyles};
-      }
       :hover {
          > a {
             color: ${({ theme }) => theme.fg.white};
@@ -100,10 +105,9 @@ const SubMenu = styled.ul`
    transform: scaleY(0);
    left: -37px;
 
+   ${lineStyles};
+
    > li {
-      > a {
-         ${lineStyles};
-      }
       :hover {
          ${ThirdMenu} {
             visibility: visible;
@@ -123,13 +127,14 @@ const Menu = styled.ul`
    padding: 0;
    list-style: outside none none;
 
+   ${lineStyles};
+
    > li {
       position: relative;
       display: inline-block;
       margin-right: 50px;
 
       > a {
-         ${lineStyles};
          line-height: 80px;
 
          font-weight: 500;
