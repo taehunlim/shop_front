@@ -16,7 +16,7 @@ describe('HeaderModal Component', () => {
                title={title}
                width={width}
                show={show}
-               onClose={() => onClick(false)}
+               onClose={onClick}
             />
          </EmotionProvider>,
       );

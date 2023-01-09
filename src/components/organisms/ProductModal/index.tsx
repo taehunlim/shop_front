@@ -47,7 +47,7 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
 
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
-         <Container>
+         <Container data-testid="container">
             <Slide>
                {product.image.map((img, i) => (
                   <ProductImgWrapper key={i}>
@@ -77,6 +77,7 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
                      {isAdded ? 'DELETE FROM CART' : 'ADD TO CART'}
                   </Button>
                   <IconButton
+                     data-testid={isWished ? 'wished-button' : 'wish-button'}
                      icon={isWished ? 'heart-solid' : 'heart'}
                      width={40}
                      height={40}
