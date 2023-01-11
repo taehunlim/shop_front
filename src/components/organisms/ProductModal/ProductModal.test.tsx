@@ -2,7 +2,12 @@ import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import { useDispatch } from 'react-redux';
 
-import { ADD_TO_CART, DELETE_FROM_CART } from 'redux/actions/types';
+import {
+   ADD_TO_CART,
+   ADD_TO_WISHLIST,
+   DELETE_FROM_CART,
+   DELETE_FROM_WISHLIST,
+} from 'redux/actions/types';
 
 import useTypedSelector from 'hooks/useTypedSelector';
 
@@ -13,10 +18,6 @@ import { products } from 'fixtures/products';
 import ProductModal from '.';
 
 import MockedFunction = jest.MockedFunction;
-
-interface Props {
-   isWished?: boolean;
-}
 
 describe('ProductModal test', () => {
    beforeEach(() => {
@@ -47,18 +48,11 @@ describe('ProductModal test', () => {
    );
 
    const onShow = jest.fn();
-   const onWish = jest.fn();
 
-   const getComponent = ({ isWished = false }: Props) => {
+   const getComponent = () => {
       const result = render(
          <EmotionProvider>
-            <ProductModal
-               show={true}
-               onClose={onShow}
-               product={product}
-               isWished={isWished}
-               onWish={onWish}
-            />
+            <ProductModal show={true} onClose={onShow} product={product} />
          </EmotionProvider>,
       );
 
@@ -111,9 +105,7 @@ describe('ProductModal test', () => {
             Description,
             CartButton,
             WishlistButton,
-         } = getComponent({
-            isWished: false,
-         });
+         } = getComponent();
 
          expect(Images).toHaveLength(product.image.length);
          expect(ProductName).toBeInTheDocument();
@@ -124,9 +116,7 @@ describe('ProductModal test', () => {
       });
       it('not added to cart, wishlist', () => {
          const { CartButton, WishlistButton, AddToCart, AddToWishlist } =
-            getComponent({
-               isWished: false,
-            });
+            getComponent();
 
          expect(CartButton).toBeInTheDocument();
          expect(WishlistButton).toBeInTheDocument();
@@ -139,7 +129,7 @@ describe('ProductModal test', () => {
          _useSelector.mockImplementation((selector) =>
             selector({
                cartReducer: { cart: [product] },
-               wishlistReducer: { wishlist: [] },
+               wishlistReducer: { wishlist: [product] },
             }),
          );
 
@@ -148,9 +138,7 @@ describe('ProductModal test', () => {
             WishlistButton,
             DeleteFromCart,
             DeleteFromWishlist,
-         } = getComponent({
-            isWished: true,
-         });
+         } = getComponent();
 
          expect(CartButton).toBeInTheDocument();
          expect(WishlistButton).toBeInTheDocument();
@@ -162,7 +150,7 @@ describe('ProductModal test', () => {
 
    describe('cart redux test', () => {
       it('add product to cart', () => {
-         const { clickCartButton } = getComponent({});
+         const { clickCartButton } = getComponent();
 
          clickCartButton();
 
@@ -180,7 +168,7 @@ describe('ProductModal test', () => {
             }),
          );
 
-         const { clickCartButton } = getComponent({});
+         const { clickCartButton } = getComponent();
 
          clickCartButton();
 
@@ -191,10 +179,34 @@ describe('ProductModal test', () => {
       });
    });
 
-   it('onWish test', () => {
-      const { clickWishlistButton } = getComponent({});
+   describe('wishlist redux test', () => {
+      it('add product to wishlist', () => {
+         const { clickWishlistButton } = getComponent();
 
-      clickWishlistButton();
-      expect(onWish).toBeCalledWith(product);
+         clickWishlistButton();
+
+         expect(dispatch).toBeCalledWith({
+            type: ADD_TO_WISHLIST,
+            payload: product,
+         });
+      });
+
+      it('delete product from wishlist', () => {
+         _useSelector.mockImplementation((selector) =>
+            selector({
+               cartReducer: { cart: [] },
+               wishlistReducer: { wishlist: [product] },
+            }),
+         );
+
+         const { clickWishlistButton } = getComponent();
+
+         clickWishlistButton();
+
+         expect(dispatch).toBeCalledWith({
+            type: DELETE_FROM_WISHLIST,
+            payload: product,
+         });
+      });
    });
 });

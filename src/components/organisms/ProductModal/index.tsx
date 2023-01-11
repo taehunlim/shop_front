@@ -3,6 +3,10 @@ import { useDispatch } from 'react-redux';
 
 import useTypedSelector from 'hooks/useTypedSelector';
 import { addToCart, deleteFromCart } from 'redux/actions/cartActions';
+import {
+   addToWishlist,
+   deleteFromWishlist,
+} from 'redux/actions/wishlistActions';
 
 import Button from 'components/atoms/Button';
 import { ProductImgWrapper } from 'components/atoms/Images';
@@ -19,12 +23,16 @@ import { Container, Content, TextWrapper, ButtonContainer } from './style';
 
 interface Props extends ModalProps {
    product: ProductDataProps;
-   isWished: boolean;
-   onWish: (product: ProductDataProps) => void;
 }
 
-function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
-   const cart = useTypedSelector((state) => state.cartReducer.cart);
+function ProductModal({ show, onClose, product }: Props) {
+   const { cart, wishlist } = useTypedSelector((state) => {
+      const { cartReducer, wishlistReducer } = state;
+      return {
+         cart: cartReducer.cart,
+         wishlist: wishlistReducer.wishlist,
+      };
+   });
    const dispatch = useDispatch();
 
    const { price, discount } = product;
@@ -44,6 +52,19 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
       (product: ProductDataProps) => dispatch(deleteFromCart(product)),
       [dispatch],
    );
+
+   const addProductToWishlist = useCallback(
+      (product: ProductDataProps) => dispatch(addToWishlist(product)),
+      [dispatch],
+   );
+
+   const deleteProductFromWishlist = useCallback(
+      (product: ProductDataProps) => dispatch(deleteFromWishlist(product)),
+      [dispatch],
+   );
+
+   const isWished = !!wishlist.filter((wishlist) => wishlist.id === product.id)
+      .length;
 
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
@@ -81,7 +102,11 @@ function ProductModal({ show, onClose, product, isWished, onWish }: Props) {
                      icon={isWished ? 'heart-solid' : 'heart'}
                      width={40}
                      height={40}
-                     onClick={() => onWish(product)}
+                     onClick={() =>
+                        isWished
+                           ? deleteProductFromWishlist(product)
+                           : addProductToWishlist(product)
+                     }
                   />
                </ButtonContainer>
             </Content>

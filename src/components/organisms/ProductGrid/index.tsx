@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -40,13 +40,6 @@ function ProductGrid() {
       [products],
    );
 
-   const isWished = useMemo(
-      () =>
-         !!wishlist.filter((wishlist) => wishlist.id === currentProduct.id)
-            .length,
-      [wishlist, isShow],
-   );
-
    return (
       <Container>
          {products.map((product) => {
@@ -69,8 +62,6 @@ function ProductGrid() {
             show={isShow}
             onClose={setIsShow}
             product={currentProduct}
-            isWished={isWished}
-            onWish={isWished ? deleteWishlist : addWishlist}
          />
       </Container>
    );
