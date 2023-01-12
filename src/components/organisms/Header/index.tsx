@@ -1,4 +1,10 @@
-import React, { useRef, useState, MouseEvent, useCallback } from 'react';
+import React, {
+   useRef,
+   useState,
+   MouseEvent,
+   useCallback,
+   useMemo,
+} from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -31,8 +37,6 @@ function Header() {
       };
    });
 
-   useBrowserEvent('scroll', handleScroll);
-
    const deleteProductFromWishlist = useCallback(
       (product: ProductDataProps) => dispatch(deleteFromWishlist(product)),
       [dispatch],
@@ -42,23 +46,17 @@ function Header() {
       [dispatch],
    );
 
-   function handleScroll() {
+   const handleScroll = useCallback(() => {
       const headerHeight = (ref.current as HTMLHeadElement).offsetHeight;
 
       if (window.scrollY > headerHeight) {
          return setIsSticky(true);
       }
+
       return setIsSticky(false);
-   }
+   }, []);
 
-   function handleModal(event: MouseEvent<HTMLButtonElement>) {
-      const { value } = event.target as HTMLButtonElement;
-
-      setIsShow(true);
-      setModalTitle(value);
-   }
-
-   const getData = () => {
+   const getData = useMemo(() => {
       switch (modalTitle) {
          case 'Wishlist':
             return wishlist;
@@ -67,7 +65,16 @@ function Header() {
          default:
             return [];
       }
-   };
+   }, [wishlist, cart, modalTitle]);
+
+   useBrowserEvent('scroll', handleScroll);
+
+   function handleModal(event: MouseEvent<HTMLButtonElement>) {
+      const { value } = event.target as HTMLButtonElement;
+
+      setIsShow(true);
+      setModalTitle(value);
+   }
 
    function handleDelete(product: ProductDataProps) {
       switch (modalTitle) {
@@ -142,7 +149,7 @@ function Header() {
          <HeaderModal
             data-testid="header-modal"
             title={modalTitle}
-            data={getData()}
+            data={getData}
             show={isShow}
             onClose={setIsShow}
             onDelete={handleDelete}
