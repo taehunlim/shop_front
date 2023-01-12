@@ -1,6 +1,9 @@
-import React, { useRef, useMemo, useState, MouseEvent } from 'react';
+import React, { useRef, useState, MouseEvent, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { deleteFromWishlist } from 'redux/actions/wishlistActions';
+import { deleteFromCart } from 'redux/actions/cartActions';
 import useTypedSelector from 'hooks/useTypedSelector';
 import { useBrowserEvent } from 'hooks/useBrowserEvent';
 
@@ -9,9 +12,11 @@ import IconButton from 'components/molecules/IconButton';
 import Navigation from 'components/organisms/Navigation';
 import HeaderModal from 'components/organisms/HeaderModal';
 
+import { ProductDataProps } from 'components/molecules/Product';
 import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
 
 function Header() {
+   const dispatch = useDispatch();
    const ref = useRef<HTMLHeadElement>(null);
    const [isSticky, setIsSticky] = useState(false);
 
@@ -27,6 +32,15 @@ function Header() {
    });
 
    useBrowserEvent('scroll', handleScroll);
+
+   const deleteProductFromWishlist = useCallback(
+      (product: ProductDataProps) => dispatch(deleteFromWishlist(product)),
+      [dispatch],
+   );
+   const deleteProductFromCart = useCallback(
+      (product: ProductDataProps) => dispatch(deleteFromCart(product)),
+      [dispatch],
+   );
 
    function handleScroll() {
       const headerHeight = (ref.current as HTMLHeadElement).offsetHeight;
@@ -44,19 +58,27 @@ function Header() {
       setModalTitle(value);
    }
 
-   const getData = useMemo(() => {
-      const key = modalTitle.toLocaleLowerCase();
-
-      switch (key) {
-         case 'cart':
-            return cart;
-         case 'wishlist':
+   const getData = () => {
+      switch (modalTitle) {
+         case 'Wishlist':
             return wishlist;
-
+         case 'Cart':
+            return cart;
          default:
             return [];
       }
-   }, [cart, wishlist, modalTitle]);
+   };
+
+   function handleDelete(product: ProductDataProps) {
+      switch (modalTitle) {
+         case 'Wishlist':
+            return deleteProductFromWishlist(product);
+         case 'Cart':
+            return deleteProductFromCart(product);
+         default:
+            return console.log('There is not product');
+      }
+   }
 
    return (
       <StyledHeader data-testid="header" ref={ref} isSticky={isSticky}>
@@ -119,10 +141,11 @@ function Header() {
 
          <HeaderModal
             data-testid="header-modal"
-            data={getData}
+            title={modalTitle}
+            data={getData()}
             show={isShow}
             onClose={setIsShow}
-            title={modalTitle}
+            onDelete={handleDelete}
          />
       </StyledHeader>
    );

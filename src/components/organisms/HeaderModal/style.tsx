@@ -16,6 +16,7 @@ const Title = styled.h3`
 `;
 
 const ProductContainer = styled.div`
+   position: relative;
    display: grid;
    grid-template-columns: 0.3fr 1fr;
    gap: 15px;
@@ -36,4 +37,13 @@ const ProductContent = styled.div`
    }
 `;
 
-export { Container, Title, ProductContainer, ProductContent };
+const DeleteButton = styled.button`
+   position: absolute;
+   z-index: 9;
+   right: 0;
+
+   cursor: pointer;
+   color: ${({ theme }) => theme.fg.black};
+`;
+
+export { Container, Title, ProductContainer, ProductContent, DeleteButton };
