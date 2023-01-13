@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
+import Input from 'components/atoms/Input';
 import { ProductImgWrapper } from 'components/atoms/Images';
 import { ProductDataProps } from 'components/molecules/Product';
 import Modal, { ModalProps } from 'components/molecules/Modal';
@@ -40,6 +41,11 @@ function HeaderModal({
       >
          <Container>
             <Title>{title}</Title>
+            {title === 'Search' && (
+               <div>
+                  <Input />
+               </div>
+            )}
             {data?.length ? (
                data.map((product) => (
                   <ProductContainer key={product.id}>
