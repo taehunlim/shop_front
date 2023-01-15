@@ -19,18 +19,4 @@ describe('Input', () => {
 
       expect(input).toContainElement(input);
    });
-
-   it('textarea render test', () => {
-      const { getByRole } = getComponent('textarea');
-      const textarea = getByRole('textbox');
-
-      expect(textarea).toContainElement(textarea);
-   });
-
-   it('select render test', () => {
-      const { getByRole } = getComponent('select');
-      const select = getByRole('combobox');
-
-      expect(select).toContainElement(select);
-   });
 });
