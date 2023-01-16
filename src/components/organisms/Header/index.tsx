@@ -20,6 +20,7 @@ import HeaderModal from 'components/organisms/HeaderModal';
 
 import { ProductDataProps } from 'components/molecules/Product';
 import { products } from 'fixtures/products';
+import useThrottle from 'hooks/useThrottle';
 import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
 
 function Header() {
@@ -59,9 +60,11 @@ function Header() {
       return setIsSticky(false);
    }, []);
 
+   const throttled = useThrottle(keyword);
+
    const fake = useMemo(
-      () => products.filter((product) => product.name.includes(keyword)),
-      [keyword],
+      () => products.filter((product) => product.name.includes(throttled)),
+      [throttled],
    );
 
    const getData = useMemo(() => {
@@ -75,7 +78,7 @@ function Header() {
          default:
             return [];
       }
-   }, [wishlist, cart, modalTitle, keyword]);
+   }, [wishlist, cart, modalTitle, throttled]);
 
    useBrowserEvent('scroll', handleScroll);
 
@@ -95,10 +98,6 @@ function Header() {
          default:
             return console.log('There is not product');
       }
-   }
-
-   function handleSearch(text: string) {
-      setKeyword(text);
    }
 
    return (
@@ -167,7 +166,7 @@ function Header() {
             show={isShow}
             onClose={setIsShow}
             onDelete={handleDelete}
-            onSearch={handleSearch}
+            onSearch={setKeyword}
          />
       </StyledHeader>
    );
