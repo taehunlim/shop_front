@@ -1,7 +1,6 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import Input from 'components/atoms/Input';
 import { ProductImgWrapper } from 'components/atoms/Images';
 import { ProductDataProps } from 'components/molecules/Product';
 import Modal, { ModalProps } from 'components/molecules/Modal';
@@ -14,12 +13,14 @@ import {
    ProductContainer,
    ProductContent,
    DeleteButton,
+   SearchInput,
 } from './style';
 
 interface Props extends ModalProps {
    data?: typeof products;
    title: string;
    onDelete?: (product: ProductDataProps) => void;
+   onSearch?: (keyword: string) => void;
 }
 
 function HeaderModal({
@@ -28,6 +29,7 @@ function HeaderModal({
    show,
    onClose,
    onDelete,
+   onSearch,
    width,
    ...props
 }: Props) {
@@ -43,17 +45,26 @@ function HeaderModal({
             <Title>{title}</Title>
             {title === 'Search' && (
                <div>
-                  <Input />
+                  <SearchInput
+                     type="text"
+                     placeholder="Search"
+                     onChange={({ target }) =>
+                        onSearch && onSearch(target.value)
+                     }
+                  />
                </div>
             )}
             {data?.length ? (
                data.map((product) => (
                   <ProductContainer key={product.id}>
-                     <DeleteButton
-                        onClick={() => onDelete && onDelete(product)}
-                     >
-                        ✕
-                     </DeleteButton>
+                     {title !== 'Search' && (
+                        <DeleteButton
+                           onClick={() => onDelete && onDelete(product)}
+                        >
+                           ✕
+                        </DeleteButton>
+                     )}
+
                      <ProductImgWrapper>
                         <Link to="/">
                            <img

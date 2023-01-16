@@ -19,15 +19,18 @@ import Navigation from 'components/organisms/Navigation';
 import HeaderModal from 'components/organisms/HeaderModal';
 
 import { ProductDataProps } from 'components/molecules/Product';
+import { products } from 'fixtures/products';
 import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
 
 function Header() {
    const dispatch = useDispatch();
-   const ref = useRef<HTMLHeadElement>(null);
-   const [isSticky, setIsSticky] = useState(false);
 
+   const ref = useRef<HTMLHeadElement>(null);
+
+   const [isSticky, setIsSticky] = useState(false);
    const [isShow, setIsShow] = useState<boolean>();
    const [modalTitle, setModalTitle] = useState('Cart');
+   const [keyword, setKeyword] = useState('');
 
    const { cart, wishlist } = useTypedSelector((state) => {
       const { cartReducer, wishlistReducer } = state;
@@ -56,16 +59,23 @@ function Header() {
       return setIsSticky(false);
    }, []);
 
+   const fake = useMemo(
+      () => products.filter((product) => product.name.includes(keyword)),
+      [keyword],
+   );
+
    const getData = useMemo(() => {
       switch (modalTitle) {
          case 'Wishlist':
             return wishlist;
          case 'Cart':
             return cart;
+         case 'Search':
+            return fake;
          default:
             return [];
       }
-   }, [wishlist, cart, modalTitle]);
+   }, [wishlist, cart, modalTitle, keyword]);
 
    useBrowserEvent('scroll', handleScroll);
 
@@ -85,6 +95,10 @@ function Header() {
          default:
             return console.log('There is not product');
       }
+   }
+
+   function handleSearch(text: string) {
+      setKeyword(text);
    }
 
    return (
@@ -153,6 +167,7 @@ function Header() {
             show={isShow}
             onClose={setIsShow}
             onDelete={handleDelete}
+            onSearch={handleSearch}
          />
       </StyledHeader>
    );

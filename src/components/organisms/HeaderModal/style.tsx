@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+import Input from 'components/atoms/Input';
+
 const Container = styled.div`
    padding: 20px;
    height: 100%;
@@ -46,4 +48,25 @@ const DeleteButton = styled.button`
    color: ${({ theme }) => theme.fg.black};
 `;
 
-export { Container, Title, ProductContainer, ProductContent, DeleteButton };
+const SearchInput = styled(Input)`
+   border: none;
+   border-bottom: 1px solid #272727;
+   border-radius: 0;
+
+   margin-bottom: 30px;
+
+   &:focus {
+      border: none;
+
+      border-bottom: 1px solid ${({ theme }) => theme.fg.primary};
+   }
+`;
+
+export {
+   Container,
+   Title,
+   ProductContainer,
+   ProductContent,
+   DeleteButton,
+   SearchInput,
+};
