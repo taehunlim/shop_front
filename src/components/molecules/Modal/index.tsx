@@ -23,6 +23,12 @@ function Modal({
 
    const showClass = show ? 'show' : isHidden;
 
+   if (show) {
+      document.body.style.overflow = 'hidden';
+   } else {
+      document.body.removeAttribute('style');
+   }
+
    return (
       <Container
          modalStyle={modalStyle}
