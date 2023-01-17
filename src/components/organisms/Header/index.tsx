@@ -27,11 +27,15 @@ function Header() {
    const dispatch = useDispatch();
 
    const ref = useRef<HTMLHeadElement>(null);
+   const scrollRef = useRef(false);
 
    const [isSticky, setIsSticky] = useState(false);
    const [isShow, setIsShow] = useState<boolean>();
    const [modalTitle, setModalTitle] = useState('Cart');
    const [keyword, setKeyword] = useState('');
+
+   useBrowserEvent('scroll', handleScroll);
+   const throttled = useThrottle(keyword);
 
    const { cart, wishlist } = useTypedSelector((state) => {
       const { cartReducer, wishlistReducer } = state;
@@ -49,18 +53,6 @@ function Header() {
       (product: ProductDataProps) => dispatch(deleteFromCart(product)),
       [dispatch],
    );
-
-   const handleScroll = useCallback(() => {
-      const headerHeight = (ref.current as HTMLHeadElement).offsetHeight;
-
-      if (window.scrollY > headerHeight) {
-         return setIsSticky(true);
-      }
-
-      return setIsSticky(false);
-   }, []);
-
-   const throttled = useThrottle(keyword);
 
    const fake = useMemo(
       () => products.filter((product) => product.name.includes(throttled)),
@@ -80,7 +72,20 @@ function Header() {
       }
    }, [wishlist, cart, modalTitle, throttled]);
 
-   useBrowserEvent('scroll', handleScroll);
+   function handleScroll() {
+      const { current } = scrollRef;
+      const headerHeight = (ref.current as HTMLHeadElement).offsetHeight;
+
+      if (window.scrollY > headerHeight && !current) {
+         scrollRef.current = true;
+         return setIsSticky(true);
+      }
+
+      if (window.scrollY <= headerHeight && current) {
+         scrollRef.current = false;
+         return setIsSticky(false);
+      }
+   }
 
    function handleModal(event: MouseEvent<HTMLButtonElement>) {
       const { value } = event.target as HTMLButtonElement;

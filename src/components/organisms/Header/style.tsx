@@ -33,9 +33,7 @@ const StyledHeader = styled.header<StyledHeaderProps>`
          return css`
             position: fixed;
             z-index: 999;
-            top: 0;
-            left: 0;
-            width: 100%;
+
             transition: all 0.3s;
             animation: 700ms ease-in-out 0s normal none 1 running ${fadeInDown};
             background-color: #fff;
