@@ -101,7 +101,6 @@ function Header() {
          case 'Cart':
             return deleteProductFromCart(product);
          default:
-            return console.log('There is not product');
       }
    }
 

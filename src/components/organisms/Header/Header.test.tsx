@@ -1,25 +1,38 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
+import { useDispatch } from 'react-redux';
 
-import { renderWithRouter } from 'utils/tests/renderWithRouter';
-import EmotionProvider from 'assets/EmotionProvider';
-import Header from '.';
+import { DELETE_FROM_CART, DELETE_FROM_WISHLIST } from 'redux/actions/types';
 
 import useTypedSelector from 'hooks/useTypedSelector';
+
+import { renderWithRouter } from 'utils/tests/renderWithRouter';
+
+import EmotionProvider from 'assets/EmotionProvider';
+
+import { products } from 'fixtures/products';
+
+import Header from '.';
 
 import MockedFunction = jest.MockedFunction;
 
 describe('Header Component', () => {
+   beforeEach(() => {
+      _useDispatch.mockImplementation(() => dispatch);
+      _useSelector.mockImplementation((selector) =>
+         selector({
+            cartReducer: { cart: products },
+            wishlistReducer: { wishlist: products },
+         }),
+      );
+   });
+
+   const dispatch = jest.fn();
+
+   const _useDispatch = useDispatch as MockedFunction<typeof useDispatch>;
    const _useSelector = useTypedSelector as MockedFunction<
       typeof useTypedSelector
    >;
-
-   _useSelector.mockImplementation((selector) =>
-      selector({
-         cartReducer: { cart: [] },
-         wishlistReducer: { wishlist: [] },
-      }),
-   );
 
    const getComponent = () => {
       const { getAllByRole, getByTestId } = renderWithRouter(
@@ -37,7 +50,9 @@ describe('Header Component', () => {
 
       const Modal = getByTestId('header-modal');
 
-      const CartCloseButton = Modal.querySelectorAll('button')[0];
+      const ModalButtons = Modal.querySelectorAll('button');
+      const CloseButton = ModalButtons[0];
+      const DeleteButton = ModalButtons[1];
 
       const clickLogo = () => fireEvent.click(Logo);
       const clickSearchButton = () => fireEvent.click(SearchButton);
@@ -45,7 +60,8 @@ describe('Header Component', () => {
       const clickWishButton = () => fireEvent.click(WishButton);
       const clickCartButton = () => fireEvent.click(CartButton);
 
-      const clickCartCloseButton = () => fireEvent.click(CartCloseButton);
+      const clickCloseButton = () => fireEvent.click(CloseButton);
+      const clickDeleteButton = () => fireEvent.click(DeleteButton);
 
       return {
          HeaderEl,
@@ -63,7 +79,8 @@ describe('Header Component', () => {
          clickWishButton,
          clickCartButton,
 
-         clickCartCloseButton,
+         clickCloseButton,
+         clickDeleteButton,
       };
    };
 
@@ -87,7 +104,7 @@ describe('Header Component', () => {
          clickWishButton,
          clickCartButton,
 
-         clickCartCloseButton,
+         clickCloseButton,
       } = getComponent();
 
       expect(Modal).not.toBeVisible();
@@ -98,7 +115,7 @@ describe('Header Component', () => {
 
       expect(Modal).toBeVisible();
 
-      clickCartCloseButton();
+      clickCloseButton();
 
       expect(Modal).not.toBeVisible();
    });
@@ -117,5 +134,31 @@ describe('Header Component', () => {
          target: { scrollY: HeaderEl.offsetHeight },
       });
       expect(HeaderEl).toHaveStyle('position: absolute');
+   });
+
+   describe('cart redux test', () => {
+      it('delete product from cart', () => {
+         const { clickCartButton, clickDeleteButton } = getComponent();
+
+         clickCartButton();
+         clickDeleteButton();
+         expect(dispatch).toBeCalledWith({
+            type: DELETE_FROM_CART,
+            payload: products[0],
+         });
+      });
+   });
+
+   describe('wishlist redux test', () => {
+      it('delete product from wishlist', () => {
+         const { clickWishButton, clickDeleteButton } = getComponent();
+
+         clickWishButton();
+         clickDeleteButton();
+         expect(dispatch).toBeCalledWith({
+            type: DELETE_FROM_WISHLIST,
+            payload: products[0],
+         });
+      });
    });
 });

@@ -21,6 +21,7 @@ import MockedFunction = jest.MockedFunction;
 
 describe('ProductModal test', () => {
    beforeEach(() => {
+      _useDispatch.mockImplementation(() => dispatch);
       _useSelector.mockImplementation((selector) =>
          selector({
             cartReducer: { cart: [] },
@@ -31,23 +32,13 @@ describe('ProductModal test', () => {
 
    const product = products[0];
 
+   const onShow = jest.fn();
    const dispatch = jest.fn();
 
    const _useDispatch = useDispatch as MockedFunction<typeof useDispatch>;
-
    const _useSelector = useTypedSelector as MockedFunction<
       typeof useTypedSelector
    >;
-
-   _useDispatch.mockImplementation(() => dispatch);
-   _useSelector.mockImplementation((selector) =>
-      selector({
-         cartReducer: { cart: [] },
-         wishlistReducer: { wishlist: [] },
-      }),
-   );
-
-   const onShow = jest.fn();
 
    const getComponent = () => {
       const result = render(
