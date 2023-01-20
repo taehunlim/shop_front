@@ -11,14 +11,21 @@ import { products } from 'fixtures/products';
 interface Props {
    show?: boolean;
    width?: string;
+   title?: string;
    data?: typeof products;
 }
 
 describe('HeaderModal Component', () => {
-   const getComponent = ({ show, width, data }: Props) => {
-      const onClick = jest.fn();
-      const title = 'Header Modal';
+   const onClick = jest.fn();
+   const onSearch = jest.fn();
+   const onDelete = jest.fn();
 
+   const getComponent = ({
+      show,
+      width,
+      title = 'Header Modal',
+      data,
+   }: Props) => {
       const result = renderWithRouter(
          <EmotionProvider>
             <button onClick={() => onClick(true)}>show</button>
@@ -28,6 +35,8 @@ describe('HeaderModal Component', () => {
                width={width}
                show={show}
                onClose={onClick}
+               onSearch={onSearch}
+               onDelete={onDelete}
             />
          </EmotionProvider>,
       );
@@ -35,24 +44,33 @@ describe('HeaderModal Component', () => {
       const EmptyContent = result.getByText(title);
       const Buttons = result.getAllByRole('button');
       const ProductImages = () => result.getAllByRole('img');
+      const SearchInput = () => result.getByPlaceholderText('Search');
 
       const ShowButton = Buttons[0];
       const CloseButton = Buttons[1];
+      const DeleteButton = Buttons[2];
       const Container = ShowButton.nextElementSibling;
       const ContentEl = () => CloseButton.parentElement;
 
       const clickShowButton = () => fireEvent.click(ShowButton);
       const clickCloseButton = () => fireEvent.click(CloseButton);
+      const keyDownSearchInput = (keyword: string) =>
+         fireEvent.change(SearchInput(), {
+            target: { value: keyword },
+         });
+      const clickDeleteButton = () => fireEvent.click(DeleteButton);
 
       return {
          EmptyContent,
          ShowButton,
          Container,
          ProductImages,
+         SearchInput,
          ContentEl,
          clickShowButton,
          clickCloseButton,
-         onClick,
+         keyDownSearchInput,
+         clickDeleteButton,
       };
    };
 
@@ -66,7 +84,7 @@ describe('HeaderModal Component', () => {
    });
 
    it('className show test', () => {
-      const { Container, ContentEl, clickCloseButton, onClick } = getComponent({
+      const { Container, ContentEl, clickCloseButton } = getComponent({
          show: true,
       });
 
@@ -79,7 +97,7 @@ describe('HeaderModal Component', () => {
    });
 
    it('className hidden test', () => {
-      const { Container, clickShowButton, onClick } = getComponent({
+      const { Container, clickShowButton } = getComponent({
          show: false,
       });
 
@@ -111,6 +129,27 @@ describe('HeaderModal Component', () => {
             data: products,
          });
          expect(ProductImages()).toHaveLength(products.length);
+      });
+
+      it('onSearch test', () => {
+         const { SearchInput, keyDownSearchInput } = getComponent({
+            title: 'Search',
+         });
+
+         expect(SearchInput()).toBeInTheDocument();
+
+         keyDownSearchInput(products[0].name);
+         expect(onSearch).toBeCalledWith(products[0].name);
+      });
+
+      it('onDelete test', () => {
+         const { clickDeleteButton } = getComponent({
+            show: true,
+            data: products,
+         });
+
+         clickDeleteButton();
+         expect(onDelete).toBeCalledWith(products[0]);
       });
    });
 });
