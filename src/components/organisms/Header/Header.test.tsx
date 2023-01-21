@@ -35,11 +35,12 @@ describe('Header Component', () => {
    >;
 
    const getComponent = () => {
-      const { getAllByRole, getByTestId } = renderWithRouter(
-         <EmotionProvider>
-            <Header />
-         </EmotionProvider>,
-      );
+      const { getAllByRole, getByTestId, getByPlaceholderText } =
+         renderWithRouter(
+            <EmotionProvider>
+               <Header />
+            </EmotionProvider>,
+         );
 
       const HeaderEl = getByTestId('header');
       const Anchors = getAllByRole('link');
@@ -53,6 +54,7 @@ describe('Header Component', () => {
       const ModalButtons = Modal.querySelectorAll('button');
       const CloseButton = ModalButtons[0];
       const DeleteButton = ModalButtons[1];
+      const SearchInput = () => getByPlaceholderText('Search');
 
       const clickLogo = () => fireEvent.click(Logo);
       const clickSearchButton = () => fireEvent.click(SearchButton);
@@ -62,6 +64,10 @@ describe('Header Component', () => {
 
       const clickCloseButton = () => fireEvent.click(CloseButton);
       const clickDeleteButton = () => fireEvent.click(DeleteButton);
+      const keyDownSearchInput = (keyword: string) =>
+         fireEvent.change(SearchInput(), {
+            target: { value: keyword },
+         });
 
       return {
          HeaderEl,
@@ -81,6 +87,7 @@ describe('Header Component', () => {
 
          clickCloseButton,
          clickDeleteButton,
+         keyDownSearchInput,
       };
    };
 
@@ -159,6 +166,14 @@ describe('Header Component', () => {
             type: DELETE_FROM_WISHLIST,
             payload: products[0],
          });
+      });
+   });
+
+   describe('api test', () => {
+      it('get search data test', () => {
+         const { clickSearchButton, keyDownSearchInput } = getComponent();
+         clickSearchButton();
+         keyDownSearchInput(products[0].name);
       });
    });
 });
