@@ -8,15 +8,14 @@ import {
    deleteFromWishlist,
 } from 'redux/actions/wishlistActions';
 
+import { ProductDataProps } from 'apis/useProduct';
+import { getDiscountPrice } from 'utils/getDiscountPrice';
+
 import Button from 'components/atoms/Button';
 import { ProductImgWrapper } from 'components/atoms/Images';
 import IconButton from 'components/molecules/IconButton';
 import Modal, { ModalProps } from 'components/molecules/Modal';
 import Slide from 'components/molecules/Slide';
-
-import { ProductDataProps } from 'components/molecules/Product';
-
-import { getDiscountPrice } from 'utils/getDiscountPrice';
 
 import { Price } from 'components/molecules/Product/style';
 import { Container, Content, TextWrapper, ButtonContainer } from './style';

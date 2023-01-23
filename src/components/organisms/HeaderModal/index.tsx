@@ -1,11 +1,10 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ProductImgWrapper } from 'components/atoms/Images';
-import { ProductDataProps } from 'components/molecules/Product';
-import Modal, { ModalProps } from 'components/molecules/Modal';
+import { ProductDataProps } from 'apis/useProduct';
 
-import { products } from 'fixtures/products';
+import { ProductImgWrapper } from 'components/atoms/Images';
+import Modal, { ModalProps } from 'components/molecules/Modal';
 
 import {
    Container,
@@ -17,7 +16,7 @@ import {
 } from './style';
 
 interface Props extends ModalProps {
-   data?: typeof products;
+   data?: ProductDataProps[];
    title: string;
    onDelete?: (product: ProductDataProps) => void;
    onSearch?: (keyword: string) => void;

@@ -5,10 +5,11 @@ import {
    addToWishlist,
    deleteFromWishlist,
 } from 'redux/actions/wishlistActions';
-
 import useTypedSelector from 'hooks/useTypedSelector';
 
-import Product, { ProductDataProps } from 'components/molecules/Product';
+import { ProductDataProps } from 'apis/useProduct';
+
+import Product from 'components/molecules/Product';
 import ProductModal from 'components/organisms/ProductModal';
 
 import { Container, Wrapper } from './style';

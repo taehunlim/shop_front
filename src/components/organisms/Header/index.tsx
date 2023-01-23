@@ -13,14 +13,16 @@ import { deleteFromCart } from 'redux/actions/cartActions';
 import useTypedSelector from 'hooks/useTypedSelector';
 import { useBrowserEvent } from 'hooks/useBrowserEvent';
 
+import { ProductDataProps } from 'apis/useProduct';
+
+import useThrottle from 'hooks/useThrottle';
+
 import Badge from 'components/atoms/Badge';
 import IconButton from 'components/molecules/IconButton';
 import Navigation from 'components/organisms/Navigation';
 import HeaderModal from 'components/organisms/HeaderModal';
 
-import { ProductDataProps } from 'components/molecules/Product';
 import { products } from 'fixtures/products';
-import useThrottle from 'hooks/useThrottle';
 import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
 
 function Header() {

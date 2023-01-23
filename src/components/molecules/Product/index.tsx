@@ -1,12 +1,12 @@
 import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ProductImgWrapper } from 'components/atoms/Images';
-import IconButton from 'components/molecules/IconButton';
+import { ProductDataProps } from 'apis/useProduct';
 
 import { getDiscountPrice } from 'utils/getDiscountPrice';
 
-import { products } from 'fixtures/products';
+import { ProductImgWrapper } from 'components/atoms/Images';
+import IconButton from 'components/molecules/IconButton';
 
 import {
    Container,
@@ -19,8 +19,6 @@ import {
    BadgeContainer,
    Badge,
 } from './style';
-
-export type ProductDataProps = typeof products[0];
 
 export interface ProductProps {
    product: ProductDataProps;
