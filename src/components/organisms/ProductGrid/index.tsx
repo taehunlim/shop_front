@@ -11,11 +11,13 @@ import useTypedSelector from 'hooks/useTypedSelector';
 import Product, { ProductDataProps } from 'components/molecules/Product';
 import ProductModal from 'components/organisms/ProductModal';
 
-import { products } from 'fixtures/products';
-
 import { Container, Wrapper } from './style';
 
-function ProductGrid() {
+interface Props {
+   products: ProductDataProps[];
+}
+
+function ProductGrid({ products }: Props) {
    const wishlist = useTypedSelector((state) => state.wishlistReducer.wishlist);
    const dispatch = useDispatch();
 
@@ -42,7 +44,7 @@ function ProductGrid() {
 
    return (
       <Container>
-         {products.map((product) => {
+         {products?.map((product) => {
             const isWished = !!wishlist.filter(
                (wishlist) => wishlist.id === product.id,
             ).length;
@@ -58,11 +60,13 @@ function ProductGrid() {
                </Wrapper>
             );
          })}
-         <ProductModal
-            show={isShow}
-            onClose={setIsShow}
-            product={currentProduct}
-         />
+         {currentProduct && (
+            <ProductModal
+               show={isShow}
+               onClose={setIsShow}
+               product={currentProduct}
+            />
+         )}
       </Container>
    );
 }

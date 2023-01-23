@@ -6,8 +6,8 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 const { dirname, PROJECT_ROOT, PUBLIC_INDEX } = require('./commonPath');
 
-const mode = process.env.WEBPACK_SERVE ? 'development' : 'production',
-   DEV = mode === 'development';
+const mode = process.env.WEBPACK_SERVE ? 'development' : 'production';
+const DEV = mode === 'development';
 
 rimraf.sync(path.resolve(PROJECT_ROOT, 'build'));
 module.exports = {

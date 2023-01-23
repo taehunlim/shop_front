@@ -34,7 +34,7 @@ describe('ProductGrid test', () => {
    function getComponent() {
       const { container, getAllByRole, getAllByText } = renderWithRouter(
          <EmotionProvider>
-            <ProductGrid />
+            <ProductGrid products={products} />
          </EmotionProvider>,
       );
 
