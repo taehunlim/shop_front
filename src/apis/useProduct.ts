@@ -19,7 +19,7 @@ export default function useProduct() {
       fetcher,
    );
    return {
-      data,
+      data: data || [],
       isLoading,
       isError: error,
    };

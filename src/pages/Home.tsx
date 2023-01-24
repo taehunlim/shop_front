@@ -14,7 +14,7 @@ function Home() {
       <Layout>
          <Banner />
          <HoverBanner />
-         <ProductGrid products={data || []} />
+         <ProductGrid products={data} />
       </Layout>
    );
 }

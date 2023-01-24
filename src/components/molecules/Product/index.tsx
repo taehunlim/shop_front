@@ -29,7 +29,7 @@ export interface ProductProps {
 }
 
 function Product({ product, isWished, onWish, onQuickView }: ProductProps) {
-   const { new: isNew, stock, price, discount, thumbImage, name } = product;
+   const { isNew, stock, price, discount, thumbImage, name } = product;
 
    const discountedPrice = useMemo(
       () => getDiscountPrice(price, discount),
