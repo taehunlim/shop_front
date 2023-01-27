@@ -14,6 +14,7 @@ import useTypedSelector from 'hooks/useTypedSelector';
 import { useBrowserEvent } from 'hooks/useBrowserEvent';
 
 import { ProductDataProps } from 'apis/useProduct';
+import useSearchProduct from 'apis/useSearchProduct';
 
 import useThrottle from 'hooks/useThrottle';
 
@@ -22,7 +23,6 @@ import IconButton from 'components/molecules/IconButton';
 import Navigation from 'components/organisms/Navigation';
 import HeaderModal from 'components/organisms/HeaderModal';
 
-import { products } from 'fixtures/products';
 import { StyledHeader, Container, LogoWrapper, IconContainer } from './style';
 
 function Header() {
@@ -35,6 +35,8 @@ function Header() {
    const [isShow, setIsShow] = useState<boolean>();
    const [modalTitle, setModalTitle] = useState('Cart');
    const [keyword, setKeyword] = useState('');
+
+   const { data } = useSearchProduct(keyword);
 
    useBrowserEvent('scroll', handleScroll);
    const throttled = useThrottle(keyword);
@@ -56,11 +58,6 @@ function Header() {
       [dispatch],
    );
 
-   const fake = useMemo(
-      () => products.filter((product) => product.name.includes(throttled)),
-      [throttled],
-   );
-
    const getData = useMemo(() => {
       switch (modalTitle) {
          case 'Wishlist':
@@ -68,7 +65,7 @@ function Header() {
          case 'Cart':
             return cart;
          case 'Search':
-            return fake;
+            return data;
          default:
             return [];
       }
