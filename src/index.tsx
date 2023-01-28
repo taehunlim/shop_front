@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import EmotionProvider from 'assets/EmotionProvider';
+import AsyncComponent from 'routes/AsyncComponent';
 import App from './App';
 import store from './store';
 
@@ -14,6 +15,7 @@ root.render(
       <Provider store={store}>
          <BrowserRouter>
             <App />
+            <AsyncComponent path={location.pathname} onNotFound={console.log} />
          </BrowserRouter>
       </Provider>
    </EmotionProvider>,
