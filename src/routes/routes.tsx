@@ -1,10 +1,7 @@
-import React from 'react';
+import { importAll } from 'routes/importAll';
 
-import { Home, Product } from './index';
-
-const routes = [
-   { path: '/', element: <Home /> },
-   { path: '/product/:id', element: <Product /> },
-];
+const routes = importAll(
+   require.context(/* webpackChunkName: "[request]" */ '../pages'),
+);
 
 export { routes };
