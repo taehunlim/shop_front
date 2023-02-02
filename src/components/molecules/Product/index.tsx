@@ -40,7 +40,7 @@ function Product({ product, isWished, onWish, onQuickView }: ProductProps) {
    return (
       <Container>
          <ProductImgWrapper>
-            <Link to={`/product/${product.id}`}>
+            <Link data-testid="product-link" to={`/product/${product.id}`}>
                <img src={thumbImage[0]} alt={name} />
             </Link>
 

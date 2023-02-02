@@ -26,16 +26,29 @@ describe('Product', () => {
          </EmotionProvider>,
       );
 
+      const Link = getByTestId('product-link');
       const WishButton = () => getByTestId('wish-button');
       const QuickViewButton = getByTestId('quick-view-button');
 
       const WishedIcon = () => getByTestId('wished-button');
 
+      const clickLink = () => fireEvent.click(Link);
       const clickWishButton = () => fireEvent.click(WishButton());
       const clickQuickViewButton = () => fireEvent.click(QuickViewButton);
 
-      return { WishedIcon, clickWishButton, clickQuickViewButton };
+      return { WishedIcon, clickLink, clickWishButton, clickQuickViewButton };
    }
+
+   it('link test', () => {
+      const { clickLink } = getComponent({
+         product: products[0],
+         isWished: true,
+      });
+
+      clickLink();
+
+      expect(window.location.pathname).toBe(`/product/${products[0].id}`);
+   });
 
    it('a sale, new test', () => {
       const { WishedIcon } = getComponent({
