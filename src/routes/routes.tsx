@@ -1,7 +1,5 @@
-import { importAll } from 'routes/importAll';
+import importAll from 'routes';
 
-const routes = importAll(
-   require.context(/* webpackChunkName: "[request]" */ '../pages'),
-);
+const routes = importAll(require.context('../pages', true, /\.tsx$/, 'weak'));
 
 export { routes };
