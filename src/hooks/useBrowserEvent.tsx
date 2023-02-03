@@ -13,9 +13,9 @@ export function useBrowserEvent(
    callbackRef.current = listener;
 
    useEffect(() => {
-      function onEvent(e: Event) {
+      const onEvent = (e: Event) => {
          callbackRef.current(e);
-      }
+      };
 
       window.addEventListener(eventType, onEvent, options);
       return () => {

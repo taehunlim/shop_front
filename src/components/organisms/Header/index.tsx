@@ -72,17 +72,20 @@ function Header() {
    }, [wishlist, cart, modalTitle, throttled]);
 
    function handleScroll() {
-      const { current } = scrollRef;
-      const headerHeight = (ref.current as HTMLHeadElement).offsetHeight;
+      if (ref.current) {
+         const { current } = scrollRef;
 
-      if (window.scrollY > headerHeight && !current) {
-         scrollRef.current = true;
-         return setIsSticky(true);
-      }
+         const headerHeight = (ref.current as HTMLHeadElement).offsetHeight;
 
-      if (window.scrollY <= headerHeight && current) {
-         scrollRef.current = false;
-         return setIsSticky(false);
+         if (window.scrollY > headerHeight && !current) {
+            scrollRef.current = true;
+            return setIsSticky(true);
+         }
+
+         if (window.scrollY <= headerHeight && current) {
+            scrollRef.current = false;
+            return setIsSticky(false);
+         }
       }
    }
 
