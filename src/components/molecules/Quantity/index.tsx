@@ -4,7 +4,11 @@ import Button from 'components/atoms/Button';
 
 import { Container } from './style';
 
-function Quantity() {
+interface Props {
+   stock: number;
+}
+
+function Quantity({ stock }: Props) {
    const [quantity, setQuantity] = useState(1);
 
    const handleDecrease = () => {
@@ -13,12 +17,15 @@ function Quantity() {
    };
 
    const handleIncrease = () => {
+      if (stock === quantity) return;
       setQuantity(quantity + 1);
    };
 
    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.validity.valid) {
-         setQuantity(Number(e.target.value));
+         const number = Number(e.target.value);
+         if (number >= stock) return setQuantity(stock);
+         setQuantity(number);
       }
    };
 

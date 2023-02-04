@@ -9,7 +9,7 @@ describe('Quantity component', () => {
    const getComponent = () => {
       const { getByRole, getByTestId } = render(
          <EmotionProvider>
-            <Quantity />
+            <Quantity stock={3} />
          </EmotionProvider>,
       );
 
@@ -56,6 +56,9 @@ describe('Quantity component', () => {
 
       clickIncreaseButton();
       expect(Input.value).toBe('3');
+
+      clickIncreaseButton();
+      expect(Input.value).toBe('3');
    });
 
    it('decrease test', () => {
@@ -75,13 +78,16 @@ describe('Quantity component', () => {
 
       expect(Input.value).toBe('1');
 
+      keyDownInput('2');
+      expect(Input.value).toBe('2');
+
       keyDownInput('9');
-      expect(Input.value).toBe('9');
+      expect(Input.value).toBe('3');
 
       keyDownInput('5');
-      expect(Input.value).toBe('5');
+      expect(Input.value).toBe('3');
 
       keyDownInput('asdkjfnsadkfjn');
-      expect(Input.value).toBe('5');
+      expect(Input.value).toBe('3');
    });
 });
