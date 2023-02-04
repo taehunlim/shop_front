@@ -84,8 +84,10 @@ function ProductModal({ show, onClose, product }: Props) {
                   </Price>
                </TextWrapper>
                <p>{product.fullDescription}</p>
+
                <ButtonContainer>
                   <Button
+                     data-testid="cart-button"
                      height={39}
                      primary
                      onClick={() =>
@@ -96,8 +98,9 @@ function ProductModal({ show, onClose, product }: Props) {
                   >
                      {isAdded ? 'DELETE FROM CART' : 'ADD TO CART'}
                   </Button>
+
                   <IconButton
-                     data-testid={isWished ? 'wished-button' : 'wish-button'}
+                     data-testid="wish-button"
                      icon={isWished ? 'heart-solid' : 'heart'}
                      width={40}
                      height={40}

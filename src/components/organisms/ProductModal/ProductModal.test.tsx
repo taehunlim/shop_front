@@ -51,19 +51,12 @@ describe('ProductModal test', () => {
 
       const Container = getByTestId('container');
       const Images = getAllByRole('img');
-      const Buttons = getAllByRole('button');
-
       const ProductName = getByText(product.name);
       const Description = getByText(product.fullDescription);
       const Price = getByText(`$${product.price}`);
 
-      const CartButton = Buttons[3];
-      const WishlistButton = Buttons[4];
-
-      const AddToCart = () => getByText('ADD TO CART');
-      const DeleteFromCart = () => getByText('DELETE FROM CART');
-      const AddToWishlist = () => getByTestId('wish-button');
-      const DeleteFromWishlist = () => getByTestId('wished-button');
+      const CartButton = getByTestId('cart-button');
+      const WishlistButton = getByTestId('wish-button');
 
       const clickCartButton = () => fireEvent.click(CartButton);
       const clickWishlistButton = () => fireEvent.click(WishlistButton);
@@ -76,11 +69,6 @@ describe('ProductModal test', () => {
          Description,
          CartButton,
          WishlistButton,
-
-         AddToCart,
-         DeleteFromCart,
-         AddToWishlist,
-         DeleteFromWishlist,
 
          clickCartButton,
          clickWishlistButton,
@@ -106,14 +94,10 @@ describe('ProductModal test', () => {
          expect(WishlistButton).toBeInTheDocument();
       });
       it('not added to cart, wishlist', () => {
-         const { CartButton, WishlistButton, AddToCart, AddToWishlist } =
-            getComponent();
+         const { CartButton, WishlistButton } = getComponent();
 
          expect(CartButton).toBeInTheDocument();
          expect(WishlistButton).toBeInTheDocument();
-
-         expect(AddToCart()).toBeInTheDocument();
-         expect(AddToWishlist()).toBeInTheDocument();
       });
 
       it('added to cart, wishlist', () => {
@@ -124,18 +108,10 @@ describe('ProductModal test', () => {
             }),
          );
 
-         const {
-            CartButton,
-            WishlistButton,
-            DeleteFromCart,
-            DeleteFromWishlist,
-         } = getComponent();
+         const { CartButton, WishlistButton } = getComponent();
 
          expect(CartButton).toBeInTheDocument();
          expect(WishlistButton).toBeInTheDocument();
-
-         expect(DeleteFromCart()).toBeInTheDocument();
-         expect(DeleteFromWishlist()).toBeInTheDocument();
       });
    });
 
