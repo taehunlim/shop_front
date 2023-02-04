@@ -37,6 +37,12 @@ const TextWrapper = styled.div`
 const ButtonContainer = styled.div`
    display: flex;
    gap: 10px;
+
+   button {
+      :first-of-type {
+         min-width: 180px;
+      }
+   }
 `;
 
 export { Container, Content, TextWrapper, ButtonContainer };

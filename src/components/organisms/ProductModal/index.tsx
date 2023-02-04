@@ -16,6 +16,7 @@ import { ProductImgWrapper } from 'components/atoms/Images';
 import IconButton from 'components/molecules/IconButton';
 import Modal, { ModalProps } from 'components/molecules/Modal';
 import Slide from 'components/molecules/Slide';
+import Quantity from 'components/molecules/Quantity';
 
 import { Price } from 'components/molecules/Product/style';
 import { Container, Content, TextWrapper, ButtonContainer } from './style';
@@ -84,6 +85,8 @@ function ProductModal({ show, onClose, product }: Props) {
                   </Price>
                </TextWrapper>
                <p>{product.fullDescription}</p>
+
+               <Quantity stock={product.stock} />
 
                <ButtonContainer>
                   <Button
