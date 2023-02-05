@@ -7,6 +7,7 @@ import {
 } from 'redux/actions/wishlistActions';
 import useTypedSelector from 'hooks/useTypedSelector';
 
+import useProductDispatch from 'hooks/useProductDispatch';
 import { ProductDataProps } from 'fixtures/products';
 
 import Product from 'components/molecules/Product';
@@ -25,10 +26,7 @@ function ProductGrid({ products }: Props) {
    const [isShow, setIsShow] = useState<boolean>();
    const [currentProduct, setCurrentProduct] = useState(products[0]);
 
-   const addWishlist = useCallback(
-      (product: ProductDataProps) => dispatch(addToWishlist(product)),
-      [dispatch],
-   );
+   const addWishlist = useProductDispatch(addToWishlist, [dispatch]);
 
    const deleteWishlist = useCallback(
       (product: ProductDataProps) => dispatch(deleteFromWishlist(product)),
