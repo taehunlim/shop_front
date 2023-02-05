@@ -7,11 +7,11 @@ interface Props extends ComponentProps<'input'> {
    color: string;
 }
 
-function Radio({ id, name, color, ...props }: Props) {
+function Radio({ id, value, name, color, ...props }: Props) {
    return (
       <StyledRadio color={color}>
-         <input id={id} type="radio" name={name} {...props} />
-         <label htmlFor={id} />
+         <input id={id || `${value}`} type="radio" name={name} {...props} />
+         <label htmlFor={id || `${value}`} />
       </StyledRadio>
    );
 }
