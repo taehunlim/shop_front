@@ -16,6 +16,7 @@ import { ProductImgWrapper } from 'components/atoms/Images';
 import IconButton from 'components/molecules/IconButton';
 import Modal, { ModalProps } from 'components/molecules/Modal';
 import Slide from 'components/molecules/Slide';
+import Variation from 'components/molecules/Variation';
 import Quantity from 'components/molecules/Quantity';
 
 import { Price } from 'components/molecules/Product/style';
@@ -86,8 +87,9 @@ function ProductModal({ show, onClose, product }: Props) {
                </TextWrapper>
                <p>{product.fullDescription}</p>
 
-               <Quantity stock={product.stock} />
+               <Variation />
 
+               <Quantity stock={product.stock} />
                <ButtonContainer>
                   <Button
                      data-testid="cart-button"

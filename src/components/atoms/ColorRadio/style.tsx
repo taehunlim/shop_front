@@ -6,7 +6,7 @@ const StyledRadio = styled.div`
    display: flex;
    border: ${({ theme }) => `1px solid ${theme.fg.gray}`};
    border-radius: 50px;
-   margin: 3px;
+
    overflow: hidden;
    position: relative;
 
