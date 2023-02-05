@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 const StyledRadio = styled.div`
-   width: 16px;
-   height: 16px;
+   width: 24px;
+   height: 24px;
    display: flex;
    border: ${({ theme }) => `1px solid ${theme.fg.gray}`};
    border-radius: 50px;
@@ -14,8 +14,8 @@ const StyledRadio = styled.div`
       position: absolute;
       background: ${({ color }) => color};
       border-radius: 50px;
-      width: 12px;
-      height: 12px;
+      width: 16px;
+      height: 16px;
 
       top: 0;
       left: 0;
@@ -29,8 +29,8 @@ const StyledRadio = styled.div`
       margin: 0 !important;
       padding: 0;
       appearance: none;
-      width: 14px !important;
-      height: 14px !important;
+      width: 22px !important;
+      height: 22px !important;
       text-align: center;
 
       &:checked {
