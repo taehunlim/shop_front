@@ -13,7 +13,7 @@ import { deleteFromCart } from 'redux/actions/cartActions';
 import useTypedSelector from 'hooks/useTypedSelector';
 import { useBrowserEvent } from 'hooks/useBrowserEvent';
 
-import { ProductDataProps } from 'apis/useProduct';
+import { ProductDataProps } from 'fixtures/products';
 import useSearchProduct from 'apis/useSearchProduct';
 
 import useThrottle from 'hooks/useThrottle';

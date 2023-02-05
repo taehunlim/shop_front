@@ -7,7 +7,7 @@ import {
 } from 'redux/actions/wishlistActions';
 import useTypedSelector from 'hooks/useTypedSelector';
 
-import { ProductDataProps } from 'apis/useProduct';
+import { ProductDataProps } from 'fixtures/products';
 
 import Product from 'components/molecules/Product';
 import ProductModal from 'components/organisms/ProductModal';

@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ProductDataProps } from 'apis/useProduct';
+import { ProductDataProps } from 'fixtures/products';
 
 import { getDiscountPrice } from 'utils/getDiscountPrice';
 

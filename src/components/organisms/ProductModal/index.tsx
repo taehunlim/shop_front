@@ -8,7 +8,7 @@ import {
    deleteFromWishlist,
 } from 'redux/actions/wishlistActions';
 
-import { ProductDataProps } from 'apis/useProduct';
+import { ProductDataProps } from 'fixtures/products';
 import { getDiscountPrice } from 'utils/getDiscountPrice';
 
 import Button from 'components/atoms/Button';

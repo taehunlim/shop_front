@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ProductDataProps } from 'apis/useProduct';
+import { ProductDataProps } from 'fixtures/products';
 
 import { ProductImgWrapper } from 'components/atoms/Images';
 import Modal, { ModalProps } from 'components/molecules/Modal';

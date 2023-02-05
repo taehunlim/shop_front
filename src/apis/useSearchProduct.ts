@@ -1,9 +1,7 @@
 import axios from 'axios';
 import useSWR from 'swr';
 
-import { products } from 'fixtures/products';
-
-export type ProductDataProps = typeof products[0];
+import { ProductDataProps } from 'fixtures/products';
 
 function fetcher(url: string) {
    return axios
