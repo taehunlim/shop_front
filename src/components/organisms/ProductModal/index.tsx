@@ -1,7 +1,7 @@
-import React, { memo, useMemo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { memo, useMemo } from 'react';
 
 import useTypedSelector from 'hooks/useTypedSelector';
+import useProductDispatch from 'hooks/useProductDispatch';
 import { addToCart, deleteFromCart } from 'redux/actions/cartActions';
 import {
    addToWishlist,
@@ -34,7 +34,6 @@ function ProductModal({ show, onClose, product }: Props) {
          wishlist: wishlistReducer.wishlist,
       };
    });
-   const dispatch = useDispatch();
 
    const {
       id,
@@ -53,25 +52,13 @@ function ProductModal({ show, onClose, product }: Props) {
 
    const isAdded = !!cart.filter((c) => c.id === product.id)[0];
 
-   const addProductToCart = useCallback(
-      (product: ProductDataProps) => dispatch(addToCart(product)),
-      [dispatch],
-   );
+   const addProductToCart = useProductDispatch(addToCart);
 
-   const deleteProductFromCart = useCallback(
-      (product: ProductDataProps) => dispatch(deleteFromCart(product)),
-      [dispatch],
-   );
+   const deleteProductFromCart = useProductDispatch(deleteFromCart);
 
-   const addProductToWishlist = useCallback(
-      (product: ProductDataProps) => dispatch(addToWishlist(product)),
-      [dispatch],
-   );
+   const addProductToWishlist = useProductDispatch(addToWishlist);
 
-   const deleteProductFromWishlist = useCallback(
-      (product: ProductDataProps) => dispatch(deleteFromWishlist(product)),
-      [dispatch],
-   );
+   const deleteProductFromWishlist = useProductDispatch(deleteFromWishlist);
 
    const isWished = !!wishlist.filter((wishlist) => wishlist.id === id).length;
 
