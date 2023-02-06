@@ -36,7 +36,16 @@ function ProductModal({ show, onClose, product }: Props) {
    });
    const dispatch = useDispatch();
 
-   const { price, discount } = product;
+   const {
+      id,
+      price,
+      discount,
+      image,
+      name,
+      fullDescription,
+      stock,
+      variation,
+   } = product;
    const discountedPrice = useMemo(
       () => getDiscountPrice(price, discount),
       [product],
@@ -64,32 +73,29 @@ function ProductModal({ show, onClose, product }: Props) {
       [dispatch],
    );
 
-   const isWished = !!wishlist.filter((wishlist) => wishlist.id === product.id)
-      .length;
+   const isWished = !!wishlist.filter((wishlist) => wishlist.id === id).length;
 
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
          <Container data-testid="container">
             <Slide>
-               {product.image.map((img, i) => (
+               {image.map((img, i) => (
                   <ProductImgWrapper key={i}>
-                     <img src={img} alt={`${product.name} img ${i + 1}`} />
+                     <img src={img} alt={`${name} img ${i + 1}`} />
                   </ProductImgWrapper>
                ))}
             </Slide>
 
             <Content>
-               <h2>{product.name}</h2>
+               <h2>{name}</h2>
                <TextWrapper>
-                  <Price discountedPrice={discountedPrice}>
-                     ${product.price}
-                  </Price>
+                  <Price discountedPrice={discountedPrice}>${price}</Price>
                </TextWrapper>
-               <p>{product.fullDescription}</p>
+               <p>{fullDescription}</p>
 
-               <Variation />
+               <Variation variation={variation} />
 
-               <Quantity stock={product.stock} />
+               <Quantity stock={stock} />
                <ButtonContainer>
                   <Button
                      data-testid="cart-button"

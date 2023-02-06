@@ -1,41 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ColorRadio from 'components/atoms/ColorRadio';
 
+import { ProductDataProps } from '../Product';
+
 import { Section, ColorContainer, SizeContainer } from './style';
 
-function Variation() {
+type Props = Pick<ProductDataProps, 'variation'>;
+
+function Variation({ variation }: Props) {
+   const { size } = variation[0];
+   const [currentColorSize, setCurrentColorSize] = useState(size);
+   console.log(setCurrentColorSize);
    return (
       <div>
          <Section>
             <span>Color</span>
             <ColorContainer>
-               <ColorRadio
-                  color="#000000"
-                  name="radio"
-                  onChange={console.log}
-                  value="1"
-               />
-               <ColorRadio
-                  color="red"
-                  name="radio"
-                  onChange={console.log}
-                  value="2"
-               />
-               <ColorRadio
-                  color="blue"
-                  name="radio"
-                  onChange={console.log}
-                  value="3"
-               />
+               {variation.map((color) => (
+                  <ColorRadio
+                     key={color.colorCode}
+                     color={color.colorCode}
+                     name="radio"
+                     value={color.color}
+                     defaultChecked={variation[0].color === color.color}
+                  />
+               ))}
             </ColorContainer>
          </Section>
          <Section>
             <span>Size</span>
             <SizeContainer>
-               <label>S</label>
-               <label>M</label>
-               <label>L</label>
+               {currentColorSize.map((size) => (
+                  <label key={size.name}>{size.name}</label>
+               ))}
             </SizeContainer>
          </Section>
       </div>
