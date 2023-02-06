@@ -6,13 +6,13 @@ import { ProductDataProps } from 'fixtures/products';
 
 const useProductDispatch = (
    callback: (p: ProductDataProps) => AnyAction,
-   deps: DependencyList,
+   deps?: DependencyList,
 ) => {
    const dispatch = useDispatch();
 
    return useCallback(
       (product: ProductDataProps) => dispatch(callback(product)),
-      deps,
+      deps || [dispatch],
    );
 };
 

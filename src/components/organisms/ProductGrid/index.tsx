@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
 import {
    addToWishlist,
@@ -21,17 +20,12 @@ interface Props {
 
 function ProductGrid({ products }: Props) {
    const wishlist = useTypedSelector((state) => state.wishlistReducer.wishlist);
-   const dispatch = useDispatch();
 
    const [isShow, setIsShow] = useState<boolean>();
    const [currentProduct, setCurrentProduct] = useState(products[0]);
 
-   const addWishlist = useProductDispatch(addToWishlist, [dispatch]);
-
-   const deleteWishlist = useCallback(
-      (product: ProductDataProps) => dispatch(deleteFromWishlist(product)),
-      [dispatch],
-   );
+   const addWishlist = useProductDispatch(addToWishlist);
+   const deleteWishlist = useProductDispatch(deleteFromWishlist);
 
    const handleQuickView = useCallback(
       (product: ProductDataProps) => {
