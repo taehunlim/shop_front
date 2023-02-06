@@ -7,9 +7,8 @@ import {
 import useTypedSelector from 'hooks/useTypedSelector';
 
 import useProductDispatch from 'hooks/useProductDispatch';
-import { ProductDataProps } from 'fixtures/products';
 
-import Product from 'components/molecules/Product';
+import Product, { ProductDataProps } from 'components/molecules/Product';
 import ProductModal from 'components/organisms/ProductModal';
 
 import { Container, Wrapper } from './style';

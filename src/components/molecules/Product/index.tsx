@@ -20,6 +20,8 @@ import {
    Badge,
 } from './style';
 
+export type { ProductDataProps };
+
 export interface ProductProps {
    product: ProductDataProps;
    isWished: boolean;
