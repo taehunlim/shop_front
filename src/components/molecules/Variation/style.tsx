@@ -1,5 +1,9 @@
 import styled from '@emotion/styled';
 
+interface Size {
+   checked: boolean;
+}
+
 const Section = styled.div`
    display: grid;
    grid-template-columns: 120px auto;
@@ -23,18 +27,20 @@ const ColorContainer = styled.div`
 const SizeContainer = styled.div`
    display: flex;
    gap: 35px;
+`;
 
-   label {
-      width: 24px;
-      text-align: center;
+const Size = styled.label<Size>`
+   width: 24px;
+   text-align: center;
+   color: ${({ theme, checked }) => (checked ? theme.fg.black : theme.fg.gray)};
+   font-size: 24px;
+
+   margin-bottom: 0;
+   cursor: pointer;
+   text-transform: uppercase;
+   :hover {
       color: ${({ theme }) => theme.fg.black};
-
-      font-size: 24px;
-
-      margin-bottom: 0;
-      cursor: pointer;
-      text-transform: uppercase;
    }
 `;
 
-export { Section, ColorContainer, SizeContainer };
+export { Section, ColorContainer, SizeContainer, Size };

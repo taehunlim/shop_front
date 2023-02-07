@@ -4,14 +4,16 @@ import ColorRadio from 'components/atoms/ColorRadio';
 
 import { ProductDataProps } from '../Product';
 
-import { Section, ColorContainer, SizeContainer } from './style';
+import { Section, ColorContainer, SizeContainer, Size } from './style';
 
 type Props = Pick<ProductDataProps, 'variation'>;
 
 function Variation({ variation }: Props) {
    const { size } = variation[0];
    const [currentColorSize, setCurrentColorSize] = useState(size);
+   const [currentSize, setCurrentSize] = useState(size[0].name);
 
+   console.log(setCurrentSize);
    return (
       <div>
          <Section>
@@ -33,7 +35,9 @@ function Variation({ variation }: Props) {
             <span>Size</span>
             <SizeContainer data-testid="size-container">
                {currentColorSize.map((size) => (
-                  <label key={size.name}>{size.name}</label>
+                  <Size key={size.name} checked={currentSize === size.name}>
+                     {size.name}
+                  </Size>
                ))}
             </SizeContainer>
          </Section>
