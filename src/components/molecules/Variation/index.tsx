@@ -16,7 +16,7 @@ function Variation({ variation }: Props) {
       <div>
          <Section>
             <span>Color</span>
-            <ColorContainer>
+            <ColorContainer data-testid="radio-container">
                {variation.map((color) => (
                   <ColorRadio
                      key={color.colorCode}
@@ -30,7 +30,7 @@ function Variation({ variation }: Props) {
          </Section>
          <Section>
             <span>Size</span>
-            <SizeContainer>
+            <SizeContainer data-testid="size-container">
                {currentColorSize.map((size) => (
                   <label key={size.name}>{size.name}</label>
                ))}
