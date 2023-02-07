@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import EmotionProvider from 'assets/EmotionProvider';
 
@@ -9,6 +9,7 @@ import Variation from '.';
 
 describe('Variation component', () => {
    const { variation } = products[0];
+
    const getComponent = () => {
       const { getByTestId } = render(
          <EmotionProvider>
@@ -16,19 +17,44 @@ describe('Variation component', () => {
          </EmotionProvider>,
       );
 
-      const RadioContainer = getByTestId('radio-container');
+      const ColorContainer = getByTestId('color-container');
       const SizeContainer = getByTestId('size-container');
 
+      const ColorRadios = ColorContainer.querySelectorAll('input');
+
+      const ClickColor = (index: number) => fireEvent.click(ColorRadios[index]);
+
       return {
-         RadioContainer,
+         ColorContainer,
          SizeContainer,
+         ClickColor,
       };
    };
 
    it('render test', () => {
-      const { RadioContainer, SizeContainer } = getComponent();
+      const { ColorContainer, SizeContainer } = getComponent();
 
-      expect(RadioContainer.childElementCount).toBe(variation.length);
+      expect(ColorContainer.childElementCount).toBe(variation.length);
       expect(SizeContainer.childElementCount).toBe(variation[0].size.length);
+   });
+
+   it('get sizes for current color test', () => {
+      const { SizeContainer, ClickColor } = getComponent();
+      let colorIndex = 0;
+      expect(SizeContainer.childElementCount).toBe(
+         variation[colorIndex].size.length,
+      );
+
+      colorIndex = 1;
+      ClickColor(colorIndex);
+      expect(SizeContainer.childElementCount).toBe(
+         variation[colorIndex].size.length,
+      );
+
+      colorIndex = 2;
+      ClickColor(colorIndex);
+      expect(SizeContainer.childElementCount).toBe(
+         variation[colorIndex].size.length,
+      );
    });
 });

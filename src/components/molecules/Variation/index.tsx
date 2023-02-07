@@ -11,12 +11,12 @@ type Props = Pick<ProductDataProps, 'variation'>;
 function Variation({ variation }: Props) {
    const { size } = variation[0];
    const [currentColorSize, setCurrentColorSize] = useState(size);
-   console.log(setCurrentColorSize);
+
    return (
       <div>
          <Section>
             <span>Color</span>
-            <ColorContainer data-testid="radio-container">
+            <ColorContainer data-testid="color-container">
                {variation.map((color) => (
                   <ColorRadio
                      key={color.colorCode}
@@ -24,6 +24,7 @@ function Variation({ variation }: Props) {
                      name="radio"
                      value={color.color}
                      defaultChecked={variation[0].color === color.color}
+                     onChange={() => setCurrentColorSize(color.size)}
                   />
                ))}
             </ColorContainer>
