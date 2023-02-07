@@ -80,7 +80,7 @@ function ProductModal({ show, onClose, product }: Props) {
                </TextWrapper>
                <p>{fullDescription}</p>
 
-               <Variation variation={variation} />
+               <Variation variation={variation} onChange={console.log} />
 
                <Quantity stock={stock} />
                <ButtonContainer>

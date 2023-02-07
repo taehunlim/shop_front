@@ -10,10 +10,12 @@ import Variation from '.';
 describe('Variation component', () => {
    const { variation } = products[0];
 
+   const onChange = jest.fn();
+
    const getComponent = () => {
       const { getByTestId } = render(
          <EmotionProvider>
-            <Variation variation={variation} />
+            <Variation variation={variation} onChange={onChange} />
          </EmotionProvider>,
       );
 
@@ -23,11 +25,14 @@ describe('Variation component', () => {
       const ColorRadios = ColorContainer.querySelectorAll('input');
 
       const ClickColor = (index: number) => fireEvent.click(ColorRadios[index]);
+      const ClickSize = (index: number) =>
+         fireEvent.click(SizeContainer.children[index]);
 
       return {
          ColorContainer,
          SizeContainer,
          ClickColor,
+         ClickSize,
       };
    };
 
@@ -40,21 +45,30 @@ describe('Variation component', () => {
 
    it('get sizes for current color test', () => {
       const { SizeContainer, ClickColor } = getComponent();
-      let colorIndex = 0;
-      expect(SizeContainer.childElementCount).toBe(
-         variation[colorIndex].size.length,
-      );
 
-      colorIndex = 1;
-      ClickColor(colorIndex);
-      expect(SizeContainer.childElementCount).toBe(
-         variation[colorIndex].size.length,
-      );
+      variation.forEach(({ size }, i) => {
+         ClickColor(i);
+         expect(SizeContainer.childElementCount).toBe(size.length);
+      });
+   });
 
-      colorIndex = 2;
-      ClickColor(colorIndex);
-      expect(SizeContainer.childElementCount).toBe(
-         variation[colorIndex].size.length,
-      );
+   it('onChange test', () => {
+      const { ClickColor, ClickSize } = getComponent();
+
+      variation.forEach(({ size, color }, colorIndex) => {
+         ClickColor(colorIndex);
+         expect(onChange).toBeCalledWith({
+            size: size[0].name,
+            color,
+         });
+
+         size.forEach((currentSize, sizeIndex) => {
+            ClickSize(sizeIndex);
+            expect(onChange).toBeCalledWith({
+               size: currentSize.name,
+               color,
+            });
+         });
+      });
    });
 });

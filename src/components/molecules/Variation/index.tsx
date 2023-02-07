@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ColorRadio from 'components/atoms/ColorRadio';
 
@@ -6,14 +6,44 @@ import { ProductDataProps } from '../Product';
 
 import { Section, ColorContainer, SizeContainer, Size } from './style';
 
-type Props = Pick<ProductDataProps, 'variation'>;
+type Variation = Pick<ProductDataProps, 'variation'>;
+type Props = Variation & {
+   onChange: ({ color, size }: { color: string; size: string }) => void;
+};
 
-function Variation({ variation }: Props) {
-   const { size } = variation[0];
+function Variation({ variation, onChange }: Props) {
+   const defaultVariation = variation[0];
+   const { size, color } = defaultVariation;
+
    const [currentColorSize, setCurrentColorSize] = useState(size);
-   const [currentSize, setCurrentSize] = useState(size[0].name);
+   const [currentValue, setCurrentValue] = useState({
+      color,
+      size: size[0].name,
+   });
 
-   console.log(setCurrentSize);
+   useEffect(() => {
+      onChange(currentValue);
+   }, [currentValue.color, currentValue.size]);
+
+   const handleColor = (variation: typeof defaultVariation) => {
+      // local variable
+      const { size, color } = variation;
+      const defaultSize = size[0].name;
+
+      setCurrentValue({
+         size: defaultSize,
+         color,
+      });
+      setCurrentColorSize(size);
+   };
+
+   const handleSize = (size: string) => {
+      setCurrentValue({
+         ...currentValue,
+         size,
+      });
+   };
+
    return (
       <div>
          <Section>
@@ -26,7 +56,7 @@ function Variation({ variation }: Props) {
                      name="radio"
                      value={color.color}
                      defaultChecked={variation[0].color === color.color}
-                     onChange={() => setCurrentColorSize(color.size)}
+                     onChange={() => handleColor(color)}
                   />
                ))}
             </ColorContainer>
@@ -35,7 +65,11 @@ function Variation({ variation }: Props) {
             <span>Size</span>
             <SizeContainer data-testid="size-container">
                {currentColorSize.map((size) => (
-                  <Size key={size.name} checked={currentSize === size.name}>
+                  <Size
+                     key={size.name}
+                     checked={currentValue.size === size.name}
+                     onClick={() => handleSize(size.name)}
+                  >
                      {size.name}
                   </Size>
                ))}
