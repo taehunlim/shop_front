@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { useState } from 'react';
 
 import useTypedSelector from 'hooks/useTypedSelector';
 import useProductDispatch from 'hooks/useProductDispatch';
@@ -51,6 +51,7 @@ function ProductModal({ show, onClose, product }: Props) {
 
    const isAdded = !!cart.filter((c) => c.id === product.id)[0];
    const isWished = !!wishlist.filter((wishlist) => wishlist.id === id).length;
+   const isOutOfStock = currentStock === 0;
 
    const addProductToCart = useProductDispatch(addToCart);
 
@@ -59,6 +60,12 @@ function ProductModal({ show, onClose, product }: Props) {
    const addProductToWishlist = useProductDispatch(addToWishlist);
 
    const deleteProductFromWishlist = useProductDispatch(deleteFromWishlist);
+
+   const getCartButtonContent = () => {
+      if (isOutOfStock) return 'OUT OF STOCK';
+      if (isAdded) return 'DELETE FROM CART';
+      return 'ADD TO CART';
+   };
 
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
@@ -90,13 +97,14 @@ function ProductModal({ show, onClose, product }: Props) {
                      data-testid="cart-button"
                      height={39}
                      primary
+                     disabled={isOutOfStock}
                      onClick={() =>
                         isAdded
                            ? deleteProductFromCart(product)
                            : addProductToCart(product)
                      }
                   >
-                     {isAdded ? 'DELETE FROM CART' : 'ADD TO CART'}
+                     {getCartButtonContent()}
                   </Button>
 
                   <IconButton
@@ -117,4 +125,4 @@ function ProductModal({ show, onClose, product }: Props) {
    );
 }
 
-export default memo(ProductModal);
+export default ProductModal;

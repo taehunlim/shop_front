@@ -15,6 +15,8 @@ function Quantity({ stock }: Props) {
       setQuantity(1);
    }, [stock]);
 
+   const isOutOfStock = stock === 0;
+
    const handleDecrease = () => {
       if (quantity < 1) return;
       setQuantity(quantity - 1);
@@ -35,7 +37,11 @@ function Quantity({ stock }: Props) {
 
    return (
       <Container>
-         <Button data-testid="decrease-button" onClick={handleDecrease}>
+         <Button
+            data-testid="decrease-button"
+            disabled={isOutOfStock}
+            onClick={handleDecrease}
+         >
             -
          </Button>
          <input
@@ -43,8 +49,13 @@ function Quantity({ stock }: Props) {
             value={quantity}
             pattern="[0-9]*"
             onChange={handleInput}
+            readOnly={isOutOfStock}
          />
-         <Button data-testid="increase-button" onClick={handleIncrease}>
+         <Button
+            data-testid="increase-button"
+            disabled={isOutOfStock}
+            onClick={handleIncrease}
+         >
             +
          </Button>
       </Container>
