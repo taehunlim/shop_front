@@ -58,14 +58,14 @@ describe('Variation component', () => {
       variation.forEach(({ size, color }, colorIndex) => {
          ClickColor(colorIndex);
          expect(onChange).toBeCalledWith({
-            size: size[0].name,
+            size: size[0],
             color,
          });
 
          size.forEach((currentSize, sizeIndex) => {
             ClickSize(sizeIndex);
             expect(onChange).toBeCalledWith({
-               size: currentSize.name,
+               size: currentSize,
                color,
             });
          });

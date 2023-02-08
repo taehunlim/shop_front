@@ -325,6 +325,8 @@ export const products = [
 ];
 
 const { variation } = products[0];
+const { size } = variation[0];
 
 export type ProductDataProps = typeof products[0];
 export type VariationProps = typeof variation[0];
+export type SizeProps = typeof size[0];

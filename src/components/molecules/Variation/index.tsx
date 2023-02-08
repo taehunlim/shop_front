@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import ColorRadio from 'components/atoms/ColorRadio';
 
-import { VariationProps } from 'fixtures/products';
+import { VariationProps, SizeProps } from 'fixtures/products';
 
 import { Section, ColorContainer, SizeContainer, Size } from './style';
 
 interface Props {
    variation: VariationProps[];
-   onChange: ({ color, size }: { color: string; size: string }) => void;
+   onChange: ({ color, size }: { color: string; size: SizeProps }) => void;
 }
 
 function Variation({ variation, onChange }: Props) {
@@ -18,7 +18,7 @@ function Variation({ variation, onChange }: Props) {
    const [currentSizesForColor, setCurrentSizesForColor] = useState(size);
    const [currentValue, setCurrentValue] = useState({
       color,
-      size: size[0].name,
+      size: size[0],
    });
 
    useEffect(() => {
@@ -28,16 +28,16 @@ function Variation({ variation, onChange }: Props) {
    const handleColor = (variation: VariationProps) => {
       // local variable
       const { size, color } = variation;
-      const defaultSize = size[0].name;
+      const defaultSize = size[0];
 
       setCurrentValue({
-         color,
          size: defaultSize,
+         color,
       });
       setCurrentSizesForColor(size);
    };
 
-   const handleSize = (size: string) => {
+   const handleSize = (size: SizeProps) => {
       setCurrentValue({
          ...currentValue,
          size,
@@ -67,8 +67,8 @@ function Variation({ variation, onChange }: Props) {
                {currentSizesForColor.map((size) => (
                   <Size
                      key={size.name}
-                     checked={currentValue.size === size.name}
-                     onClick={() => handleSize(size.name)}
+                     checked={currentValue.size.name === size.name}
+                     onClick={() => handleSize(size)}
                   >
                      {size.name}
                   </Size>
