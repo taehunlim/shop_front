@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 import Button from 'components/atoms/Button';
 
@@ -10,6 +10,10 @@ interface Props {
 
 function Quantity({ stock }: Props) {
    const [quantity, setQuantity] = useState(1);
+
+   useEffect(() => {
+      setQuantity(1);
+   }, [stock]);
 
    const handleDecrease = () => {
       if (quantity < 1) return;

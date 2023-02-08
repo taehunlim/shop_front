@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useState } from 'react';
 
 import useTypedSelector from 'hooks/useTypedSelector';
 import useProductDispatch from 'hooks/useProductDispatch';
@@ -42,15 +42,15 @@ function ProductModal({ show, onClose, product }: Props) {
       image,
       name,
       fullDescription,
-      stock,
+
       variation,
    } = product;
-   const discountedPrice = useMemo(
-      () => getDiscountPrice(price, discount),
-      [product],
-   );
+   const discountedPrice = getDiscountPrice(price, discount);
+
+   const [currentStock, setCurrentStock] = useState(variation[0].size[0].stock);
 
    const isAdded = !!cart.filter((c) => c.id === product.id)[0];
+   const isWished = !!wishlist.filter((wishlist) => wishlist.id === id).length;
 
    const addProductToCart = useProductDispatch(addToCart);
 
@@ -59,8 +59,6 @@ function ProductModal({ show, onClose, product }: Props) {
    const addProductToWishlist = useProductDispatch(addToWishlist);
 
    const deleteProductFromWishlist = useProductDispatch(deleteFromWishlist);
-
-   const isWished = !!wishlist.filter((wishlist) => wishlist.id === id).length;
 
    return (
       <Modal width="80%" height="auto" show={show} onClose={onClose}>
@@ -80,9 +78,13 @@ function ProductModal({ show, onClose, product }: Props) {
                </TextWrapper>
                <p>{fullDescription}</p>
 
-               <Variation variation={variation} onChange={console.log} />
+               <Variation
+                  variation={variation}
+                  onChange={({ size }) => setCurrentStock(size.stock)}
+               />
 
-               <Quantity stock={stock} />
+               <Quantity stock={currentStock} />
+
                <ButtonContainer>
                   <Button
                      data-testid="cart-button"
