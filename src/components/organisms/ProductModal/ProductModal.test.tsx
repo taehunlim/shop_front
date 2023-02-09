@@ -61,6 +61,15 @@ describe('ProductModal test', () => {
       const clickCartButton = () => fireEvent.click(CartButton);
       const clickWishlistButton = () => fireEvent.click(WishlistButton);
 
+      // Variation component data-testid
+      const ColorContainer = getByTestId('color-container');
+      const SizeContainer = getByTestId('size-container');
+      const ColorRadios = ColorContainer.querySelectorAll('input');
+
+      const ClickColor = (index: number) => fireEvent.click(ColorRadios[index]);
+      const ClickSize = (index: number) =>
+         fireEvent.click(SizeContainer.children[index]);
+
       return {
          Container,
          Images,
@@ -72,6 +81,8 @@ describe('ProductModal test', () => {
 
          clickCartButton,
          clickWishlistButton,
+         ClickColor,
+         ClickSize,
       };
    };
 
@@ -112,6 +123,25 @@ describe('ProductModal test', () => {
 
          expect(CartButton).toBeInTheDocument();
          expect(WishlistButton).toBeInTheDocument();
+      });
+
+      it('out of stock button test', () => {
+         const { ClickColor, ClickSize, CartButton } = getComponent();
+
+         const { variation } = product;
+         const coloIndex = variation.findIndex((color) => {
+            const size = color.size.filter((size) => size.stock === 0);
+            return size[0]?.stock === 0;
+         });
+
+         const sizeIndex = variation[coloIndex].size.findIndex(
+            (size) => size.stock === 0,
+         );
+
+         ClickColor(coloIndex);
+         ClickSize(sizeIndex);
+
+         expect(CartButton.innerHTML).toBe('OUT OF STOCK');
       });
    });
 
